@@ -1,0 +1,36 @@
+.dashboard-container {
+    display: grid;
+    grid-template-columns: 6% 88% 6%; 
+    height: 0vh; 
+  }
+  
+ 
+  .cont-a, .cont-c {
+    background-color: black;
+    color: white;
+  }
+  
+  
+  .cont-b {
+    display: flex;
+    flex-direction: column;
+  }
+  
+
+  .row-1 {
+    /* flex-shrink: 0; 
+    overflow-y: auto; */
+    margin-left: 0px;
+    /* background-color:red; */
+  
+   
+  }
+  
+ 
+  .row-2 {
+   
+    background-color:red;
+   
+    
+  }
+  
