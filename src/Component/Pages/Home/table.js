@@ -8,7 +8,7 @@ const DataTable= ()=> {
     { id: 1, title: 'Case A', createdOn: '2023-11-01', createdBy: 'Alice', modifiedOn: '2023-11-02', status: 'On Hold', description: 'Sample description' },
     { id: 2, title: 'Case B', createdOn: '2023-11-03', createdBy: 'Bob', modifiedOn: '2023-11-04', status: 'Progress', description: 'Another sample description' },
     { id: 3, title: 'Case C', createdOn: '2023-11-03', createdBy: 'Neck', modifiedOn: '2023-11-04', status: 'Close', description: 'Another sample description' },
-    { id: 4, title: 'Case D', createdOn: '2023-11-03', createdBy: 'Sam', modifiedOn: '2023-11-04', status: 'Progress', description: 'Another sample description' },
+    { id: 4, title: 'Case D', createdOn: '2023-11-03', createdBy: 'Sam', modifiedOn: '2023-11-04', status: 'Progress', description: ' Another sample description Another sample description' },
     // Add more data as needed
   ]);
 
@@ -37,7 +37,7 @@ const DataTable= ()=> {
         <InputGroup className="search-bar1">
           <InputGroup.Text className="search-icon"><Search /></InputGroup.Text>
           <FormControl
-            placeholder="Search"
+            placeholder="Search Case"
             aria-label="Search"
             value={searchTerm}
             onChange={handleSearch}
@@ -45,9 +45,18 @@ const DataTable= ()=> {
         </InputGroup>
 
         <div className="header-icons">
-          <Button variant="outline-dark" className="header-icon"><List size={20} /> List View</Button>
-          <Button variant="outline-dark" className="header-icon"><CardList size={20} /> Card View</Button>
-          <Button variant="outline-dark" className="header-icon"><Plus size={20} /> Add New</Button>
+          <Button variant="outline-dark" className="header-icon">
+            <span className="icon"><List size={20} /></span>
+             <span>List View</span>
+            </Button>
+          <Button variant="outline-dark" className="header-icon">
+            <span className="icon"><CardList size={20} /></span>
+             <span>Card View</span>
+             </Button>
+          <Button variant="outline-dark" className="header-icon">
+            <span className="icon"><Plus size={20} /></span>
+             <span>Add New</span>
+            </Button>
           <DropdownButton align="end" variant="outline-dark" title={<ThreeDotsVertical size={20} />} id="dropdown-menu-align-end">
             <Dropdown.Item href="#">Option 1</Dropdown.Item>
             <Dropdown.Item href="#">Option 2</Dropdown.Item>
@@ -59,8 +68,8 @@ const DataTable= ()=> {
       <Table striped bordered hover variant="light" responsive className="data-table">
         <thead>
           <tr>
-            <th>Case ID</th>
-            <th>Title</th>
+            <th>CaseId</th>
+            <th> Title</th>
             <th>Created On</th>
             <th>Created By</th>
             <th>Modified On</th>
