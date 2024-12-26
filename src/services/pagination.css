@@ -1,0 +1,26 @@
+
+.page-link{
+    padding: 5px;
+    font-size:20px;
+    color:gray;
+    text-decoration: underline;
+    border: none; 
+}
+.pagination .page-item:hover .page-link { 
+    background-color: white !important; /* Active background color */ 
+    color: black !important; /* Active text color */ 
+    border: none !important; /* Remove border */
+    box-shadow: white !important; /* Remove box-shadow */
+ }
+ .pagination .page-link:focus { 
+    box-shadow: none !important; /* Remove focus shadow */
+
+ }
+ 
+ 
+
+ .pagination{
+    --bs-pagination-focus-bg: none !important;
+    --bs-pagination-focus-color: none !important; 
+ }
+ 

@@ -1,0 +1,65 @@
+.case-details-container {
+    padding: 10px;
+    max-width: 100%;
+    overflow-x: auto;
+    max-height: 500px;
+    overflow-y: auto;
+  
+}
+
+.popup-containera {
+    width: 45%;
+   
+    padding: 20px;
+
+    position: relative; /* For the close icon */
+    
+  }
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+.close-btn {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    align-items: left;
+}
+
+h3 {
+    margin: 0;
+    text-align: left;
+    font-size: .8em;
+}
+
+.custom-table {
+   padding: 10%;
+    /* Small font size */
+    background-color: #f7f7f7;
+    /* Light gray background color */
+    table-layout: auto;
+    width: 100%;
+  
+}
+
+.custom-table th {
+    background-color: white;
+    font-size: 14px  !important;
+    padding: 5px; /* Dark gray background color */
+  color: black;
+    
+    width: 35%
+}
+
+.custom-table td {
+    background-color: white;
+    font-size:10px !important;
+    padding: 5px ; /* Dark gray background color */
+    color: #0a0909;
+    vertical-align: middle; 
+    font-weight: bold;
+}

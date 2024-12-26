@@ -4,7 +4,7 @@ import Sidebar from './leftSideBar.js'
 import CardList from './cards.js'
 import '../../../Assets/Stlyes/dashboard.css'
 import RightSidebar from './rightSideBar.js'
-import DataTable from './table.js'
+import DataTable from '../Case/caseList.js'
 
 const Home = () => {
   return (

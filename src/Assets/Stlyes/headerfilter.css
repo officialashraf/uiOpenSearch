@@ -1,0 +1,19 @@
+.button {
+    background-color: gray;
+    color: white;
+    margin-top: 0px !important;
+    margin-right: 40px;
+  }
+  .button:hover {
+   background-color: black;
+    
+  
+  }
+  .custom-containerH {
+    margin-left: -10px !important;
+    padding-right: 0 !important;
+  }
+  .nav-tabs .nav-link {
+      
+    --bs-nav-tabs-border-width:none !important ;}
+    

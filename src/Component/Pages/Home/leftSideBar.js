@@ -1,6 +1,6 @@
 import React from 'react';
 import { Container, Nav } from 'react-bootstrap';
-import { House, ListTask, Folder, Database, FileEarmarkText, BarChart,Grid, Bullseye, People, Person } from 'react-bootstrap-icons';
+import { House, ListTask, Folder, Database, FileEarmarkText, BarChart,Grid, Bullseye, People} from 'react-bootstrap-icons';
 import { useNavigate } from 'react-router-dom';
 import "../../../Assets/Stlyes/sideBar.css"
 const  Sidebar = ()=> {
@@ -16,8 +16,6 @@ const  Sidebar = ()=> {
     { label: 'Dashboard', icon: <Grid size={24} />, path: '/dashboard' },
     { label: 'Targets', icon: <Bullseye size={24} />, path: '/targets' },
     { label: 'Admin', icon: <People size={24} />, path: '/admin' },
-    { label: 'Profile', icon: <Person size={24} />, path: '/profile' },
-    { label: 'Profile', icon: < Person size={24} />, path: '/profile' },
   ];
 
   return (

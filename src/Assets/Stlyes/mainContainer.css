@@ -1,0 +1,21 @@
+.containerM {
+    border: 1px solid #ccc;
+    padding: 20px;
+    border-radius: 5px;
+    background-color:white;
+  }
+  
+  .title {
+    font-size: 1.5em;
+    color: #333;
+  }
+  
+  .content {
+    font-size: 1em;
+    color: #666;
+  }
+  
+  .button {
+    margin-top: 20px;
+  }
+  
