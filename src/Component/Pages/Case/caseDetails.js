@@ -39,9 +39,9 @@ const CaseDetails = ({ item, togglePopupA }) => {
                     <button type="button" className="cancel-btn" onClick={togglePopupA}>
                         Cancel
                     </button>
-                    <button type="submit" className="create-btn">
+                    {/* <button type="submit" className="create-btn">
                         create
-                    </button>
+                    </button> */}
                     </div>
                 </div>
                 </div>

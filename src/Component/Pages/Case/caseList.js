@@ -2,18 +2,22 @@ import React, { useState, useEffect } from 'react';
 import { Table, InputGroup, FormControl, Dropdown, Button, DropdownButton } from 'react-bootstrap';
 import { Search, List, CardList, Plus, ThreeDotsVertical } from 'react-bootstrap-icons';
 import axios from 'axios';
+//import {useNavigate}from 'react-router-dom'
 import '../../../Assets/Stlyes/table.css';
 import CreateCase from '../Case/createCase';
 import Cookies from "js-cookie";
 import { toast } from 'react-toastify';
 import CaseDetails from './caseDetails';
+import EditCase from './editCase';
 
-const DataTable = () => {
+const DataTable = ({onFieldClick}) => {
+  //const navigate = useNavigate()
   const [data, setData] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
   const [filteredData, setFilteredData] = useState([]);
   const [showPopup, setShowPopup] = useState(false);
   const [showPopupA, setShowPopupA] = useState(false);
+  const [showPopupB, setShowPopupB] = useState(false);
   const [selectedData, setSelectedData] = useState(null)
 
   useEffect(() => {
@@ -36,11 +40,23 @@ const DataTable = () => {
       }
     };
     fetchData();
-    // const interval = setInterval(() =>
-    //    { fetchData(); }, 10000);
-    // return () => clearInterval(interval);
+    const interval = setInterval(() =>
+       { fetchData(); }, 10000);
+    return () => clearInterval(interval);
   },
     []);
+
+    // const filterPage =()=>{
+    //   navigate('/filter')
+    // }
+    const confirmDelete = (id) => { 
+      toast((t) => (
+         <div> 
+          <p>Are you sure you want to delete this case?</p>
+           <button className='custom-confirm-button' onClick={() => { deleteCase(id); toast.dismiss(t.id); }}>Yes</button> 
+           <button  className='custom-confirm-button'  onClick={() => toast.dismiss(t.id)}>No</button> </div> ),
+            { position: "top-center", autoClose: false, closeOnClick: false, draggable: false, });
+           };
 
   const deleteCase = async (id) => {
     const token = Cookies.get("accessToken");
@@ -91,8 +107,13 @@ const DataTable = () => {
   };
 
   const togglePopup = () => {
+   
     setShowPopup((prev) => !prev);
-  };
+  };  
+  const togglePopupB = () => {
+   
+    setShowPopupB((prev) => !prev);
+  }; 
   const togglePopupA = (item) => {
     setShowPopupA((prev) => !prev);
     setSelectedData(item)
@@ -146,20 +167,22 @@ const DataTable = () => {
               <th>Title</th>
               <th>Created On</th>
               <th>Created By</th>
+              <th>Assignee</th>
               <th>Watchers</th>
               <th>Modified On</th>
               <th className="sticky-column">Status</th>
               <th>Description</th>
-              <th>Case</th>
+             
             </tr>
           </thead>
           <tbody>
             {filteredData && filteredData.map((item) => (
               <tr key={item.id} >
-                <td onClick={() => { togglePopupA(item) }} style={{ cursor: "pointer" }}>{item.id.slice(0, 8)}</td>
+                <td onClick={onFieldClick} style={{cursor :'pointer'}} >{item.id.slice(0, 8)}</td>
                 <td>{item.title}</td>
                 <td>{item.created_on.slice(0, 10)}</td>
                 <td>{item.created_by.slice(0, 8)}</td>
+                <td>{item.assignee}</td>
                 <td>{item.watchers}</td>
             <td>{item.modified_on}</td>
                 <td disabled={true} >
@@ -174,11 +197,21 @@ const DataTable = () => {
                     </Dropdown.Menu>
                   </Dropdown>
                 </td>
-                <td>{item.description}</td>
-                <td>
-                  <Button variant="outline-dark" className="header-icon" onClick={() => deleteCase(item.id)}>
-                    <span>Delete Case</span>
-                  </Button>
+                <td  className="d-flex justify-content-between align-items-center">
+                <span>{item.description}</span> 
+                <span> <Dropdown>
+                   <Dropdown.Toggle className="custom-dropdown-toggle custom-btn"> ⋮ </Dropdown.Toggle>
+                 <Dropdown.Menu className="custom-dropdown-menu"> 
+                  <Dropdown.Item onClick={() => { togglePopupA(item) }} style={{ cursor: "pointer" }}>Details</Dropdown.Item> 
+                  <Dropdown.Item  onClick={togglePopupB} >Edit</Dropdown.Item>
+                 <Dropdown.Item  
+                // onClick={() => deleteCase(item.id)}
+                onClick={() => confirmDelete(item.id)}
+                 >Delete</Dropdown.Item> 
+                 </Dropdown.Menu> 
+                 </Dropdown>  
+                 </span>
+                 
                 </td>
               </tr>
             ))}
@@ -186,6 +219,7 @@ const DataTable = () => {
         </Table>
       </div>
       {showPopup && <CreateCase togglePopup={togglePopup} />}
+      {showPopupB && <EditCase togglePopup={togglePopupB} />}
       {showPopupA && <CaseDetails item={selectedData} togglePopupA={togglePopupA} />}
     </>
   );

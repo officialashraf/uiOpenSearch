@@ -1,0 +1,13 @@
+import React from "react";
+import { ProgressBar } from "react-bootstrap";
+
+const ProgressRow = ({ now, label }) => {
+  return (
+    <div className="mb-3" style={{background:"lightgray"}}>
+      <strong>{label}</strong>
+      <ProgressBar now={now} label={`${now}%`}  />
+    </div>
+  );
+};
+
+export default ProgressRow;

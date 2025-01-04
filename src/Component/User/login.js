@@ -91,6 +91,7 @@ const LoginPage = () => {
                             onChange={handleChange}
                             placeholder="Enter your username"
                             controlId="Username"
+                            autocomplete="off"
                             name="username"
                            
                         />
@@ -100,7 +101,7 @@ const LoginPage = () => {
                             value={formData.password}
                             onChange={handleChange}
                             placeholder="Enter your password"
-                            controlId="Password-123"
+                            controlId="Username"
                             autocomplete="off"
                             name="password"
                              

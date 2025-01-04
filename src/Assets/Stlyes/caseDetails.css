@@ -51,15 +51,15 @@ h3 {
     font-size: 14px  !important;
     padding: 5px; /* Dark gray background color */
   color: black;
-    
+  font-weight:normal !important ;
     width: 35%
 }
 
 .custom-table td {
     background-color: white;
-    font-size:10px !important;
+    font-size:14px !important;
     padding: 5px ; /* Dark gray background color */
     color: #0a0909;
     vertical-align: middle; 
-    font-weight: bold;
+    /* font-weight: bold; */
 }

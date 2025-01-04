@@ -10,7 +10,9 @@ import DataTable from './Component/Pages/Case/caseList.js';
 import SearchBar from './Component/Pages/SearchPage/searchBar';
 import LoginPage from './Component/User/login';
 import { BrowserRouter , Routes, Route } from 'react-router-dom';
-import MainFilter from './Component/Pages/Case/Filters/mainFilter.js';
+import MainFilter from './Component/Pages/Filters/Add_Filter/mainFilterPage.js';
+import AddFilter2 from './Component/Pages/Filters/AddExistingFilter/addFilter2.js';
+import CaseTableDataFilter from './Component/Pages/Filters/AddExistingFilter/TabularData/caseTableDataFilter.js';
 
 
 function App() {
@@ -27,6 +29,9 @@ function App() {
         <Route path='/pagination' element={<Pagination1/>}/>
         <Route path='/data' element={<DataTable1/>}/> 
         <Route path='/filter' element={<MainFilter/>}/>
+        <Route path='/existing-filter' element={<AddFilter2/>}/>
+        <Route path='/tableData' element={<CaseTableDataFilter/>}/>
+      
          {/* <Route path='/case' element={<CreateCase/>}/> */}
        
       </Routes>

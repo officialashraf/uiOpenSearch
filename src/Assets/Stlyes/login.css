@@ -40,6 +40,8 @@ h1 {
     color: white;
     border: none;
     margin-bottom: 15px;
+    font-size: 16px;
+    height: 2.5rem;
 }
 
 .forgot-password-link {
@@ -50,20 +52,25 @@ h1 {
 
 
 .login-button {
-    background-color: gray;
+    background-color  :black;
     width: 30%;
     height: 2.2rem;
     border: none;
-    color: white;
+    color:white;
     border-radius: 0.375rem;
 }
-label{
+.login-button:hover{
+
+    background-color: #282828;
+}
+
+.labell{
     color: white;
 }
 input:-webkit-autofill {
-    -webkit-box-shadow: 0 0 0px 1000px white inset !important;
-    box-shadow: 0 0 0px 1000px white inset !important;
-    transition: background-color 5000s ease-in-out 0s;
+    -webkit-box-shadow: 0 0 0px 1000px white !important;
+    box-shadow: 0 0 0px 1000px white !important;
+    transition: background-color red 5000s ease-in-out 0s;
   }
   
 @media (max-width: 768px) {

@@ -1,13 +1,19 @@
-.button {
+.analyze-btn {
     background-color: gray;
     color: white;
     margin-top: 0px !important;
     margin-right: 40px;
+    border-color: gray;
   }
-  .button:hover {
+  .analyze-btn:hover {
    background-color: black;
-    
+   border-color: black;
   
+  }
+  .caseName{
+    font-size: 20px;
+    font-weight: bold;
+
   }
   .custom-containerH {
     margin-left: -10px !important;

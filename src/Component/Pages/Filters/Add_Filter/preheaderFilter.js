@@ -12,7 +12,7 @@ const PreheaderFilter = () => {
   console.log("setsetlecteb", selectedTab)
 
   return (
-    <Nav variant="tabs" className="navM">
+    <Nav variant="tabs" className="navM" style={{background:"black"}}>
       {tabs.map((tab) => (
         <Nav.Item key={tab} onClick={() => dispatch(setSelectedTab(tab.toLowerCase()))} 
         className={`navItemM  ${selectedTab === tab.toLowerCase() ? "active" : ""}`}
