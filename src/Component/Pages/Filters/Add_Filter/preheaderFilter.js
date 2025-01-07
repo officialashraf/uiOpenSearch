@@ -7,7 +7,7 @@ import  '../../../../Assets/Stlyes/preHeaderFilter.css';
 const PreheaderFilter = () => {
   const dispatch = useDispatch();
   //const selectedTab = useSelector((state) => state.slectedTab);
-  const selectedTab = useSelector((state) => state.slectedTab.selectedTab);
+  const selectedTab = useSelector((state) => state.selectedTab.selectedTab);
   const tabs = ['Summary', 'Jobs', 'Reports', 'Tasks', 'Contributors', 'History'];
   console.log("setsetlecteb", selectedTab)
 

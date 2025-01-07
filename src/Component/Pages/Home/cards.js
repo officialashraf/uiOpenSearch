@@ -28,7 +28,7 @@ const CardList = ({data })=> {
   return (
     <Container fluid className="card-list-container">
       {data.map((item, index) => (
-        <StatusCard key={index} name={item.name} number={item.number} icon={item.icon} />
+        <StatusCard key={index} name={item.name}  number={item.number} icon={item.icon} />
       ))}
     </Container>
   );

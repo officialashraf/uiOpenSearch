@@ -4,14 +4,14 @@ import { FaFileAlt,FaArrowLeft } from 'react-icons/fa';
 //import { useDispatch } from 'react-redux';
 //import { setSelectedTab } from '../../../../Redux/Action/caseAction';
 import '../../../../Assets/Stlyes/headerfilter.css';
-import { useNavigate } from 'react-router-dom';
+//import { useNavigate } from 'react-router-dom';
 
-const HeaderFilter = () => {
+const HeaderFilter = ({onAnalyzeClick}) => {
   //const dispatch = useDispatch();
-  const navigate = useNavigate()
-  const tableData = ()=>{
-    navigate('/dashboard')
-  }
+  // const navigate = useNavigate()
+  // const tableData = ()=>{
+  //   navigate('/dashboard')
+  // }
 
   return (
     <Navbar expand="lg" className="justify-content-between" style={{background:"lightgray"}}>
@@ -23,10 +23,10 @@ const HeaderFilter = () => {
         <Col xs={11}>
           <Nav className="flex-column">
             <Nav.Item className="d-flex align-items-center">
-              <span>ID: </span>
+              <span>ID:{148935172} </span>
               </Nav.Item> 
               <Nav.Item>
-             <span className='caseName'>Name </span> <FaFileAlt className="ml-3" />  <Badge pill bg="dark">
+             <span className='caseName'>Rameshwaram Blast </span> <FaFileAlt className="ml-3" />  <Badge pill bg="dark">
              <span><ul><li >Status</li></ul></span>
                </Badge>
               </Nav.Item>
@@ -37,7 +37,7 @@ const HeaderFilter = () => {
       </Row>
       
       </Container>
-      <Button  className='analyze-btn' onClick={tableData}>
+      <Button  className='analyze-btn' onClick={onAnalyzeClick}>
         {/* <FaChartLine /> */}
          Analyze
       </Button>

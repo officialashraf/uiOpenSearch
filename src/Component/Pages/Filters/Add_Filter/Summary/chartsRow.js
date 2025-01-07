@@ -15,7 +15,9 @@ const ChartsRow = ({ pieData, barData, tableData }) => {
     <div className="row mb-3" style={{background:"lightgray"}}>
       <div className="col-md-4" style={{width: '373px', height:'250px', marginLeft:"5px", background:"darkgray"}}>
         <h5>Pie Chart</h5>
-        <Doughnut data={pieData}/>
+        <div style={{height: '220px', width: '373px'}}>
+        <Doughnut data={pieData} />
+        </div>
       </div>
       <div className="col-md-4"style={{width: '373px', height:'250px', marginLeft:"5px", background:"darkgray"}}>
         <h5>Bar Chart</h5>
@@ -27,15 +29,15 @@ const ChartsRow = ({ pieData, barData, tableData }) => {
           <thead>
             <tr>
               {tableData.headers.map((header, index) => (
-                <th key={index}>{header}</th>
+                <th key={index}  style={{background:"gray"}}>{header}</th>
               ))}
             </tr>
           </thead>
           <tbody>
             {tableData.rows.map((row, index) => (
-              <tr key={index}>
+              <tr key={index} >
                 {row.map((cell, i) => (
-                  <td key={i}>{cell}</td>
+                  <td key={i} style={{background:"gray"}}>{cell}</td>
                 ))}
               </tr>
             ))}

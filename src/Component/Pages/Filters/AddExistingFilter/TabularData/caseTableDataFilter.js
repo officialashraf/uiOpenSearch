@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React from 'react'
 import Group from './group'
 //import Pagination from './pagination'
 import CaseHeader from './caseHeader'
@@ -6,7 +6,7 @@ import CaseData from './caseData'
 //import { useState } from 'react'
 
 const CaseTableDataFilter = () => {
-  const [filter, setFilter] = useState([]);
+  // const [filter, setFilter] = useState([]);
   const data = Array.from({ length: 112 }, (_, i) => ({
     id: i + 1,
     fileName: `File_name_${i + 1}`,
@@ -19,22 +19,23 @@ const CaseTableDataFilter = () => {
     imei: i % 2 === 0 ? `35904337488${i}` : "-",
   }));
 
-  const handleFilterChange = (location) => {
-    setFilter((prev) =>
-      prev.includes(location)
-        ? prev.filter((loc) => loc !== location)
-        : [...prev, location]
-    );
-  };
+  // const handleFilterChange = (location) => {
+  //   setFilter((prev) =>
+  //     prev.includes(location)
+  //       ? prev.filter((loc) => loc !== location)
+  //       : [...prev, location]
+  //   );
+  // };
 
-  const filteredData = filter.length
-    ? data.filter((item) => filter.includes(item.location))
-    : data;
+  // const filteredData = 
+  // filter.length
+  //   ? data.filter((item) => filter.includes(item.location))
+  //   : data;
   return (
     <>
     <CaseHeader/>
       <Group/>
-      <CaseData data={data}/>
+      <CaseData data={data} />
       {/* <Pagination/> */}
     </>
   )

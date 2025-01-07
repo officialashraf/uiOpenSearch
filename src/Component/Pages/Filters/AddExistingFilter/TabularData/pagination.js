@@ -20,7 +20,7 @@ const Pagination = ({
   
     const handleJumpToPage = (e) => {
       e.preventDefault();
-      const page = parseInt(jumpPageInput, 10);
+      const page = parseInt(jumpPageInput, 7);
       if (page >= 1 && page <= totalPages) {
         onPageChange(page);
       }

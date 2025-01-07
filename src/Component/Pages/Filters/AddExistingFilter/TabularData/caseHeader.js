@@ -3,31 +3,32 @@ import React from 'react'
 const CaseHeader = () => {
   return (
     <>
-    <div className='row header-row' >
-        <div className='col mt-4' >
+    <div className='row header-row' style={{background: 'darkgray', color:'white',display: 'flex', marginLeft: '0rem', marginRight: '0rem'}} >
+        <div className='col ' >
             <h7 className="header-caseid-h7" >Case id: {"456884"}</h7>
             <h5 className='header-casename-h5' >Rameshwaram Cafe Blast</h5>
         </div>
-        <div className='col d-flex justify-content-center mt-4' >
-        <ul className="pagination">
+        <div className='col d-flex justify-content-center mt-2 mb-2' >
+    
           
-            <li className="page-item header-li">
-              <button className="page-link header-li-button">summary</button>
-            </li>
-            <li className="page-item header-li">
-              <button className="page-link header-li-button">resources</button>
-            </li>
-            <li className="page-item header-li">
-              <button className="page-link header-li-button">case board</button>
-            </li>
-        </ul>
+          
+              <button className="btn btn-secondary mx-2">Summary</button>
+            
+            
+              <button className="btn btn-secondary mx-2">Resources</button>
+   
+            
+              <button className="btn btn-secondary mx-2">Case board</button>
+            
+      
         </div>
-        <div className='col mt-4' >
-            <button className='btn float-end header-btcs-button' >back to case snapshot</button>
+        <div className='col mt-2 mb-2'style={{ display: 'flex', justifyContent: 'flex-end' }} >
+       
+            <button className="btn btn-secondary ">  Back to Case Snapshot</button>
         </div>
     </div>
     {                             /*end header*/                                     }
-    <div className="row mt-3 ms-2" >
+    <div className="row mt-3 ms-2" style={{background:'gray'}} >
       <div className="col-md-auto">                
                 <input
                 type="text"
@@ -39,8 +40,8 @@ const CaseHeader = () => {
       </div>
       <div className="col-md-auto">
       <select className="form-select header-dropdown1">
-        <option value="source1" >smart insights</option>
-        <option value="source2">option2</option>
+        <option value="source1" >Smart Insights</option>
+        <option value="source2">Options</option>
       </select>
       </div>
       
@@ -59,5 +60,6 @@ const CaseHeader = () => {
     </>
   )
 }
+
 
 export default CaseHeader

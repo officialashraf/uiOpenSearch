@@ -14,7 +14,7 @@ import  '../../../../Assets/Stlyes/mainContainer.css';
 
 const MainContainer = () => {
   const navigate = useNavigate();
-  const selectedTab = useSelector((state) => state.slectedTab.selectedTab);
+  const selectedTab = useSelector((state) => state.selectedTab.selectedTab);
   const addResource = ()=>{
     navigate('/existing-filter')
   }

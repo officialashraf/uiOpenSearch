@@ -4,10 +4,10 @@ import Header from './headerFilter';
 import Preheader from './preheaderFilter';
 import MainContainer from './mainContainer';
 
-const MainFilter = () => {
+const MainFilter = ({ onAnalyzeClick }) => {
   return (
     <>
-      <Header />
+      <Header onAnalyzeClick={onAnalyzeClick} />
       <Preheader />
       
         <MainContainer />

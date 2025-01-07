@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import { Table, InputGroup, FormControl, Dropdown, Button, DropdownButton } from 'react-bootstrap';
+import { Table, InputGroup, FormControl, Dropdown, Button, DropdownButton, Badge } from 'react-bootstrap';
 import { Search, List, CardList, Plus, ThreeDotsVertical } from 'react-bootstrap-icons';
 import axios from 'axios';
-//import {useNavigate}from 'react-router-dom'
 import '../../../Assets/Stlyes/table.css';
 import CreateCase from '../Case/createCase';
 import Cookies from "js-cookie";
@@ -11,7 +10,7 @@ import CaseDetails from './caseDetails';
 import EditCase from './editCase';
 
 const DataTable = ({onFieldClick}) => {
-  //const navigate = useNavigate()
+
   const [data, setData] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
   const [filteredData, setFilteredData] = useState([]);
@@ -46,9 +45,7 @@ const DataTable = ({onFieldClick}) => {
   },
     []);
 
-    // const filterPage =()=>{
-    //   navigate('/filter')
-    // }
+  
     const confirmDelete = (id) => { 
       toast((t) => (
          <div> 
@@ -102,9 +99,9 @@ const DataTable = ({onFieldClick}) => {
     setFilteredData(filtered);
   };
 
-  const handleStatusChange = (id, status) => {
-    setFilteredData(filteredData.map(item => (item.id === id ? { ...item, status } : item)));
-  };
+  // const handleStatusChange = (id, status) => {
+  //   setFilteredData(filteredData.map(item => (item.id === id ? { ...item, status } : item)));
+  // };
 
   const togglePopup = () => {
    
@@ -119,11 +116,7 @@ const DataTable = ({onFieldClick}) => {
     setSelectedData(item)
   };
 
-  // const handleCaseClick = (item) => {
-  //   // setSelectedCase(caseDetails); // Set the selected case
-  //   // setIsPopupVisible(true); // Show the popup
-  //   console.log("item", item)
-  // };
+  
 
   return (
     <>
@@ -142,15 +135,15 @@ const DataTable = ({onFieldClick}) => {
           <div className="header-icons">
             <Button variant="outline-dark" className="header-icon">
               <span className="icon"><List size={20} /></span>
-              <span>List View</span>
+           
             </Button>
             <Button variant="outline-dark" className="header-icon">
               <span className="icon"><CardList size={20} /></span>
-              <span>Card View</span>
+       
             </Button>
             <Button variant="outline-dark" className="header-icon" onClick={togglePopup}>
               <span className="icon"><Plus size={20} /></span>
-              <span>Add New</span>
+              <span>Add New Case</span>
             </Button>
             <DropdownButton align="end" variant="outline-dark" title={<ThreeDotsVertical size={20} />} id="dropdown-menu-align-end">
               <Dropdown.Item href="#">Option 1</Dropdown.Item>
@@ -186,16 +179,9 @@ const DataTable = ({onFieldClick}) => {
                 <td>{item.watchers}</td>
             <td>{item.modified_on}</td>
                 <td disabled={true} >
-                  <Dropdown onSelect={(status) => handleStatusChange(item.id, status)} >
-                    <Dropdown.Toggle variant="outline-dark" size="sm"  >
-                      {item.status}
-                    </Dropdown.Toggle>
-                    <Dropdown.Menu >
-                      <Dropdown.Item eventKey="On Hold">On Hold</Dropdown.Item>
-                      <Dropdown.Item eventKey="Close">Close</Dropdown.Item>
-                      <Dropdown.Item eventKey="Progress">Progress</Dropdown.Item>
-                    </Dropdown.Menu>
-                  </Dropdown>
+                   <Badge pill bg="dark"> 
+             <span><ul><li >{item.status}</li></ul></span>
+               </Badge>
                 </td>
                 <td  className="d-flex justify-content-between align-items-center">
                 <span>{item.description}</span> 
@@ -205,7 +191,6 @@ const DataTable = ({onFieldClick}) => {
                   <Dropdown.Item onClick={() => { togglePopupA(item) }} style={{ cursor: "pointer" }}>Details</Dropdown.Item> 
                   <Dropdown.Item  onClick={togglePopupB} >Edit</Dropdown.Item>
                  <Dropdown.Item  
-                // onClick={() => deleteCase(item.id)}
                 onClick={() => confirmDelete(item.id)}
                  >Delete</Dropdown.Item> 
                  </Dropdown.Menu> 

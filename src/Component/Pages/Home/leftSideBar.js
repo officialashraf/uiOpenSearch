@@ -1,6 +1,6 @@
 import React from 'react';
 import { Container, Nav } from 'react-bootstrap';
-import { House, ListTask, Folder, Database, FileEarmarkText, BarChart,Grid, Bullseye, People} from 'react-bootstrap-icons';
+import { House, ListTask, Folder, BarChart, People} from 'react-bootstrap-icons';
 import { useNavigate } from 'react-router-dom';
 import "../../../Assets/Stlyes/sideBar.css"
 const  Sidebar = ()=> {
@@ -10,11 +10,11 @@ const  Sidebar = ()=> {
     { label: 'Home', icon: <House size={24} />, path: '/home' },
     { label: 'Tasks', icon: <ListTask size={24} />, path: '/tasks' },
     { label: 'Cases', icon: <Folder size={24} />, path: '/dashboard' },
-    { label: 'Data Repo', icon: <Database size={24} />, path: '/data-repo' },
-    { label: 'Legals', icon: <FileEarmarkText size={24} />, path: '/legals' },
+    // { label: 'Data Repo', icon: <Database size={24} />, path: '/data-repo' },
+    // { label: 'Legals', icon: <FileEarmarkText size={24} />, path: '/legals' },
     { label: 'Reports', icon: <BarChart size={24} />, path: '/reports' },
-    { label: 'Dashboard', icon: <Grid size={24} />, path: '/dashboard' },
-    { label: 'Targets', icon: <Bullseye size={24} />, path: '/targets' },
+    // { label: 'Dashboard', icon: <Grid size={24} />, path: '/dashboard' },
+    // { label: 'Targets', icon: <Bullseye size={24} />, path: '/targets' },
     { label: 'Admin', icon: <People size={24} />, path: '/admin' },
   ];
 

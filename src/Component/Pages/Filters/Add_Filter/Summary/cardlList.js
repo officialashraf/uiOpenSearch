@@ -17,7 +17,7 @@ const data1 = [
 ];
 
 const Component1 = () => {
-  return <CardList data={data1}  />;
+  return <CardList data={data1} />;
 }
 
 export default Component1;

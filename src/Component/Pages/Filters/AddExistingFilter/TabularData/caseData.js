@@ -1,13 +1,14 @@
 //import { useState } from "react";
 import React,{useState} from 'react'
 import Pagination from "./pagination";
+import '../../../../../Assets/Stlyes/caseData.css'
 const CaseData = ({data}) => {
     const rowsPerPageOptions = [10, 15, 25];
   const [currentPage, setCurrentPage] = useState(1);
   const [rowsPerPage, setRowsPerPage] = useState(rowsPerPageOptions[0]);
 
   const totalItems = data.length;
-  const totalPages = Math.ceil(totalItems / rowsPerPage);
+ // const totalPages = Math.ceil(totalItems / rowsPerPage);
 
   const startIdx = (currentPage - 1) * rowsPerPage;
   const endIdx = startIdx + rowsPerPage;
@@ -24,11 +25,12 @@ const CaseData = ({data}) => {
   };
   return (
    <>
-     <div className='row' style={{margin:"4px 0px 0px 0px"}}>
-        <div className='col-4 text-light'>
+     <div className='row' style={{margin:"4px 0px 0px 0px", height:'400px', overflowY:'auto', background:'gray'}}>
+        <div className='col-4'style={{background:"gray !important"}} >
 
-        <table className="table table-hover" style={{backgroundColor:"gray"}}>
-        <thead >
+        <table className="table table-hover" >
+        <thead   >
+       
           <tr>
             <th>#</th>
             <th>File Name</th>
@@ -49,7 +51,7 @@ const CaseData = ({data}) => {
       </table>
 
         </div>
-        <div className='col text-light'>
+        <div className='col' style={{ background:'gray'}}>
         <table className="table table-hover">
         <thead >
           <tr >
