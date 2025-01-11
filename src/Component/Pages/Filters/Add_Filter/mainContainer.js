@@ -46,7 +46,7 @@ console.log("stlected", selectedTab)
       default:
         
         return (
-          <div className="containerM" text-center mt-4 >
+          <div className="containerM" >
             <h3 className="title">Let's Get Started!</h3>
             <p className="content">Add resources to get started</p>
             <Button variant="primary" className="create-case-button" onClick={addResource} >
@@ -59,7 +59,7 @@ console.log("stlected", selectedTab)
     }
   };
 
-  return <div style={{background:"lightgray", margin:'0px'}}>{renderContent()}</div>;
+  return <div className="containerM" containerM style={{background:"lightgray", margin:'0px'}}>{renderContent()}</div>;
 };
 
 export default MainContainer;

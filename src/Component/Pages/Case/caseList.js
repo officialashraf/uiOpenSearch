@@ -133,19 +133,18 @@ const DataTable = ({onFieldClick}) => {
           </InputGroup>
 
           <div className="header-icons">
-            <Button variant="outline-dark" className="header-icon">
-              <span className="icon"><List size={20} /></span>
            
-            </Button>
-            <Button variant="outline-dark" className="header-icon">
-              <span className="icon"><CardList size={20} /></span>
+              <span className="icon"><List size={30} /></span>
+           
+         
+            
+              <span className="icon"><CardList size={30} /></span>
        
-            </Button>
-            <Button variant="outline-dark" className="header-icon" onClick={togglePopup}>
-              <span className="icon"><Plus size={20} /></span>
-              <span>Add New Case</span>
-            </Button>
-            <DropdownButton align="end" variant="outline-dark" title={<ThreeDotsVertical size={20} />} id="dropdown-menu-align-end">
+           
+              <span className="icon" title='Add New Case'  onClick={togglePopup}><Plus size={30}/></span>
+              <span></span>
+            
+            <DropdownButton className="custom-dropdown1" align="end" title={<ThreeDotsVertical size={20} />} id="dropdown-menu-align-end">
               <Dropdown.Item href="#">Option 1</Dropdown.Item>
               <Dropdown.Item href="#">Option 2</Dropdown.Item>
               <Dropdown.Item href="#">Option 3</Dropdown.Item>
