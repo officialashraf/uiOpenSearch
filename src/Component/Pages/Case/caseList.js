@@ -52,7 +52,7 @@ const DataTable = ({onFieldClick}) => {
           <p>Are you sure you want to delete this case?</p>
            <button className='custom-confirm-button' onClick={() => { deleteCase(id); toast.dismiss(t.id); }}>Yes</button> 
            <button  className='custom-confirm-button'  onClick={() => toast.dismiss(t.id)}>No</button> </div> ),
-            { position: "top-center", autoClose: false, closeOnClick: false, draggable: false, });
+            { position: "top-right" , autoClose: false, closeOnClick: false, draggable: false, });
            };
 
   const deleteCase = async (id) => {
@@ -178,7 +178,7 @@ const DataTable = ({onFieldClick}) => {
                 <td>{item.watchers}</td>
             <td>{item.modified_on}</td>
                 <td disabled={true} >
-                   <Badge pill bg="dark"> 
+                   <Badge pill bg="dark" className="badge-custom"> 
              <span><ul><li >{item.status}</li></ul></span>
                </Badge>
                 </td>

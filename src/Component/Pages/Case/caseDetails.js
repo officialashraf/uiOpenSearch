@@ -10,11 +10,11 @@ const CaseDetails = ({ item, togglePopupA }) => {
             
                      <div className="header">
                   
-                    <h3>{item.title.toUpperCase()}</h3> 
+                    <h5>{item.title}</h5> 
                     <CloseButton onClick={togglePopupA}/>
                     </div>
                     <div className="case-details-container"> 
-                <Table bordered hover className='custom-table'>
+                <Table bordered hover className='custom-table custom-table-th' >
                      <tbody> <tr> <th>Case ID</th> <td>{item.id.slice(0,8)}</td> </tr>
                       <tr> <th>Status</th> <td>{item.status}</td> </tr>
                        <tr> <th>Description</th> <td>{item.description}</td> </tr> 
@@ -35,15 +35,12 @@ const CaseDetails = ({ item, togglePopupA }) => {
                              </tr> 
                              </tbody> 
                              </Table>
+                </div>
                 <div className="button-container">
                     <button type="button" className="cancel-btn" onClick={togglePopupA}>
                         Cancel
                     </button>
-                    {/* <button type="submit" className="create-btn">
-                        create
-                    </button> */}
                     </div>
-                </div>
                 </div>
             </div>
         </div>

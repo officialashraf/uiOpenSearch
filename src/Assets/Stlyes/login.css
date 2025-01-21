@@ -52,7 +52,7 @@ h1 {
 
 
 .login-button {
-    background-color  :black;
+    background-color : gray;
     width: 30%;
     height: 2.2rem;
     border: none;
@@ -66,6 +66,12 @@ h1 {
 
 .labell{
     color: white;
+}
+.labell input:focus,
+.form-control:focus {
+    outline: none; 
+    box-shadow: none; 
+    border-color: none; 
 }
 input:-webkit-autofill {
     -webkit-box-shadow: 0 0 0px 1000px white !important;

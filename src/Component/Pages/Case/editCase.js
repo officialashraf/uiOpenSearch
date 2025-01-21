@@ -17,7 +17,7 @@ const EditCase = ({ togglePopup }) => {
           &times;
         </button>
         <div className="popup-content">
-          <h2>Edit !!!!!Case</h2>
+          <h5>Edit Case</h5>
           <form onSubmit={handleCreate}>
             {/* Title Field */}
             <label htmlFor="title">Title:</label>

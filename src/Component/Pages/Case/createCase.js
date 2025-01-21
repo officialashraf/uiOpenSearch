@@ -1,31 +1,95 @@
-import React, {  useState } from "react";
+import React, {  useState,useEffect } from "react";
 import "../../../Assets/Stlyes/createCase.css";
 import axios from "axios";
 import Cookies from "js-cookie"; // Make sure you're using this for cookies
 import {  toast } from 'react-toastify';
+import Select from 'react-select';
 
 
 const CreateCase = ({ togglePopup }) => {
+  const [assignee, setAssignee] = useState([]);
+  console.log("setAssignee",assignee)
+  const options = assignee.data && assignee.data.map(user => ({
+    value: user.id,
+    label: user.username
+  }));
+  
     const [formData, setFormData] = useState({
       title: "",
       description: "",
        status: 'NEW',
-       watchers: '',
-      
-      
+       watchers: [],
+       assignee: null,
     });
-   // if (Array.isArray(formData.watchers)) { formData.watchers = formData.watchers.join(', '); }
-    console.log('Form Data:', formData);
-console.log('Watchers:', formData.watchers.split(',').map(watcher => watcher.trim()));
+    console.log("formData",formData)
+ 
 
-    const handleInputChange = (e) => {
-      const { name, value } = e.target;
-      setFormData((prevData) => ({
-        ...prevData,
-        [name]: value,
-      }));
-    
-    };
+
+
+const customStyles = {
+  control: (base,state) => ({
+    ...base,
+    backgroundColor: 'white', // Black background
+    color: 'black', // White text
+    // border: '1px solid #fff',
+    boxShadow: 'none',
+    outline: 'none'
+  }),
+  menu: (base) => ({
+    ...base,
+    backgroundColor: 'white', // Black background
+    color: 'black', // White text
+  }),
+  option: (base, state) => ({
+    ...base,
+    backgroundColor: state.isSelected ? 'black' : 'white', // Darker black for selected option
+    color: 'black', // White text
+    '&:hover': {
+      backgroundColor: 'black', // Lighter black on hover
+      color:'white'
+    }
+  }),
+  multiValue: (base) => ({
+    ...base,
+    backgroundColor: 'white', // Dark background for selected values
+    color: 'black', // White text
+  }),
+  multiValueLabel: (base) => ({
+    ...base,
+    backgroundColor:'black',
+    color: 'white', // White text
+  }),
+  multiValueRemove: (base) => ({
+    ...base,
+    color: 'black', // White text
+    '&:hover': {
+      backgroundColor: 'black', // Lighter black on hover
+      color: 'white' // White text
+    }
+  })
+};
+
+const handleInputChange = (e) => {
+  const { name, value } = e.target;
+  setFormData((prevData) => ({
+    ...prevData,
+    [name]: value,
+  }));
+};
+
+const handleWatchersChange = (selectedOptions) => {
+  setFormData((prevData) => ({
+    ...prevData,
+    watchers: selectedOptions || [], // Ensure it's an array
+  }));
+};
+
+const handleAssigneeChange = (selectedOption) => {
+  setFormData((prevData) => ({
+    ...prevData,
+    assignee: selectedOption || null, // Ensure it's a single value
+  }));
+};
   //console.log("set",setFormData)
   const handleCreateCase = async (formData) => {
     const token = Cookies.get("accessToken");
@@ -38,14 +102,17 @@ console.log('Watchers:', formData.watchers.split(',').map(watcher => watcher.tri
         title: formData.title,
         description: formData.description,
         status: 'Progress',
-        watchers:formData.watchers.split(',').map(watcher => watcher.trim()).join(', '),
+        assignee: formData.assignee?.value || null,
+        watchers: formData.watchers.map(watcher => watcher.value)
+        
       }, {
         headers: {
           'Content-Type': 'application/json',
           'Authorization': `Bearer ${token}`
         }
-      });
-  
+      }
+    );
+    console.log("responseLb", response)
       if (response.status === 200) {
         toast.success("Case Created Successfully");
         togglePopup(); // पॉपअप बंद करें
@@ -58,6 +125,24 @@ console.log('Watchers:', formData.watchers.split(',').map(watcher => watcher.tri
       toast.error("Error during case creation: " + (err.response?.data?.message || err.message));
     }
   };
+  const userData = async () => {
+    const token = Cookies.get("accessToken");
+     try { 
+      const response = await axios.get('http://5.180.148.40:8007/api/user/get-all'
+        , {
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}`
+          }
+        });
+       const user = response.data;
+        setAssignee(user); // Update the state with usered data
+         } catch (error) { 
+          console.error('There was an error usering the data!', error); 
+        } };
+ useEffect(() => {
+   userData(); // Call the userData function
+ }, []);
    
     return (
         <div className="popup-overlay">
@@ -66,7 +151,7 @@ console.log('Watchers:', formData.watchers.split(',').map(watcher => watcher.tri
           &times;
         </button>
         <div className="popup-content">
-          <h2>Create Case</h2>
+          <h5>Create Case</h5>
           <form
             onSubmit={(e) => {
               e.preventDefault();
@@ -80,7 +165,9 @@ console.log('Watchers:', formData.watchers.split(',').map(watcher => watcher.tri
               id="title"
               name="title"
               value={formData.title}
-              onChange={handleInputChange}
+              onChange={(e) =>
+                setFormData((prev) => ({ ...prev, title: e.target.value }))
+              }
               placeholder="Enter title"
               required
             />
@@ -93,31 +180,31 @@ console.log('Watchers:', formData.watchers.split(',').map(watcher => watcher.tri
               onChange={handleInputChange}
               placeholder="Enter description"
             ></textarea>
-            <label htmlFor="assignee">Assignee:</label>
-            <select
-              id="assignee"
-              name="assignee"
-              className="com"
-             // value={formData.assignee}
-              //onChange={handleInputChange}
-            >
-              <option value="">Select Assignee</option>
-              <option value="user1">User 1</option>
-              <option value="user2">User 2</option>
-              <option value="user3">User 3</option>
-            </select>
-            <label htmlFor="watcher">Watcher:</label>
-            <input
-              type="text"
-              id="watcher"
-              name="watchers"
-              value={formData.watchers}
-              onChange={handleInputChange}
-              placeholder="Search watcher"
-                autoComplete="off"
-               className="com"
-            
-            />
+           
+    <div>
+      <label htmlFor="assignee">Assignee:</label>
+      <Select
+        options={options}
+        isMulti
+        styles={customStyles}
+        className="com"
+        placeholder="Select Assignee"
+        value={formData.assignee}
+        onChange={handleAssigneeChange}
+        
+      />
+    </div>
+        <label htmlFor="watcher">Watcher:</label>
+        <Select
+        options={options}
+        isMulti
+        styles={customStyles}
+        className="com"
+        name="watchers"
+        placeholder="Select Watchers"
+        value={formData.watchers}
+        onChange={handleWatchersChange}xz
+        />
             <div className="button-container">
               <button type="submit" className="create-btn">
                 Create

@@ -22,7 +22,7 @@ function App() {
       <Routes>
         <Route path="/" element={<LoginPage />} />    
         <Route path="/search" element={<SearchBar/>} /> 
-        <Route path="/dashboard" element={<Home />} />
+        <Route path="/home" element={<Home />} />
         <Route path="/header" element={<Header/>}/>  
         <Route path="/card" element={<CardList/>}/>  
         <Route path="/table" element={<DataTable/>}/>  

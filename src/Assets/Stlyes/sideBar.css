@@ -1,4 +1,4 @@
 .nav {
      --bs-nav-link-padding-x: 0rem !important;
-     -bs-nav-link-padding-y: 0.5rem !important;
+     --bs-nav-link-padding-y: 0.0rem !important;
 }

@@ -26,15 +26,15 @@ const  Header = () => {
             height="30"
             className="d-inline-block align-top"
           />{' '} */}
-          MyApp
+        Data Search
         </Navbar.Brand>
 
         {/* Right Side: Notification and Profile Icons */}
         <Nav className="ms-auto">
           {/* Notification Icon */}
-          <Nav.Link href="#notifications">
+          {/* <Nav.Link href="#notifications">
             <Bell size={20} color="white" />
-          </Nav.Link>
+          </Nav.Link> */}
 
           {/* Profile Dropdown */}
           <NavDropdown
@@ -43,7 +43,7 @@ const  Header = () => {
             align="end"
             menuVariant="dark"
           >
-            <NavDropdown.Item href="#profile">Username</NavDropdown.Item>
+            <NavDropdown.Item href="#profile">Profile</NavDropdown.Item>
             <NavDropdown.Divider />
             <NavDropdown.Item onClick={handleLogout} >Logout</NavDropdown.Item>
           </NavDropdown>

@@ -38,7 +38,7 @@ const SearchBar = () => {
     }
   };
   const handleCreateCase = () => {
-    navigate('/dashboard'
+    navigate('/home'
       //, { state: { showPopup: true } }
       );
   };
