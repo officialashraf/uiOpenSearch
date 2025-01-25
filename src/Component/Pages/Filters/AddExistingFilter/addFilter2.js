@@ -1,13 +1,17 @@
 import React, { useState} from 'react'
 //import AddNewFilter from "./components/addNewFilter";
 import ExistingFilters from "./existingFilter";
+
 import AddNewFilter from './addNewFilter';
 import "./main.css"
 import { Plus, X} from 'react-bootstrap-icons'
+import { useSelector } from 'react-redux';
+//import MainContainer from '../Add_Filter/mainContainer';
+
 
 const AddFilter2 = () => {
   const [showAddFilter, setShowAddFilter] = useState(false);
-
+  const caseData1 = useSelector((state) => state.caseData.caseData);
 
   // Toggle visibility of Add New Filter form
   const toggleAddFilter = () => {
@@ -19,21 +23,22 @@ const AddFilter2 = () => {
   
      <div className="container-fluid p-4 main-body-div" >
           <button  className="btn btn-sm mb-3 add-new-filter-button" onClick={toggleAddFilter}>
-          <Plus />  Add New Filter
+          <Plus />  Add New Filter 
           </button>
       <div className="row main-body-div-1st-row">
         
-        <ExistingFilters/>
+        <ExistingFilters />
 
           {showAddFilter && (
         <div className="col-md-8" style={{marginTop:"-15px"}}>
          
             <button onClick={()=>(setShowAddFilter(false))} className="btn close-add-filter-button" >< X /> </button>       
             
-            <AddNewFilter/>
+            <AddNewFilter />
             
         </div>
           )}
+         
       </div>
       <button className="btn  btn-secondary" onClick={() => window.history.back()} >Back</button>
       <button className="btn btn-sm btn-secondary mb-3 proceed-button" >Proceed</button>

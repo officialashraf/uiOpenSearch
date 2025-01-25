@@ -1,25 +1,37 @@
-import React, { useState, useEffect } from 'react';
-import { Table, InputGroup, FormControl, Dropdown, Button, DropdownButton, Badge } from 'react-bootstrap';
+import React, { useState, useEffect, useCallback } from 'react';
+import { Table, InputGroup, FormControl, Dropdown, DropdownButton, Badge } from 'react-bootstrap';
 import { Search, List, CardList, Plus, ThreeDotsVertical } from 'react-bootstrap-icons';
 import axios from 'axios';
 import '../../../Assets/Stlyes/table.css';
 import CreateCase from '../Case/createCase';
 import Cookies from "js-cookie";
+import {useNavigate} from 'react-router-dom';
 import { toast } from 'react-toastify';
 import CaseDetails from './caseDetails';
 import EditCase from './editCase';
+import { useDispatch } from 'react-redux';
+import {setCaseData } from '../../../Redux/Action/caseAction';
 
-const DataTable = ({onFieldClick}) => {
-
+const DataTable = () => {
+ const dispatch = useDispatch();
+ const navigate =  useNavigate();
   const [data, setData] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
   const [filteredData, setFilteredData] = useState([]);
   const [showPopup, setShowPopup] = useState(false);
   const [showPopupA, setShowPopupA] = useState(false);
   const [showPopupB, setShowPopupB] = useState(false);
-  const [selectedData, setSelectedData] = useState(null)
+  const [selectedData, setSelectedData] = useState(null);
 
-  useEffect(() => {
+
+
+  const onFieldClick = (item) => {
+      dispatch(setCaseData(item)); // Set the case data in Redux store
+     navigate('/filter'); // Navigate to the new page
+  };
+console.log("onfield", onFieldClick)
+console.log("dfdf", setCaseData())
+useEffect(() => {
     const fetchData = async () => {
       try {
         const authToken = Cookies.get('accessToken');
@@ -42,8 +54,7 @@ const DataTable = ({onFieldClick}) => {
     const interval = setInterval(() =>
        { fetchData(); }, 10000);
     return () => clearInterval(interval);
-  },
-    []);
+  },[]);
 
   
     const confirmDelete = (id) => { 
@@ -170,7 +181,7 @@ const DataTable = ({onFieldClick}) => {
           <tbody>
             {filteredData && filteredData.map((item) => (
               <tr key={item.id} >
-                <td onClick={onFieldClick} style={{cursor :'pointer'}} >{item.id.slice(0, 8)}</td>
+                <td onClick={()=>onFieldClick(item)}  style={{cursor :'pointer'}} >{item.id.slice(0, 8)}</td>
                 <td>{item.title}</td>
                 <td>{item.created_on.slice(0, 10)}</td>
                 <td>{item.created_by.slice(0, 8)}</td>
@@ -205,8 +216,15 @@ const DataTable = ({onFieldClick}) => {
       {showPopup && <CreateCase togglePopup={togglePopup} />}
       {showPopupB && <EditCase togglePopup={togglePopupB} />}
       {showPopupA && <CaseDetails item={selectedData} togglePopupA={togglePopupA} />}
+    
     </>
   );
 };
 
 export default DataTable;
+//"69256ec1d45c5b23973b8d44884d5914
+// "6b0a297b235c5b719d5b33d605dc3948",
+// "2850b434e3aa55ac9bad26a61381deed",
+// "0e984e466fd35713a1d876c27ce2d84d",
+// "6aa97938a23d526a93a19616a5904d62",
+// "3d1ddc358d6f573d80285db381c27d04"

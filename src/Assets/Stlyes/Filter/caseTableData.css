@@ -1,0 +1,26 @@
+.fixed-th {
+    width: 20px !important; /* Fix width for <th> */
+    text-align: center; /* Center align the text */
+ height: auto !important;
+   padding: 0px !important;
+    white-space: normal; /* Allow wrapping of text */
+  }
+  
+  .fixed-td {
+    width: 20px !important; /* Fix width for <td> */
+    text-align: center; /* Center align the text */
+    white-space: normal; /* Allow wrapping of text */
+    word-wrap: break-word; /* Break long words */
+    padding: 0px !important;
+    height: auto !important
+  }
+  
+  .table-container {
+    overflow-x: auto; /* Enable horizontal scroll if content exceeds table width */
+  }
+  .pagination{
+    --bs-pagination-active-bg: black !important;
+    --bs-pagination-bg:gray !important;
+    --bs-pagination-hover-color: white !important;
+    --bs-pagination-hover-bg: black !important;
+  }

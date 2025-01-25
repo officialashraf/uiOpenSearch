@@ -7,91 +7,43 @@ import Select from 'react-select';
 
 
 const CreateCase = ({ togglePopup }) => {
-  const [assignee, setAssignee] = useState([]);
-  console.log("setAssignee",assignee)
-  const options = assignee.data && assignee.data.map(user => ({
+  const [formData, setFormData] = useState({
+    title: "",
+    description: "",
+     status: '',
+     watchers: '',
+     assignee: '',
+  });
+
+  const [users, setUsers] = useState([]);
+  const options = users.data && users.data.map(user => ({
     value: user.id,
     label: user.username
   }));
-  
-    const [formData, setFormData] = useState({
-      title: "",
-      description: "",
-       status: 'NEW',
-       watchers: [],
-       assignee: null,
-    });
-    console.log("formData",formData)
- 
+
+  console.log("options", options)
+
+const userData = async () => {
+  const token = Cookies.get("accessToken");
+   try { 
+    const response = await axios.get('http://5.180.148.40:8007/api/user/get-all'
+      , {
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`
+        }
+      });
+     const user = response.data;
+      setUsers(user); // Update the state with usered data
+       } catch (error) { 
+        console.error('There was an error usering the data!', error); 
+      } };
+    useEffect(() => {
+    userData(); // Call the userData function
+    }, []);
 
 
-
-const customStyles = {
-  control: (base,state) => ({
-    ...base,
-    backgroundColor: 'white', // Black background
-    color: 'black', // White text
-    // border: '1px solid #fff',
-    boxShadow: 'none',
-    outline: 'none'
-  }),
-  menu: (base) => ({
-    ...base,
-    backgroundColor: 'white', // Black background
-    color: 'black', // White text
-  }),
-  option: (base, state) => ({
-    ...base,
-    backgroundColor: state.isSelected ? 'black' : 'white', // Darker black for selected option
-    color: 'black', // White text
-    '&:hover': {
-      backgroundColor: 'black', // Lighter black on hover
-      color:'white'
-    }
-  }),
-  multiValue: (base) => ({
-    ...base,
-    backgroundColor: 'white', // Dark background for selected values
-    color: 'black', // White text
-  }),
-  multiValueLabel: (base) => ({
-    ...base,
-    backgroundColor:'black',
-    color: 'white', // White text
-  }),
-  multiValueRemove: (base) => ({
-    ...base,
-    color: 'black', // White text
-    '&:hover': {
-      backgroundColor: 'black', // Lighter black on hover
-      color: 'white' // White text
-    }
-  })
-};
-
-const handleInputChange = (e) => {
-  const { name, value } = e.target;
-  setFormData((prevData) => ({
-    ...prevData,
-    [name]: value,
-  }));
-};
-
-const handleWatchersChange = (selectedOptions) => {
-  setFormData((prevData) => ({
-    ...prevData,
-    watchers: selectedOptions || [], // Ensure it's an array
-  }));
-};
-
-const handleAssigneeChange = (selectedOption) => {
-  setFormData((prevData) => ({
-    ...prevData,
-    assignee: selectedOption || null, // Ensure it's a single value
-  }));
-};
-  //console.log("set",setFormData)
-  const handleCreateCase = async (formData) => {
+const handleCreateCase = async (formData) => {
     const token = Cookies.get("accessToken");
     if (!token) {
       toast.error("Authentication error: No token found");
@@ -102,9 +54,8 @@ const handleAssigneeChange = (selectedOption) => {
         title: formData.title,
         description: formData.description,
         status: 'Progress',
-        assignee: formData.assignee?.value || null,
-        watchers: formData.watchers.map(watcher => watcher.value)
-        
+        assignee: formData.assignee,
+        watchers:formData.watchers,  
       }, {
         headers: {
           'Content-Type': 'application/json',
@@ -112,7 +63,6 @@ const handleAssigneeChange = (selectedOption) => {
         }
       }
     );
-    console.log("responseLb", response)
       if (response.status === 200) {
         toast.success("Case Created Successfully");
         togglePopup(); // पॉपअप बंद करें
@@ -125,24 +75,73 @@ const handleAssigneeChange = (selectedOption) => {
       toast.error("Error during case creation: " + (err.response?.data?.message || err.message));
     }
   };
-  const userData = async () => {
-    const token = Cookies.get("accessToken");
-     try { 
-      const response = await axios.get('http://5.180.148.40:8007/api/user/get-all'
-        , {
-          headers: {
-            'Content-Type': 'application/json',
-            'Authorization': `Bearer ${token}`
-          }
-        });
-       const user = response.data;
-        setAssignee(user); // Update the state with usered data
-         } catch (error) { 
-          console.error('There was an error usering the data!', error); 
-        } };
- useEffect(() => {
-   userData(); // Call the userData function
- }, []);
+
+
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setFormData((prevData) => ({
+      ...prevData,
+      [name]: value,
+    }));
+  };
+  
+  const handleWatchersChange = (selectedOptions) => {
+    const selectedLabels = selectedOptions.map((option) => option.label).join(", ");
+    setFormData((formData) => ({
+      ...formData,
+      watchers: selectedLabels , // Ensure it's an array
+    }));
+  };
+  
+  const handleAssigneeChange = (selectedOption) => {
+    setFormData((prevData) => ({
+      ...prevData,
+      assignee: selectedOption ? selectedOption.value : ''
+    }));
+  };
+
+  const customStyles = {
+    control: (base,state) => ({
+      ...base,
+      backgroundColor: 'white', // Black background
+      color: 'black', // White text
+      // border: '1px solid #fff',
+      boxShadow: 'none',
+      outline: 'none'
+    }),
+    menu: (base) => ({
+      ...base,
+      backgroundColor: 'white', // Black background
+      color: 'black', // White text
+    }),
+    option: (base, state) => ({
+      ...base,
+      backgroundColor: state.isSelected ? 'black' : 'white', // Darker black for selected option
+      color: 'black', // White text
+      '&:hover': {
+        backgroundColor: 'black', // Lighter black on hover
+        color:'white'
+      }
+    }),
+    multiValue: (base) => ({
+      ...base,
+      backgroundColor: 'white', // Dark background for selected values
+      color: 'black', // White text
+    }),
+    multiValueLabel: (base) => ({
+      ...base,
+      backgroundColor:'black',
+      color: 'white', // White text
+    }),
+    multiValueRemove: (base) => ({
+      ...base,
+      color: 'black', // White text
+      '&:hover': {
+        backgroundColor: 'black', // Lighter black on hover
+        color: 'white' // White text
+      }
+    })
+  };
    
     return (
         <div className="popup-overlay">
@@ -183,16 +182,16 @@ const handleAssigneeChange = (selectedOption) => {
            
     <div>
       <label htmlFor="assignee">Assignee:</label>
-      <Select
-        options={options}
-        isMulti
-        styles={customStyles}
-        className="com"
-        placeholder="Select Assignee"
-        value={formData.assignee}
-        onChange={handleAssigneeChange}
+     
         
-      />
+      <Select
+            options={options}
+            styles={customStyles}
+            className="com"
+            placeholder="Select Assignee"
+            value={options && options.find((option) => option.value === formData.assignee) || null}
+            onChange={handleAssigneeChange}
+          />
     </div>
         <label htmlFor="watcher">Watcher:</label>
         <Select
@@ -202,8 +201,9 @@ const handleAssigneeChange = (selectedOption) => {
         className="com"
         name="watchers"
         placeholder="Select Watchers"
-        value={formData.watchers}
-        onChange={handleWatchersChange}xz
+        value={options && options.filter((option) => formData.watchers.split(", ").includes(option.label)
+           )}
+        onChange={handleWatchersChange}
         />
             <div className="button-container">
               <button type="submit" className="create-btn">

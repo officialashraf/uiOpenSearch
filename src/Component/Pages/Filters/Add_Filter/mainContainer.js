@@ -15,8 +15,12 @@ import  '../../../../Assets/Stlyes/mainContainer.css';
 const MainContainer = () => {
   const navigate = useNavigate();
   const selectedTab = useSelector((state) => state.selectedTab.selectedTab);
+  const caseData1 = useSelector((state) => state.caseData.caseData);
+  console.log("caseData1",caseData1);
+  const caseData2 = useSelector((state) => state.caseData.caseData);
+  console.log("casedata2", caseData2)
   const addResource = ()=>{
-    navigate('/existing-filter')
+    navigate('/add-filter' )
   }
 console.log("stlected", selectedTab)
   const renderContent = () => {
@@ -48,8 +52,9 @@ console.log("stlected", selectedTab)
         return (
           <div className="containerM" >
             <h3 className="title">Let's Get Started!</h3>
+          
             <p className="content">Add resources to get started</p>
-            <Button variant="primary" className="create-case-button" onClick={addResource} >
+            <Button variant="primary" className="create-case-button" onClick={addResource } >
               <FaPlus /> Add Resources
             </Button>
           </div>

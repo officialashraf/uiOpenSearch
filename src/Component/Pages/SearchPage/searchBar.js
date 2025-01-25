@@ -129,9 +129,7 @@ const SearchBar = () => {
                     ))}
                   </tbody>
                 </table>
-                <div className="button-container">
-                  <button className="create-case-button" onClick={handleCreateCase}>Create Case</button>
-                </div>
+              
               </>
             ) : (
               <p>No results found</p>
@@ -139,6 +137,9 @@ const SearchBar = () => {
 
           </div>
         </div>
+        <div className="button-container">
+                  <button className="create-case-button" onClick={handleCreateCase}>Create Case</button>
+                </div>
       </div>
 
     </>

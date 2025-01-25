@@ -3,14 +3,18 @@ import React from 'react';
 import Header from './headerFilter';
 import Preheader from './preheaderFilter';
 import MainContainer from './mainContainer';
+import { useSelector } from 'react-redux';
 
-const MainFilter = ({ onAnalyzeClick }) => {
+const MainFilter = () => {
+  //const caseData1 = useSelector((state) => state.case.caseData.caseData);
   return (
     <>
-      <Header onAnalyzeClick={onAnalyzeClick} />
+
+      <Header  />
       <Preheader />
       
         <MainContainer />
+        
      
     </>
   );

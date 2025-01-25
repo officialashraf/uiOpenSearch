@@ -1,12 +1,13 @@
 import React from 'react'
-
+import {useSelector} from 'react-redux'
 const CaseHeader = () => {
+  const caseData1 = useSelector((state) => state.caseData.caseData);
   return (
     <>
     <div className='row header-row' style={{background: 'darkgray', color:'white',display: 'flex', marginLeft: '0rem', marginRight: '0rem'}} >
         <div className='col ' >
-            <h7 className="header-caseid-h7" >Case id: {"456884"}</h7>
-            <h5 className='header-casename-h5' >Rameshwaram Cafe Blast</h5>
+            <h7 className="header-caseid-h7" >Case id: {caseData1.id}</h7>
+            <h5 className='header-casename-h5' >{caseData1.title}</h5>
         </div>
         <div className='col d-flex justify-content-center mt-2 mb-2' >
     
@@ -28,7 +29,7 @@ const CaseHeader = () => {
         </div>
     </div>
     {                             /*end header*/                                     }
-    <div className="row mt-3 ms-2" style={{background:'gray'}} >
+    <div className="row mt-3 ms-2" >
       <div className="col-md-auto">                
                 <input
                 type="text"
@@ -45,7 +46,7 @@ const CaseHeader = () => {
       </select>
       </div>
       
-      <div className="col"> 
+      {/* <div className="col"> 
       <button className="float-end header-three-dots" ><i className='fas fa-ellipsis-v'></i></button>
       <ul className="pagination float-end">
           <li className="page-item header-li">
@@ -55,7 +56,7 @@ const CaseHeader = () => {
             <button className="page-link header-li-button"><i className="fas fa-table" ></i></button>
           </li>
       </ul>
-      </div>
+      </div> */}
     </div>
     </>
   )

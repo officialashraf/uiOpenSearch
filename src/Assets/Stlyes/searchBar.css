@@ -1,6 +1,6 @@
 .search-bar-container {
   background-color: white;
-  padding: 20px;
+  
   /* Add padding for better spacing */
   color: black;
   display: flex;
@@ -71,9 +71,7 @@
 
 .search-results {
   width: 100%;
-  max-width: 800px;
-  margin: 20px 0;
-  padding: 10px;
+ height: 400px;
   box-sizing: border-box;
   overflow-x: auto;
   /* Enable horizontal scrolling */
@@ -92,6 +90,7 @@
   border: 1px solid #dfe1e5;
   /* padding: 8px; */
   text-align: left;
+  font-size: 10px;
 }
 
 .results-table th {
@@ -109,7 +108,7 @@
   justify-content: center;
   align-items: center;
   border-radius: .375rem;
-  margin: 20px 0;
+  margin: 10px 0;
 }
 
 .create-case-button:hover {

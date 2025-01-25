@@ -1,9 +1,11 @@
-import { SET_SELECTED_TAB } from '../Constants/caseCaontant';
+import { SET_SELECTED_TAB,
+    SET_CASE_DATA,
+    } from '../Constants/caseCaontant';
 
 
-const initialState = { selectedTab: 'default', };
+const initialState = { selectedTab: 'default',  };
 
-const tabReducer = (state = initialState, action) => {
+export const tabReducer = (state = initialState, action) => {
 
     switch (action.type) {
 
@@ -15,4 +17,15 @@ const tabReducer = (state = initialState, action) => {
         default: return state;
     }
 };
-export default tabReducer;
+ 
+export const caseReducer = (state ={ caseData: {}},  action) => {
+    switch (action.type) {
+        case SET_CASE_DATA:
+            return {
+                ...state,
+                caseData: action.payload,
+            };
+        default:
+            return state;
+    }
+};
