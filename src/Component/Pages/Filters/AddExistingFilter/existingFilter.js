@@ -8,6 +8,7 @@ const ExistingFilter = () => {
   
   const caseData1 = useSelector((state) => state.caseData.caseData);
   const [filterdata, setfilterdata] = useState([])
+  
     const [filters, setFilters] = useState([
         { id: 1, name: "Ukraine War", created: "ashraf", modified: "ashraf", owner:"anon", description:"Lorem ipsum dolor sit amet consectetur adipisicing elit." },
         { id: 2, name: "Russia Attack", created: "11/04/2024", modified: "20/04/2024", owner:"anon", description:"Lorem ipsum dolor sit amet consectetur adipisicing elit." },
@@ -48,37 +49,54 @@ const ExistingFilter = () => {
              try { 
               const response = await axios.get(`http://5.180.148.40:9002/api/osint/filter/${caseData1.id}`);
                const user = response.data;
+              //  setRefresh(true);
                 setfilterdata(user); // Update the state with usered data
                  } catch (error) { 
                   console.error('There was an error usering the data!', error); 
-                } };
-              useEffect(() => {
-              filterData(); // Call the userData function
-              },[]);
-             console.log("filterdData", filterdata)
+                } 
+              };
+             
+          
+            useEffect(() => {
+              filterData()
+              const handleDatabaseUpdate = () => {
+                  filterData()
+              };
+      
+              window.addEventListener("databaseUpdated", handleDatabaseUpdate);
+      
+              return () => {
+                  window.removeEventListener("databaseUpdated", handleDatabaseUpdate);
+              };
+          }, []);
       
   return (
    <>
-   <div className="col-md-4 ">
-          <div className="d-flex justify-content-between align-items-center mb-3">
-            <h5>Existing Filters </h5>
-            <div>
-              {
-                searchBarVisibility &&
-                <input
-           
-                className="search_input"
-                placeholder="Search..."
-                onChange={handleSearch}
-                />
-              }
-              <span> < Search onClick={toggleSearchBar} /></span>
-              <button className="btn btn-sm me-2 sort-filters" onClick={sortFilters}>
-              <SortDown/>
-              </button>
-            </div>
-          </div>
-        
+       <div style={{ display: 'flex', alignItems: 'center', width: '150px' }}>
+  <p style={{ margin: '0' }}>Existing Filters</p>
+  {searchBarVisibility && (
+    <input
+      className="search_input"
+      placeholder="Search..."
+      onChange={handleSearch}
+      style={{ marginLeft: 'auto' }}
+    />
+  )}
+ {!searchBarVisibility && (
+    <span style={{ marginLeft: '40px', marginRight: '0' }}>
+      <Search onClick={toggleSearchBar} style={{ width: '10px' }} />
+    </span>
+  )}
+  <button
+    className="btn btn-sm me-2 sort-filters"
+    onClick={sortFilters}
+    style={{ marginLeft: '0', marginRight: '0', width: '10px'}}
+  >
+    <SortDown />
+  </button>
+</div>
+          
+          <div className='exist-filter'>
           <ul className="list-group existing-filters-ul" >
         {filterdata.data && filterdata.data.length > 0 ? (
          filterdata.data && filterdata.data.map((filter) => (
@@ -117,7 +135,8 @@ const ExistingFilter = () => {
       ))}
     </ul> */}
           </ul>
-        </div>
+          </div>
+        
    </>
   )
 }

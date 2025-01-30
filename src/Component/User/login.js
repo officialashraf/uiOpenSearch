@@ -47,7 +47,7 @@ const LoginPage = () => {
     
                 // Navigate to the next page after successful login
                 toast("You have logged in successfully!");
-                navigate('/home');
+                navigate('/cases');
                
             } else {
                 // Handle errors when the response is not 200

@@ -60,7 +60,6 @@ const Summary = () => {
         totalUnderProcessing={0}
         totalUnsupported={0}
         totalDiscard={0}
-        
       />
     
       <Component1 />
@@ -80,8 +79,7 @@ const Summary = () => {
             paddingAngle={5}
             dataKey="value"
             labelLine={true}
-            label={({ name, percent }) => `${name}: ${(percent * 100).toFixed(0)}%`}
-           
+            label={({ name, percent }) => `${name}: ${(percent * 100).toFixed(0)}%`}        
           >
             {pieData.map((entry, index) => (
               <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />

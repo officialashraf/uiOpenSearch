@@ -13,15 +13,13 @@
   
   .navItemM {
     position: relative;
-
     padding: 1px 15px;
   }
   
-  /* .nav-link {
-    margin-left: 20px;
-  } */
+
   a:-webkit-any-link {
     text-decoration: none !important;
+    font-size: 12px;
   }
   
   .nav-link{
@@ -65,5 +63,7 @@
     
   }
   ol, ul {
-    padding-left: 1rem;
-    margin-bottom: .2rem;}
+    padding-left: 0.7rem;
+    margin-bottom: 0.1rem;}
+    .badge {
+      --bs-badge-padding-y: 0.15rem !important;}

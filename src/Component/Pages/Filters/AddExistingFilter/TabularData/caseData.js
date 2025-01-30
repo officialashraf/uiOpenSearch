@@ -86,30 +86,30 @@ const CaseData = () => {
             <div className="case-t" style={{ overflow: "auto", height: "390px", fontSize: "10px" }} >
 
                 {data.length > 0 ? (
-                    <Table striped bordered hover >
-                        <thead>
-                            <tr>
-                                {headers.map((header) => (
-                                    <th key={header}
-                                        className='fixed-th'
-
-                                    >{header}</th>
-                                ))}
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {currentItems.map((item, index) => (
-                                <tr key={index}>
-                                    {headers.map((header) => (
-                                        <td key={header}
-                                            className='fixed-td'
-
-                                        >{item.data[header]}</td>
-                                    ))}
-                                </tr>
-                            ))}
-                        </tbody>
-                    </Table>
+                     <Table striped bordered hover>
+                       <thead>
+                         <tr>
+                           {headers.map((header) => (
+                             <th key={header} className="fixed-th">
+                               {header}
+                             </th>
+                           ))}
+                         </tr>
+                       </thead>
+                       <tbody>
+                         {currentItems.map((item, index) => (
+                           <tr key={index}>
+                             {headers.map((header) => (
+                              <td key={header} className="fixed-td">
+                              <div className="cell-content" title={item.data[header]}>
+                                {item.data[header]}
+                              </div>
+                            </td>
+                             ))}
+                           </tr>
+                         ))}
+                       </tbody>
+                     </Table>
 
                 ) : (
                     <p>No data available.</p>

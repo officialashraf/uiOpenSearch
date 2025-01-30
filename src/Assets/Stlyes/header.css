@@ -1,10 +1,24 @@
-Container{
-    /* margin-right: auto !important;  */
-     margin-left: 5px !important; 
+.container{
+     margin-right: 60px;
+     /* margin-left: 60px;   */
 }
-
+.custom-nav {
+     margin-right: -63px; /* Adjust this value to increase the space */
+      /* padding-top: 0px; */
+ }
 
 .navbar {
      --bs-navbar-padding-y: 0.0rem !important ;
     }
+    
+    
+ .navbar-brand {
+     margin: -125px !important;
+ } 
+
+ .dropdown-toggle::after {
+     display: none !important;
+ }
+
+ 
 

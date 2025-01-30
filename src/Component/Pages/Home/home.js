@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-//import { Folder, FileEarmarkPlus, PieChart, Check2Circle, PauseCircle, Archive, Trash } from 'react-bootstrap-icons';
+
 import Header from './header.js'
 import Sidebar from './leftSideBar.js'
 import CardList from './cards.js'
@@ -21,15 +21,7 @@ const Home = () => {
     setSelectedCase(caseData1);
     setShowCaseTableDataFilter(true);
   };
-  const data = [
-    { name: 'All Files', number: 25 },
-    { name: 'New Files', number: 5},
-    { name: 'In Progress', number: 5, },
-    { name: 'Closed', number: 8 },
-    { name: 'On Hold', number: 3 },
-    { name: 'Archived', number: 12 },
-    { name: 'Deleted', number: 7 },
-  ];
+
 
   return (
     <div >
@@ -44,7 +36,7 @@ const Home = () => {
 
         {/* <div className="cont-b"> */}
         <div className="row-1"> 
-           <CardList data={data} /> </div>
+           <CardList  /> </div>
             <div className="row-2">
              <DataTable onFieldClick={handleTableFieldClick}  />
            {/* </div>  */}

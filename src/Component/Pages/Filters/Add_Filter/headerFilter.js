@@ -4,16 +4,19 @@ import { FaFileAlt,FaArrowLeft } from 'react-icons/fa';
 import { useDispatch, useSelector } from 'react-redux';
 //import { setSelectedTab } from '../../../../Redux/Action/caseAction';
 import '../../../../Assets/Stlyes/headerfilter.css';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import CaseData from '../AddExistingFilter/TabularData/caseData';
 
 const HeaderFilter = () => {
   //const dispatch = useDispatch();
   const caseData1 = useSelector((state) => state.caseData.caseData);
-  console.log("headeData", caseData1)
+  const {id} = useParams()
+  console.log("parms id", id)
+   console.log("headeData", caseData1)
   const navigate = useNavigate()
   const  handleClick =()=>{
-   navigate('/tableData')
+    const caseID = caseData1.id
+   navigate(`/cases/${caseID}/analysis`)
   }
 
   return (
@@ -26,15 +29,13 @@ const HeaderFilter = () => {
         <Col xs={11}>
           <Nav className="flex-column">
             <Nav.Item className="d-flex align-items-center">
-              <span>ID: {caseData1.id}</span>
+              <span>ID:{caseData1.id}</span>
               </Nav.Item> 
               <Nav.Item>
              <span className='caseName'>{caseData1.title} </span> <FaFileAlt className="ml-3" />  <Badge pill bg="dark">
-             <span><ul><li >Status</li></ul></span>
+             <span><ul><li >{caseData1.status}</li></ul></span>
                </Badge>
               </Nav.Item>
-             
-           
           </Nav>
         </Col>
       </Row>

@@ -7,10 +7,10 @@ const  Sidebar = ()=> {
   const navigate = useNavigate();
 
   const menuItems = [
-    { label: 'Home', icon: <House size={15} />, path: '/home' },
+    // { label: 'Home', icon: <House size={15} />, path: '/home' },
       { label: 'Search Data', icon: <Search size={15} />, path: '/search' },
-    { label: 'Tasks', icon: <ListTask size={15} />, path: '/tasks' },
-    { label: 'Cases', icon: <Folder size={15} />, path: '/dashboard' },
+    { label: 'PII', icon: <ListTask size={15} />, path: '/pii' },
+     { label: 'Cases', icon: <Folder size={15} />, path: '/dashboard' },
   
     // { label: 'Legals', icon: <FileEarmarkText size={15} />, path: '/legals' },
     { label: 'Reports', icon: <BarChart size={15} />, path: '/reports' },
@@ -22,17 +22,18 @@ const  Sidebar = ()=> {
   return (
    
       <>
-     
+     <div style={{marginTop:'1rem'}}>
           {menuItems.map((item, index) => (
             <Nav.Link
               key={index}
               onClick={() => navigate(item.path)}
-              style={{ color: '#fff', display: 'flex', flexDirection: 'column', alignItems: 'center', fontSize: '12px', textAlign: 'center', marginTop: '2rem' }}
+              style={{ color: '#fff', display: 'flex', flexDirection: 'column', alignItems: 'center', fontSize: '12px', textAlign: 'center', marginBottom: '2rem' }}
             >
               {item.icon}
               <span style={{ marginRight: '3px' }}>{item.label}</span>
             </Nav.Link>
           ))}
+        </div>
           </>
   );
 }

@@ -11,22 +11,24 @@ const  RightSidebar = ()=> {
     { label: 'Docs', icon: <FileEarmarkText size={15} />, path: '/documents' },
     { label: 'Pin', icon: <PinAngle size={15} />, path: '/pin' },
     { label: 'Comm', icon: <ChatLeftText size={15} />, path: '/ comments' },
-    { label: 'Notif', icon: <Bell size={15} />, path: '/notification' },
+    // { label: 'Notif', icon: <Bell size={15} />, path: '/notification' },
   ];
 
   return (
    
      <>
-          {menuItems.map((item, index) => (
+         <div style={{marginTop:'1rem'}}>
+         {menuItems.map((item, index) => (
             <Nav.Link
               key={index}
               onClick={() => navigate(item.path)}
-              style={{ color: '#fff', display: 'flex', flexDirection: 'column', alignItems: 'center', fontSize: '12px',  marginTop: '2rem' }}
+              style={{ color: '#fff', display: 'flex', flexDirection: 'column', alignItems: 'center', fontSize: '12px',  marginBottom: '2rem' }}
             >
               {item.icon}
               <span style={{ marginLeft: '1px' }}>{item.label}</span>
             </Nav.Link>
           ))}
+         </div>
           </>
 
   );

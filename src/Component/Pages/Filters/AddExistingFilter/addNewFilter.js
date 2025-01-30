@@ -2,16 +2,16 @@ import React from 'react';
 import axios from 'axios';
 import { useState } from 'react';
 import { Dropdown, Form, InputGroup, Button } from "react-bootstrap";
-import {  toast } from 'react-toastify';
+import { toast } from 'react-toastify';
 import { useDispatch } from 'react-redux';
 import { setTaskFilter } from '../../../../Redux/Action/filterAction';
 import { useSelector } from 'react-redux';
-
+import Cookies from "js-cookie";
 //import Summary from '../Add_Filter/summary';
 
 const AddNewFilter = () => {
-  
- 
+
+
   const [sourceExpand, setSourceExpand] = useState(false);
   const [selectedPlatform, setSelectedPlatform] = useState('');
   const [newKey, setNewKey] = useState('');
@@ -19,7 +19,7 @@ const AddNewFilter = () => {
   const [keyValuePairs, setKeyValuePairs] = useState([]);
   const [searchTerm, setSearchTerm] = useState('');
   const [filterName, setFilterName] = useState('');
-  const [taskId, setTaskId] = useState([]); 
+  const [taskId, setTaskId] = useState([]);
   const [filterId, setfilterId] = useState('')
   const dispatch = useDispatch();
 
@@ -32,7 +32,14 @@ const AddNewFilter = () => {
     setNewKey('');
     setNewValue('');
   };
+  console.log("keyvaluepair", keyValuePairs)
 
+  const handleSourceChange = (event) => {
+    const value = event.target.value;
+    if (value) {
+      setSourceExpand(true);
+    }
+  };
   const handleSearch = (e) => {
     setSearchTerm(e.target.value.toLowerCase());
   };
@@ -62,25 +69,28 @@ const AddNewFilter = () => {
     setTaskId((prevTaskId) => [...prevTaskId, newTask]);// Add new task to state
   };
 
- 
-  
-  
+
+
+
 
   const handleSubmit = async () => {
+    const token = Cookies.get("accessToken");
     const postData = {
       name: filterName,
       case_id: caseData1.id,
       data: {
         [selectedPlatform]: keyValuePairs.reduce((acc, pair, index) => {
           const checkbox = document.getElementById(`checkbox-${index}`);
+          console.log(`Checkbox-${index} exists:`, checkbox !== null);
           if (checkbox && checkbox.checked) {
+            console.log(`Checkbox-${index} is checked:`, checkbox.checked);
             acc[pair.key] = pair.value;
           }
           return acc;
         }, {})
       }
     };
-  console.log("postdata", postData)
+    console.log("postdata", postData)
     try {
       const response = await axios.post('http://5.180.148.40:9002/api/osint/create', postData, {
         headers: {
@@ -93,33 +103,55 @@ const AddNewFilter = () => {
       setSelectedPlatform('');
       setSourceExpand(false);
       if (response.status === 200) {
-              toast.success(`Filter Created Successfully ${response.data.data.name}`);
-              setfilterId(response.data.data.id);
-              try {
-                const startResponse = await axios.post(`http://5.180.148.40:9002/api/start-task/${response.data.data.id}`, {
-                  headers: { 'Content-Type': 'application/json' }
-                });
-                
-                console.log('Start Task Response:', startResponse);
-                console.log('Start Task ID:', startResponse.data.tasks);
-                   addTask(startResponse.data.tasks)
-                if (startResponse.status === 200) {
-                  toast.success('Task started successfully');
-                } else {
-                  toast.error('Unexpected response from server during task start.');
-                }
-              } catch (startError) {
-                console.error('Error starting task:', startError);
-                toast.error('Error during task start: ' + (startError.response?.data?.message || startError.message));
-              }
-
-            } else {
-              toast.error("Unexpected response from server.");
+        toast.success(`Filter Created Successfully ${response.data.data.name}`);
+        setfilterId(response.data.data.id);
+        console.log("filterId", response.data.data.id)
+        try {
+          const startResponse = await axios.post(`http://5.180.148.40:9002/api/start-task/${response.data.data.id}`, {
+            headers: {
+              'Content-Type': 'application/json'
             }
+          });
+          window.dispatchEvent(new Event("databaseUpdated"));
+          console.log('Start Task Response:', startResponse);
+          console.log('Start Task ID:', startResponse.data.tasks);
+          addTask(startResponse.data.tasks)
+          if (startResponse.status === 200) {
+            toast.success('Task started successfully');
+
+            try {
+              const updateStatusResponse = await axios.put(`http://5.180.148.40:8008/api/case-service/cases/${caseData1.id}`, { status: "Progress" }, {
+                headers: {
+                  'Content-Type': 'application/json',
+                  'Authorization': `Bearer ${token}`
+                }
+              });
+              console.log('Update Status Response:', updateStatusResponse);
+              if (updateStatusResponse.status === 200) {
+                toast.success('Case status updated successfully');
+              } else {
+                toast.error('Unexpected response from server during status update.');
+              }
+            } catch (updateError) {
+              console.error('Error updating status:', updateError);
+              toast.error('Error during status update: ' + (updateError.response?.data?.message || updateError.message));
+            }
+
+          } else {
+            toast.error('Unexpected response from server during task start.');
+          }
+        } catch (startError) {
+          console.error('Error starting task:', startError);
+          toast.error('Error during task start: ' + (startError.response?.data?.message || startError.message));
+        }
+
+      } else {
+        toast.error("Unexpected response from server.");
+      }
     } catch (error) {
       console.error('Error posting data:', error);
-    toast.error("Error during case creation: " + (error.response?.data?.message || error.message));
-    }  
+      toast.error("Error during case creation: " + (error.response?.data?.message || error.message));
+    }
   };
 
 
@@ -131,11 +163,11 @@ const AddNewFilter = () => {
             Filter Name {caseData1.title}
           </label>
           <input type="text"
-           className="form-control filter-name-input" 
-          id="filterName"
-          value={filterName}
-          onChange={(e) => setFilterName(e.target.value)}
-           />
+            className="form-control filter-name-input"
+            id="filterName"
+            value={filterName}
+            onChange={(e) => setFilterName(e.target.value)}
+          />
         </div>
         <div className="mb-3">
           <label htmlFor="description" className="form-label">
@@ -155,24 +187,38 @@ const AddNewFilter = () => {
               <label htmlFor="source" className="form-label source-label">
                 Source
               </label>
-              <select onChange={() => (setSourceExpand(!sourceExpand))} className="form-select source-select" id="source" >
-                <option value="">Select</option>
-                <option value="source1">Social Media</option>
-                <option value="source2">Rss</option>
-              </select>
+              <select
+        placeholder="Select"
+        onChange={handleSourceChange}
+        className="form-select source-select"
+        id="source"
+      >
+        <option value="" disabled selected>
+          Select Source
+        </option>
+        <option value="source1">Social Media </option>
+        <option value="source1">Social Media Profile</option>
+        <option value="source2">Rss</option>
+      </select>
             </div>
             {sourceExpand && (
-              <div className="col-md-6">
-                <label htmlFor="platform" className="form-label source-label">
-                  Platform
-                </label>
-                <select className="form-select source-select" id="platform" onChange={handlePlatformChange}>
-                  <option value="">Select</option>
-                  <option value="twitter">Twitter</option>
-                  <option value="instagram">Instagram</option>
-                </select>
-              </div>
-            )}
+        <div className="col-md-6">
+          <label htmlFor="platform" className="form-label source-label">
+            Platform
+          </label>
+          <select
+            className="form-select source-select"
+            id="platform"
+            onChange={handlePlatformChange}
+          >
+            <option value="" disabled selected>
+              Select Platform
+            </option>
+            <option value="twitter">Twitter</option>
+            <option value="instagram">Instagram</option>
+          </select>
+        </div>
+      )}
           </div>
           {selectedPlatform && (
             <div className="row">
@@ -211,7 +257,7 @@ const AddNewFilter = () => {
             </div>
           )}
         </div>
-        <button type="button" className="btn btn-secondary add-new-filter-button"  onClick={handleSubmit}>
+        <button type="button" className="btn btn-secondary add-new-filter-button" onClick={handleSubmit}>
           Save and Add
         </button>
       </form>

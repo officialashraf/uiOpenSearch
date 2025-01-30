@@ -13,7 +13,7 @@ const CaseHeader = () => {
     
           
           
-              <button className="btn btn-secondary mx-2">Summary</button>
+              {/* <button className="btn btn-secondary mx-2">Summary</button> */}
             
             
               <button className="btn btn-secondary mx-2">Resources</button>

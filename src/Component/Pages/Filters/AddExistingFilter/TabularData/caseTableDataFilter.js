@@ -1,5 +1,5 @@
 import React from 'react'
-import Group from './group'
+
 //import Pagination from './pagination'
 import CaseHeader from './caseHeader'
 import CaseData from './caseData'
@@ -34,7 +34,6 @@ const CaseTableDataFilter = () => {
   return (
     <>
     <CaseHeader/>
-      <Group/>
       <CaseData data={data} />
       {/* <Pagination/> */}
     </>

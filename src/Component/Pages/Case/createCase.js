@@ -53,7 +53,6 @@ const handleCreateCase = async (formData) => {
       const response = await axios.post('http://5.180.148.40:8008/api/case-service/v1/cases', {
         title: formData.title,
         description: formData.description,
-        status: 'Progress',
         assignee: formData.assignee,
         watchers:formData.watchers,  
       }, {

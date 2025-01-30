@@ -56,13 +56,15 @@ function App() {
        <div className="cont-b">
        <Routes>
        <Route path="/search" element={<SearchBar/>} /> 
-        <Route path="/home" element={<Home />} />
-        <Route path="/filter" element={<MainFilter/>} />
+        <Route path="/cases" element={<Home />} />
+        <Route path="/cases/:caseId" element={<MainFilter/>} />
         <Route path="/add-filter" element={<AddFilter2 />} /> 
         <Route path='/case-detail' element={<CaseAddFilter/>}/>
-        <Route path='/tableData' element={<CaseTableDataFilter/>}/>
+        <Route path='/cases/:caseID/analysis' element={<CaseTableDataFilter/>}/>
         <Route path="/case-summary" element={<Summary />} /> 
-        
+        <Route path="*">
+        <>Page Not Found</>
+        </Route>
         </Routes>
        </div>
 
