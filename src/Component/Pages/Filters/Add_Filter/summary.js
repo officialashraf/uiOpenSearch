@@ -2,8 +2,8 @@ import React from "react";
 import PreHeader from "./Summary/preheader.js";
 //import CardRow from "./Summary/cardRow.js";
 import ProgressRow from "./Summary/progressBar.js";
-import { Container, Box, Typography } from '@mui/material';
-import { PieChart, Pie, Cell, BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend } from 'recharts';
+import { Container, Box, Typography, Grid  } from '@mui/material';
+import { PieChart, Pie, Cell, BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend,ResponsiveContainer } from 'recharts';
 import Component1 from "./Summary/cardlList.js";
 import { useSelector } from 'react-redux';
 
@@ -39,15 +39,20 @@ const Summary = () => {
 
   const pieData = headers.map((header) => ({
     name: header,
-    value: data.reduce((acc, item) => acc + (item.data[header] || 0), 0),
+    value: Math.floor(Math.random() * 50) + 1,//data.reduce((acc, item) => acc + (item.data[header] || 0), 0)
   }));
  console.log("piedata", pieData)
-  const barData = data.map((item) => ({
-    ...item.data,
-  }));
-  console.log("bardata", barData)
+ const barvalues = Object.keys(data[0].data); 
+ console.log("barvalues", barvalues)
+const barData = barvalues.map((header) => ({
+  name: header,
+  value: data.reduce((sum, entry) => sum + (entry[header] || 0), 0), // Sum of all entries
+}));
+console.log("bardataaaa",barData )
 
-  const COLORS = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042'];
+  const COLORS = [
+    "#333", 
+  ];
 
 
   return (
@@ -65,41 +70,54 @@ const Summary = () => {
       <Component1 />
       <ProgressRow now={50} label="Overall Progress" />
     
-    <Container>
-      <Box mt={4}>
-        <Typography variant="h5">Summary</Typography>
-        <PieChart width={400} height={400}>
-          <Pie
-            data={pieData}
-            cx="50%"
-            cy="50%"
-            innerRadius={60}
-            outerRadius={80}
-            fill="#8884d8"
-            paddingAngle={5}
-            dataKey="value"
-            labelLine={true}
-            label={({ name, percent }) => `${name}: ${(percent * 100).toFixed(0)}%`}        
-          >
-            {pieData.map((entry, index) => (
-              <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
+      <Container>
+    <Box mt={4}>
+      <Typography variant="h5">Summary</Typography>
+     
+       
+           <PieChart width={400} height={400}>
+    <Pie
+      data={pieData}
+      cx="50%"
+      cy="50%"
+      innerRadius={60}
+      outerRadius={80}
+      fill="#333"
+      paddingAngle={50}
+       dataKey="value"
+       labelLine={true}
+      label={({ name, percent, value }) => `${name}: ${value}${(percent * 100).toFixed(0)}%`}
+    >
+      {pieData.map((entry, index) => (
+        <Cell key={`cell-${index}`} fill={COLORS[index]} />
+      ))}
+    </Pie>
+    <Tooltip />
+  </PieChart>
+    
+          <BarChart width={600} height={500} data={barData}>
+            {/* <CartesianGrid  />
+            <XAxis dataKey="name"  tick={{ fontSize: 12 }}  />
+            <YAxis  domain={[0,50]} tick={{ fontSize: 12 }}  />
+            <Tooltip />
+            <Legend />
+            {headers.map((header,index) => (
+              <Bar key={header} dataKey={header}  fill={COLORS[index % COLORS.length]} barSize={5} />
             ))}
-          </Pie>
-          <Tooltip />
-        </PieChart>
-        <BarChart width={600} height={500} data={barData}>
-          <CartesianGrid strokeDasharray="8 8" />
-          <XAxis dataKey={headers[0]} />
-          <YAxis />
-          <Tooltip />
-          <Legend />
-          {headers.slice(1).map((header) => (
-            <Bar key={header} dataKey={header} fill={COLORS[headers.indexOf(header) % COLORS.length]}  radius={[10, 10, 0, 0]} />
-          ))}
-        </BarChart>
-      </Box>
-    </Container>
+            <Bar/> */}
+         
+         
+          <CartesianGrid strokeDasharray="3 3" />
+  <XAxis dataKey="name" tick={{ fontSize: 12 }} />
+  <YAxis domain={[0,50]} />
+  <Tooltip />
+  <Legend />
+  <Bar dataKey="value" fill="#8884d8" barSize={5} />
+  </BarChart>
+    </Box>
   
+  </Container>
+
     </div>
   );
 };

@@ -6,7 +6,7 @@ import { //Tooltip, OverlayTrigger,
 } from "react-bootstrap";
 
 
-const AddNewFilter = ({caseData1}) => {
+const AddNewFilter = () => {
     const [sourceExpand, setSourceExpand] = useState(false);
     const [selectedPlatform, setSelectedPlatform] = useState('');
     const [newKey, setNewKey] = useState('');
@@ -25,6 +25,7 @@ const AddNewFilter = ({caseData1}) => {
     const handleSearch = (e) => {
         setSearchTerm(e.target.value.toLowerCase());
     };
+
     const handleKeyChange = (index, newKey) => {
         const updatedPairs = [...keyValuePairs];
         updatedPairs[index].key = newKey;
@@ -33,12 +34,12 @@ const AddNewFilter = ({caseData1}) => {
 
     const handlePlatformChange = (e) => {
         setSelectedPlatform(e.target.value);
-        //   setSourceExpand(e.target.value === 'source1' );
-        // Open keywords if Twitter is selected
     }
+
     const handleValueChange = (index, newValue) => {
         const updatedPairs = [...keyValuePairs]; updatedPairs[index].value = newValue; setKeyValuePairs(updatedPairs);
     };
+    
     const handleDeletePair = (index) => {
         const updatedPairs = keyValuePairs.filter((_, i) => i !== index);
         setKeyValuePairs(updatedPairs);
@@ -64,13 +65,13 @@ const AddNewFilter = ({caseData1}) => {
           console.error('Error posting data:', error);
         }
       };
-      console.log("handlesybmit", handleSubmit)
+      
     return (
         <>
             <form>
                 <div className="mb-3">
                     <label htmlFor="filterName" className="form-label">
-                        Filter Name {caseData1.title}
+                        Filter Name 
                     </label>
                     <input type="text" className="form-control filter-name-input" id="filterName" />
                 </div>

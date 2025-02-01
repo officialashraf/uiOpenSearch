@@ -10,7 +10,7 @@ const  Sidebar = ()=> {
     // { label: 'Home', icon: <House size={15} />, path: '/home' },
       { label: 'Search Data', icon: <Search size={15} />, path: '/search' },
     { label: 'PII', icon: <ListTask size={15} />, path: '/pii' },
-     { label: 'Cases', icon: <Folder size={15} />, path: '/dashboard' },
+     { label: 'Cases', icon: <Folder size={15} />, path: '/cases' },
   
     // { label: 'Legals', icon: <FileEarmarkText size={15} />, path: '/legals' },
     { label: 'Reports', icon: <BarChart size={15} />, path: '/reports' },

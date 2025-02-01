@@ -160,7 +160,7 @@ const AddNewFilter = () => {
       <form>
         <div className="mb-3">
           <label htmlFor="filterName" className="form-label">
-            Filter Name {caseData1.title}
+            Filter Name 
           </label>
           <input type="text"
             className="form-control filter-name-input"

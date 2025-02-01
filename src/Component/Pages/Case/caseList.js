@@ -53,7 +53,6 @@ const DataTable = () => {
     }
   };
   const fetchCaseData = useCallback(() => {
-    console.log("Filtering data...");
     fetchData();
   }, [data]);
 
@@ -67,16 +66,23 @@ const DataTable = () => {
 
 
 
-  const confirmDelete = (id) => {
+  const confirmDelete = (id,title) => {
     toast((t) => (
       <div>
         <p>Are you sure you want to delete this case?</p>
-        <button className='custom-confirm-button' onClick={() => { deleteCase(id); toast.dismiss(t.id); }}>Yes</button>
+        <button className='custom-confirm-button' onClick={() => { deleteCase(id,title); toast.dismiss(t.id); }}>Yes</button>
         <button className='custom-confirm-button' onClick={() => toast.dismiss(t.id)}>No</button> </div>),
-      { position: "top-right", autoClose: false, closeOnClick: false, draggable: false, });
+      { position: "top-right",  autoClose: false, closeOnClick: false, draggable: false, style: {  
+        position: "fixed",       // Ensure it's fixed relative to viewport
+        top: "50%",              // Center vertically
+        right: "20px",           // Right side placement
+        transform: "translateY(-50%)",  // Exact centering
+        width: "250px",          // Adjust width if needed
+        zIndex: 9999               // Size adjust karne ke liye
+      } });
   };
 
-  const deleteCase = async (id) => {
+  const deleteCase = async (id, title) => {
     const token = Cookies.get("accessToken");
     if (!token) {
       console.error("No token found in cookies.");
@@ -92,7 +98,7 @@ const DataTable = () => {
           }
         });
       setRefresh(true);
-      toast("Case Deleted Successfully")
+      toast(`Case ${title} Deleted Successfully`)
       console.log("Case Deleted:", response.data);
 
       // After successful deletion, fetch the updated data
@@ -192,16 +198,6 @@ const DataTable = () => {
               <tr>
                 <th>
                   <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                    S.No.
-                    <span onClick={() => handleSort('index')} style={{ cursor: 'pointer', display: 'inline-flex', alignItems: 'center' }}>
-                      {sortConfig.key === 'index' ? (
-                        sortConfig.direction === 'asc' ? <ArrowDropUp /> : <ArrowDropDown />
-                      ) : <ArrowDropDown />}
-                    </span>
-                  </div>
-                </th>
-                <th>
-                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                     CaseId
                     <span onClick={() => handleSort('id')} style={{ cursor: 'pointer', display: 'inline-flex', alignItems: 'center' }}>
                       {sortConfig.key === 'id' ? (
@@ -295,7 +291,7 @@ const DataTable = () => {
             <tbody className='tb-1'>
               {filteredData && filteredData.map((item, index) => (
                 <tr key={item.id} >
-                  <td>{index + 1}.</td>
+
                   <td onClick={() => onFieldClick(item)} style={{ cursor: 'pointer' }} >{item.id.slice(0, 8)}</td>
                   <td>{item.title}</td>
                   <td>{item.created_on.slice(0, 10)}</td>
@@ -316,7 +312,7 @@ const DataTable = () => {
                         <Dropdown.Item onClick={() => { togglePopupA(item) }} style={{ cursor: "pointer" }}>Details</Dropdown.Item>
                         <Dropdown.Item onClick={togglePopupB} >Edit</Dropdown.Item>
                         <Dropdown.Item
-                          onClick={() => confirmDelete(item.id)}
+                          onClick={() => confirmDelete(item.id,item.title)}
                         >Delete</Dropdown.Item>
                       </Dropdown.Menu>
                     </Dropdown>

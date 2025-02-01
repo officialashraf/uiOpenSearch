@@ -104,7 +104,6 @@ const ExistingFilter = () => {
             <input type="checkbox" className="form-check-input me-2" />
             <span>
               {filter.name}
-              {console.log("Rendering InfoCircle for filter:", filter)}
               <OverlayTrigger
                 placement="right"
                 overlay={

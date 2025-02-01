@@ -9,7 +9,7 @@ import DataTable1 from './Component/Pages/Home/searchbarCrm.js';
 import DataTable from './Component/Pages/Case/caseList.js';
 import SearchBar from './Component/Pages/SearchPage/searchBar';
 import LoginPage from './Component/User/login';
-import { BrowserRouter , Routes, Route } from 'react-router-dom';
+import { BrowserRouter , Routes, Route, useLocation  } from 'react-router-dom';
 import MainFilter from './Component/Pages/Filters/Add_Filter/mainFilterPage.js';
 import AddFilter2 from './Component/Pages/Filters/AddExistingFilter/addFilter2.js';
 import CaseTableDataFilter from './Component/Pages/Filters/AddExistingFilter/TabularData/caseTableDataFilter.js';
@@ -21,64 +21,46 @@ import './Assets/Stlyes/dashboard.css';
 import Summary from './Component/Pages/Filters/Add_Filter/summary.js';
 
 
-function App() {
-  
+
+const AppContent = () => {
+  const location = useLocation();
+
   return (
-      
-     <>
-       {/* <Route path="/search" element={<SearchBar/>} /> 
-        <Route path="/home" element={<Home />} />
-        <Route path="/header" element={<Header/>}/>  
-        <Route path="/card" element={<CardList/>}/>  
-        <Route path="/table" element={<DataTable/>}/>  
-        <Route path='/pagination' element={<Pagination1/>}/>
-        <Route path='/data' element={<DataTable1/>}/> 
-        <Route path='/case-detail' element={<CaseAddFilter/>}/>
-        <Route path='/existing-filter' element={<AddFilter2/>}/>
-        <Route path='/tableData' element={<CaseTableDataFilter/>}/> */}
-      
-         {/* <Route path='/case' element={<CreateCase/>}/> */}
-     <BrowserRouter>
-     <Routes>
-        <Route path="/" element={<LoginPage />} /> 
-        </Routes> 
-        <Header/>
-       <div className="dashboard-container">
-     
-       
-     
-      
-       <div className="cont-a">
-         <Sidebar />
-       </div>
+    <div>
+      {/* Render Header for all pages except the LoginPage */}
+      {location.pathname !== '/' && <Header />}
 
+      <div className="dashboard-container">
+        <div className="cont-a">
+        {location.pathname !== '/' &&<Sidebar />}
+        </div>
 
-       <div className="cont-b">
-       <Routes>
-       <Route path="/search" element={<SearchBar/>} /> 
-        <Route path="/cases" element={<Home />} />
-        <Route path="/cases/:caseId" element={<MainFilter/>} />
-        <Route path="/add-filter" element={<AddFilter2 />} /> 
-        <Route path='/case-detail' element={<CaseAddFilter/>}/>
-        <Route path='/cases/:caseID/analysis' element={<CaseTableDataFilter/>}/>
-        <Route path="/case-summary" element={<Summary />} /> 
-        <Route path="*">
-        <>Page Not Found</>
-        </Route>
-        </Routes>
-       </div>
+        <div className="cont-b">
+          <Routes>
+            <Route path="/" element={<LoginPage />} />
+            <Route path="/search" element={<SearchBar />} />
+            <Route path="/cases" element={<Home />} />
+            <Route path="/cases/:caseId" element={<MainFilter />} />
+            <Route path="/add-filter" element={<AddFilter2 />} />
+            <Route path='/case-detail' element={<CaseAddFilter />} />
+            <Route path='/cases/:caseID/analysis' element={<CaseTableDataFilter />} />
+            <Route path="/case-summary" element={<Summary />} />
+            <Route path="*" element={<div>Page Not Found</div>} />
+          </Routes>
+        </div>
 
-
-       <div className="cont-c">
-         <RightSidebar  />
-       </div>
-      
-    
-     </div>
-     </BrowserRouter>
-  </>
+        <div className="cont-c">
+        {location.pathname !== '/' &&<RightSidebar />}
+        </div>
+      </div>
+    </div>
   );
-    
-}
+};
+
+const App = () => (
+  <BrowserRouter>
+    <AppContent />
+  </BrowserRouter>
+);
 
 export default App;
