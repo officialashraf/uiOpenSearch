@@ -17,7 +17,6 @@ const DataTable = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [data, setData] = useState([]);
-  const [refresh, setRefresh] = useState(true);
   const [searchTerm, setSearchTerm] = useState("");
   const [filteredData, setFilteredData] = useState([]);
   const [showPopup, setShowPopup] = useState(false);
@@ -44,7 +43,7 @@ const DataTable = () => {
             'Authorization': `Bearer ${Token}`
           },
         });
-
+    
       setData(response.data.data);
       setFilteredData(response.data.data);
       console.log("data", response.data)
@@ -52,34 +51,36 @@ const DataTable = () => {
       console.error('Error fetching data:', error);
     }
   };
-  const fetchCaseData = useCallback(() => {
-    fetchData();
-  }, [data]);
+  
 
-  useEffect(() => {
-    if (refresh) {
-      fetchCaseData(); // Runs only when refresh changes
-      setRefresh(false); // Reset refresh state after running
-    }
-  }, [refresh]);
-
-
-
+ useEffect(() => {
+              fetchData()
+              const handleDatabaseUpdate = () => {
+                  fetchData()
+              };
+      
+              window.addEventListener("databaseUpdated", handleDatabaseUpdate);
+      
+              return () => {
+                  window.removeEventListener("databaseUpdated", handleDatabaseUpdate);
+              };
+          }, []);
 
   const confirmDelete = (id,title) => {
     toast((t) => (
       <div>
-        <p>Are you sure you want to delete this case?</p>
+        <p>Are you sure you want to delete {title} case?</p>
         <button className='custom-confirm-button' onClick={() => { deleteCase(id,title); toast.dismiss(t.id); }}>Yes</button>
         <button className='custom-confirm-button' onClick={() => toast.dismiss(t.id)}>No</button> </div>),
-      { position: "top-right",  autoClose: false, closeOnClick: false, draggable: false, style: {  
-        position: "fixed",       // Ensure it's fixed relative to viewport
-        top: "50%",              // Center vertically
-        right: "20px",           // Right side placement
-        transform: "translateY(-50%)",  // Exact centering
-        width: "250px",          // Adjust width if needed
-        zIndex: 9999               // Size adjust karne ke liye
-      } });
+      { autoClose: false, closeOnClick: false, draggable: false, style: {
+        position: 'fixed',
+        top: '300px',
+        left: '50%',
+        transform: 'translate(-50%, -50%)',
+        width: '100%',
+        zIndex: 9999, 
+      }
+      },)
   };
 
   const deleteCase = async (id, title) => {
@@ -97,7 +98,7 @@ const DataTable = () => {
             'Authorization': `Bearer ${authToken}`
           }
         });
-      setRefresh(true);
+        window.dispatchEvent(new Event("databaseUpdated"));
       toast(`Case ${title} Deleted Successfully`)
       console.log("Case Deleted:", response.data);
 
@@ -149,21 +150,27 @@ const DataTable = () => {
   const handleSort = (key) => {
     let direction = 'asc';
     if (sortConfig.key === key && sortConfig.direction === 'asc') {
-      direction = 'desc';
+        direction = 'desc';
     }
     setSortConfig({ key, direction });
 
     const sortedData = [...filteredData].sort((a, b) => {
-      if (a[key] < b[key]) {
-        return direction === 'asc' ? -1 : 1;
-      }
-      if (a[key] > b[key]) {
-        return direction === 'asc' ? 1 : -1;
-      }
-      return 0;
+        if (typeof a[key] === 'number' && typeof b[key] === 'number') {
+            return direction === 'asc' ? a[key] - b[key] : b[key] - a[key];
+        } else {
+            const aValue = a[key].toString();
+            const bValue = b[key].toString();
+            if (aValue < bValue) {
+                return direction === 'asc' ? -1 : 1;
+            }
+            if (aValue > bValue) {
+                return direction === 'asc' ? 1 : -1;
+            }
+            return 0;
+        }
     });
     setFilteredData(sortedData);
-  }
+};
   return (
     <>
       <div className="data-table-container">

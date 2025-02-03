@@ -3,9 +3,10 @@ import React from 'react'
 import { useState, useEffect} from 'react'
 import { Tooltip, OverlayTrigger} from "react-bootstrap";
 import { SortDown, Search, InfoCircle } from 'react-bootstrap-icons'
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
+import { logFilterCount } from '../../../../Redux/Action/filterAction';
 const ExistingFilter = () => {
-  
+  const dispatch = useDispatch();
   const caseData1 = useSelector((state) => state.caseData.caseData);
   const [filterdata, setfilterdata] = useState([])
   
@@ -49,6 +50,8 @@ const ExistingFilter = () => {
              try { 
               const response = await axios.get(`http://5.180.148.40:9002/api/osint/filter/${caseData1.id}`);
                const user = response.data;
+               console.log("user", user)
+               dispatch(logFilterCount(user));
               //  setRefresh(true);
                 setfilterdata(user); // Update the state with usered data
                  } catch (error) { 
@@ -95,8 +98,7 @@ const ExistingFilter = () => {
     <SortDown />
   </button>
 </div>
-          
-          <div className='exist-filter'>
+           <div className='exist-filter'>
           <ul className="list-group existing-filters-ul" >
         {filterdata.data && filterdata.data.length > 0 ? (
          filterdata.data && filterdata.data.map((filter) => (
@@ -122,7 +124,7 @@ const ExistingFilter = () => {
           </li>
         ))
       ) : (
-        <li className="list-group-item existing-filters-li" style={{height:'250px' , textAlign:"center", padding: "100px"}}>
+        <li className="list-group-item existing-filters-li" style={{display: 'flex',height:"400px", justifyContent: 'center', alignItems: 'center', border:"none"}}>
           <p>No filters created yet</p>
         </li>
       )}  

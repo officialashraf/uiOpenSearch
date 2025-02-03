@@ -21,7 +21,6 @@ const CreateCase = ({ togglePopup }) => {
     label: user.username
   }));
 
-  console.log("options", options)
 
 const userData = async () => {
   const token = Cookies.get("accessToken");
@@ -61,7 +60,7 @@ const handleCreateCase = async (formData) => {
           'Authorization': `Bearer ${token}`
         }
       }
-    );
+    );    window.dispatchEvent(new Event("databaseUpdated"));
       if (response.status === 200) {
         toast.success("Case Created Successfully");
         togglePopup(); // पॉपअप बंद करें

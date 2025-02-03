@@ -1,4 +1,4 @@
-  import { SET_TASK_FILTER_ID , SET_HEADERS, SET_DATA} from "../Constants/filterConstant";
+  import { SET_TASK_FILTER_ID , SET_HEADERS, SET_DATA, LOG_FILTER_COUNT} from "../Constants/filterConstant";
 
 const initialState = {
     taskId: null,
@@ -27,3 +27,14 @@ export const taskFilterReducer = (state = initialState, action) => {
       default:
         return state;
     }}
+   export const filterReducer = (state = {filterCount:{}}, action) => {
+      switch (action.type) {
+        case LOG_FILTER_COUNT:
+          return {
+            ...state,
+            filterCount: action.payload,
+          };
+        default:
+          return state;
+      }
+    };

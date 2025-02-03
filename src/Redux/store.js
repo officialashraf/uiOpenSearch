@@ -1,8 +1,8 @@
 import {configureStore}  from '@reduxjs/toolkit'
-import { caseReducer, tabReducer,
+import { caseReducer, summaryReducer, tabReducer,
 
   } from './Reducers/caseReducer'
-import { summaryDataReducer, taskFilterReducer } from './Reducers/filterReducer';
+import { filterReducer, summaryDataReducer, taskFilterReducer } from './Reducers/filterReducer';
 
 const store = configureStore({
   reducer: {
@@ -10,6 +10,8 @@ const store = configureStore({
     taskFilterId : taskFilterReducer,
     caseData : caseReducer ,
     filterData: summaryDataReducer,
+    summaryData: summaryReducer,
+    filterCount: filterReducer,
  },
 });
 

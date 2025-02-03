@@ -1,12 +1,5 @@
-
-//import './App.css';
-//import CreateCase from './Component/Pages/Case/createCase.js';
-import CardList from './Component/Pages/Home/cards.js';
 import Header from './Component/Pages/Home/header.js';
 import Home from './Component/Pages/Home/home';
-import Pagination1 from './services/pagination.js';
-import DataTable1 from './Component/Pages/Home/searchbarCrm.js';
-import DataTable from './Component/Pages/Case/caseList.js';
 import SearchBar from './Component/Pages/SearchPage/searchBar';
 import LoginPage from './Component/User/login';
 import { BrowserRouter , Routes, Route, useLocation  } from 'react-router-dom';
@@ -16,9 +9,10 @@ import CaseTableDataFilter from './Component/Pages/Filters/AddExistingFilter/Tab
 import CaseAddFilter from './Component/Pages/Filters/Add_Filter/caseAddFilter.js';
 import RightSidebar from './Component/Pages/Home/rightSideBar.js';
 import Sidebar from './Component/Pages/Home/leftSideBar.js';
-
 import './Assets/Stlyes/dashboard.css';
 import Summary from './Component/Pages/Filters/Add_Filter/summary.js';
+import LineChart1 from './Component/Pages/Filters/AddExistingFilter/TabularData/lineChart.js';
+import KeywordChart from './Component/Pages/Filters/AddExistingFilter/TabularData/keywordChart.js';
 
 
 
@@ -45,6 +39,8 @@ const AppContent = () => {
             <Route path='/case-detail' element={<CaseAddFilter />} />
             <Route path='/cases/:caseID/analysis' element={<CaseTableDataFilter />} />
             <Route path="/case-summary" element={<Summary />} />
+            <Route path="/key" element={< KeywordChart/>} />
+            <Route path="/line" element={<LineChart1 />} />
             <Route path="*" element={<div>Page Not Found</div>} />
           </Routes>
         </div>

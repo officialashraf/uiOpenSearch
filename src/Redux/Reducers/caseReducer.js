@@ -1,5 +1,6 @@
 import { SET_SELECTED_TAB,
     SET_CASE_DATA,
+    SET_SUMMARY_DATA,
     } from '../Constants/caseCaontant';
 
 
@@ -29,3 +30,21 @@ export const caseReducer = (state ={ caseData: {}},  action) => {
             return state;
     }
 };
+
+export const summaryReducer = (state = {
+    social_media: {},
+    count: 0,
+    dates: {}
+}, action) => {
+    switch (action.type) {
+      case SET_SUMMARY_DATA:
+        return {
+          ...state,
+          social_media: action.payload.social_media,
+          count: action.payload.count,
+          dates: action.payload.dates
+        };
+      default:
+        return state;
+    }
+  };

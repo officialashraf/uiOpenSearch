@@ -1,5 +1,6 @@
 import React from 'react'
 import {useSelector} from 'react-redux'
+import {ListAltOutlined, PieChart} from '@mui/icons-material';
 const CaseHeader = () => {
   const caseData1 = useSelector((state) => state.caseData.caseData);
   return (
@@ -20,11 +21,12 @@ const CaseHeader = () => {
    
             
               <button className="btn btn-secondary mx-2">Case board</button>
-            
+             
       
         </div>
         <div className='col mt-2 mb-2'style={{ display: 'flex', justifyContent: 'flex-end' }} >
-       
+        <PieChart/>
+          <ListAltOutlined/>
             <button className="btn btn-secondary ">  Back to Case Snapshot</button>
         </div>
     </div>

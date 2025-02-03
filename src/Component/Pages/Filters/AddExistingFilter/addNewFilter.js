@@ -216,46 +216,122 @@ const AddNewFilter = () => {
             </option>
             <option value="twitter">Twitter</option>
             <option value="instagram">Instagram</option>
+            <option value="facebook">Facebook</option>
           </select>
         </div>
       )}
           </div>
           {selectedPlatform && (
-            <div className="row">
-              <div className="col-md-6">
-                <label htmlFor="keywords" className="form-label source-label">
-                  Keywords
-                </label>
-                <Dropdown className="w-100 keywords-dropdown" id="keywords">
-                  <Dropdown.Toggle className="w-100 keywords-dropdown-toggle" variant="outline-secondary">
-                    Select Keywords
-                  </Dropdown.Toggle>
-                  <Dropdown.Menu className="w-100 p-2 keywords-dropdown-menu">
-                    <InputGroup className="mb-2">
-                      <Form.Control
-                        placeholder="Search"
-                        value={searchTerm}
-                        onChange={handleSearch}
-                      />
-                    </InputGroup>
-                    <div className="d-flex mb-2">
-                      <Form.Control placeholder="Key" value={newKey} onChange={(e) => setNewKey(e.target.value)} className="me-2" />
-                      <Form.Control placeholder="Value" value={newValue} onChange={(e) => setNewValue(e.target.value)} className="me-2" />
-                      <Button variant="outline-secondary" onClick={handleAddKeyValuePair}> Add </Button>
-                    </div>
-                    {keyValuePairs.map((pair, index) => (
-                      <div key={index} className="d-flex align-items-center mb-2">
-                        <Form.Check type="checkbox" id={`checkbox-${index}`} className="me-2" />
-                        <Form.Control placeholder="Key" value={pair.key} onChange={(e) => handleKeyChange(index, e.target.value)} className="me-2" />
-                        <Form.Control placeholder="Value" value={pair.value} onChange={(e) => handleValueChange(index, e.target.value)} className="me-2" />
-                        <Button variant="outline-danger" onClick={() => handleDeletePair(index)}> Delete </Button>
-                      </div>
-                    ))}
-                  </Dropdown.Menu>
-                </Dropdown>
-              </div>
+  <div className="row">
+    {/* <div className="col-md-6">
+     
+     
+    </div> */}
+    {selectedPlatform === 'instagram' && (
+      <div className="col-md-6">
+        <label htmlFor="insta-keywords" className="form-label source-label">
+          Instagram Keywords
+        </label>
+        <Dropdown className="w-100 keywords-dropdown" id="insta-keywords">
+          <Dropdown.Toggle className="w-100 keywords-dropdown-toggle" variant="outline-secondary">
+            Select Instagram Keywords
+          </Dropdown.Toggle>
+          <Dropdown.Menu className="w-100 p-2 keywords-dropdown-menu">
+            <InputGroup className="mb-2">
+              <Form.Control
+                placeholder="Search"
+                value={searchTerm}
+                onChange={handleSearch}
+              />
+            </InputGroup>
+            <div className="d-flex mb-2">
+              <Form.Control placeholder="Key" value={newKey} onChange={(e) => setNewKey(e.target.value)} className="me-2" />
+              <Form.Control placeholder="Value" value={newValue} onChange={(e) => setNewValue(e.target.value)} className="me-2" />
+              <Button variant="outline-secondary" onClick={handleAddKeyValuePair}> Add </Button>
             </div>
-          )}
+            {keyValuePairs.map((pair, index) => (
+              <div key={index} className="d-flex align-items-center mb-2">
+                <Form.Check type="checkbox" id={`checkbox-${index}`} className="me-2" />
+                <Form.Control placeholder="Key" value={pair.key} onChange={(e) => handleKeyChange(index, e.target.value)} className="me-2" />
+                <Form.Control placeholder="Value" value={pair.value} onChange={(e) => handleValueChange(index, e.target.value)} className="me-2" />
+                <Button variant="outline-danger" onClick={() => handleDeletePair(index)}> Delete </Button>
+              </div>
+            ))}
+          </Dropdown.Menu>
+        </Dropdown>
+      </div>
+    )}
+    {selectedPlatform === 'facebook' && (
+      <div className="col-md-6">
+        <label htmlFor="facebook-keywords" className="form-label source-label">
+          Facebook Keywords
+        </label>
+        <Dropdown className="w-100 keywords-dropdown" id="facebook-keywords">
+          <Dropdown.Toggle className="w-100 keywords-dropdown-toggle" variant="outline-secondary">
+            Select Facebook Keywords
+          </Dropdown.Toggle>
+          <Dropdown.Menu className="w-100 p-2 keywords-dropdown-menu">
+            <InputGroup className="mb-2">
+              <Form.Control
+                placeholder="Search"
+                value={searchTerm}
+                onChange={handleSearch}
+              />
+            </InputGroup>
+            <div className="d-flex mb-2">
+              <Form.Control placeholder="Key" value={newKey} onChange={(e) => setNewKey(e.target.value)} className="me-2" />
+              <Form.Control placeholder="Value" value={newValue} onChange={(e) => setNewValue(e.target.value)} className="me-2" />
+              <Button variant="outline-secondary" onClick={handleAddKeyValuePair}> Add </Button>
+            </div>
+            {keyValuePairs.map((pair, index) => (
+              <div key={index} className="d-flex align-items-center mb-2">
+                <Form.Check type="checkbox" id={`checkbox-${index}`} className="me-2" />
+                <Form.Control placeholder="Key" value={pair.key} onChange={(e) => handleKeyChange(index, e.target.value)} className="me-2" />
+                <Form.Control placeholder="Value" value={pair.value} onChange={(e) => handleValueChange(index, e.target.value)} className="me-2" />
+                <Button variant="outline-danger" onClick={() => handleDeletePair(index)}> Delete </Button>
+              </div>
+            ))}
+          </Dropdown.Menu>
+        </Dropdown>
+      </div>
+    )}
+    {selectedPlatform === 'twitter' && (
+      <div className="col-md-6">
+        <label htmlFor="twitter-keywords" className="form-label source-label">
+          Twitter Keywords
+        </label>
+        <Dropdown className="w-100 keywords-dropdown" id="twitter-keywords">
+          <Dropdown.Toggle className="w-100 keywords-dropdown-toggle" variant="outline-secondary">
+            Select Twitter Keywords
+          </Dropdown.Toggle>
+          <Dropdown.Menu className="w-100 p-2 keywords-dropdown-menu">
+            <InputGroup className="mb-2">
+              <Form.Control
+                placeholder="Search"
+                value={searchTerm}
+                onChange={handleSearch}
+              />
+            </InputGroup>
+            <div className="d-flex mb-2">
+              <Form.Control placeholder="Key" value={newKey} onChange={(e) => setNewKey(e.target.value)} className="me-2" />
+              <Form.Control placeholder="Value" value={newValue} onChange={(e) => setNewValue(e.target.value)} className="me-2" />
+              <Button variant="outline-secondary" onClick={handleAddKeyValuePair}> Add </ Button>
+            </div>
+            {keyValuePairs.map((pair, index) => (
+              <div key={index} className="d-flex align-items-center mb-2">
+                <Form.Check type="checkbox" id={`checkbox-${index}`} className="me-2" />
+                <Form.Control placeholder="Key" value={pair.key} onChange={(e) => handleKeyChange(index, e.target.value)} className="me-2" />
+                <Form.Control placeholder="Value" value={pair.value} onChange={(e) => handleValueChange(index, e.target.value)} className="me-2" />
+                <Button variant="outline-danger" onClick={() => handleDeletePair(index)}> Delete </Button>
+              </div>
+            ))}
+          </Dropdown.Menu>
+        </Dropdown>
+      </div>
+    )}
+  </div>
+)}
+
         </div>
         <button type="button" className="btn btn-secondary add-new-filter-button" onClick={handleSubmit}>
           Save and Add
