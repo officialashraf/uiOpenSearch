@@ -1,6 +1,6 @@
 import React from 'react';
-import { Box } from '@mui/material';
-import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend } from 'recharts';
+import { Box , Slider } from '@mui/material';
+import { LineChart, Line, XAxis, YAxis, Tooltip, Legend } from 'recharts';
 
 const data = [
   { name: 'Jan', uv: 4000, pv: 2400, amt: 2400 },
@@ -15,16 +15,32 @@ const data = [
 const LineChart1 = () => {
   return (
 <>
-<Box width={500} height={300} sx={{ marginTop: 4 }}>
-      <LineChart width={500} height={300} data={data}>
-        <CartesianGrid strokeDasharray="3 3" />
-        <XAxis dataKey="name" />
-        <YAxis />
+<Box  height={250} sx={{ marginTop: 1 }}>
+      <LineChart width={1200} height={150} data={data}>
+        {/* <CartesianGrid strokeDasharray="3 3" /> */}
+        <XAxis dataKey="name" tick={{ fontSize: 10 }}/>
+        <YAxis tick={{ fontSize: 10 }} />
         <Tooltip />
         <Legend />
         
-        <Line type="monotone" dataKey="pv" stroke="#82ca9d" />
+        <Line type="monotone" dataKey="pv" stroke="darkgray" />
       </LineChart>
+      <Slider
+        defaultValue={50}
+        min={0}
+        max={100}
+        step={1}
+        
+        // onChange={handleSliderChange}
+        sx={{
+          width: '100%', // Make sure the slider takes full width
+          marginTop: 0,
+          width: '100%', // Full width
+          marginBottom: 0, // Remove margin
+          padding: 0, // Remove padding
+          color: 'darkgray',
+        }}
+      />
     </Box>
     </>
   );

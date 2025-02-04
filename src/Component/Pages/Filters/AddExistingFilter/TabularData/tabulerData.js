@@ -7,7 +7,7 @@ import '../../../../../Assets/Stlyes/Filter/caseTableData.css'
 import { useSelector,useDispatch } from 'react-redux';
 import { setSumaryHeadersAction, setSummaryDataAction } from '../../../../../Redux/Action/filterAction';
 import { setSummaryData } from '../../../../../Redux/Action/caseAction';
-const CaseData = () => {
+const TabulerData = () => {
     const dispatch = useDispatch();
     const data1 = useSelector((state) => state.caseData.caseData)
     const [headers, setHeaders] = useState([]);
@@ -137,4 +137,4 @@ console.log("datarray", dataArray)
     )
 }
 
-export default CaseData
+export default TabulerData

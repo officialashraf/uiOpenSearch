@@ -21,12 +21,9 @@ const MainContainer = () => {
   const caseData2 = useSelector((state) => state.caseData.caseData);
   console.log("casedata2", caseData2)
   const [showPopup, setShowPopup] = useState(false);
-  // const addResource = ()=>{
-  //   navigate('/add-filter' )
-  // }
+ 
 
   const togglePopup = () => {
-   
     setShowPopup((prev) => !prev);
   };   
 
@@ -47,14 +44,7 @@ console.log("stlected", selectedTab)
         return <Contributors />
       case 'history':
         return <History />
-      // case 'analyze':
-      //   return <CaseTableDataFilter/>;
-        // return (
-        //   <div>
-        //     <h3>Analyze</h3>
-        //     <p>Analyze Content</p>
-        //   </div>
-        // );
+     
       default:
         
         return (

@@ -13,6 +13,7 @@ import './Assets/Stlyes/dashboard.css';
 import Summary from './Component/Pages/Filters/Add_Filter/summary.js';
 import LineChart1 from './Component/Pages/Filters/AddExistingFilter/TabularData/lineChart.js';
 import KeywordChart from './Component/Pages/Filters/AddExistingFilter/TabularData/keywordChart.js';
+import GraphicalData from './Component/Pages/Filters/AddExistingFilter/TabularData/graphicalData.js';
 
 
 
@@ -38,9 +39,10 @@ const AppContent = () => {
             <Route path="/add-filter" element={<AddFilter2 />} />
             <Route path='/case-detail' element={<CaseAddFilter />} />
             <Route path='/cases/:caseID/analysis' element={<CaseTableDataFilter />} />
-            <Route path="/case-summary" element={<Summary />} />
+            <Route path="/cases/:caseID/case-summary" element={<Summary />} />
             <Route path="/key" element={< KeywordChart/>} />
             <Route path="/line" element={<LineChart1 />} />
+            <Route path="/grapg" element={< GraphicalData />} />
             <Route path="*" element={<div>Page Not Found</div>} />
           </Routes>
         </div>

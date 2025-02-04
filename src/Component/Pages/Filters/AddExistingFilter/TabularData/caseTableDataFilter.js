@@ -2,11 +2,18 @@ import React from 'react'
 
 //import Pagination from './pagination'
 import CaseHeader from './caseHeader'
-import CaseData from './caseData'
-//import { useState } from 'react'
+import CaseData from './tabulerData'
+import { useState } from 'react'
+import TabulerData from './tabulerData'
+import GraphicalData from './graphicalData'
 
 const CaseTableDataFilter = () => {
   // const [filter, setFilter] = useState([]);
+  const [view, setView] = useState('caseData'); // Default view is 'caseData'
+
+  const handleButtonClick = (viewType) => {
+    setView(viewType); // Update the view when a button is clicked
+  };
   const data = Array.from({ length: 112 }, (_, i) => ({
     id: i + 1,
     fileName: `File_name_${i + 1}`,
@@ -31,11 +38,13 @@ const CaseTableDataFilter = () => {
   // filter.length
   //   ? data.filter((item) => filter.includes(item.location))
   //   : data;
+
   return (
+
     <>
-    <CaseHeader/>
-      <CaseData data={data} />
-      {/* <Pagination/> */}
+    <CaseHeader onIconClick={handleButtonClick}/>
+      {/* <CaseData data={data}  onIc/> */}
+      {view === 'caseData' ? <TabulerData /> : <GraphicalData />}
     </>
   )
 }

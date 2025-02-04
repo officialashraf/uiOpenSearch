@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from 'react-redux';
 //import { setSelectedTab } from '../../../../Redux/Action/caseAction';
 import '../../../../Assets/Stlyes/headerfilter.css';
 import { useNavigate, useParams } from 'react-router-dom';
-import CaseData from '../AddExistingFilter/TabularData/caseData';
+import CaseData from '../AddExistingFilter/TabularData/tabulerData';
 
 const HeaderFilter = () => {
   //const dispatch = useDispatch();

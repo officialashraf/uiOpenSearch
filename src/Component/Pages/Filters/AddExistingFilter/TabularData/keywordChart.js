@@ -16,12 +16,12 @@ const fontSizeMapper = word => Math.log2(word.value) * 10;
 
 const KeywordChart = () => {
   return (
-    <Box width={400} height={400} style={{ marginTop: 4 }}>
+    <Box width={400} height={230} style={{ marginTop: 0 }}>
       <WordCloud
         data={data}
         fontSizeMapper={fontSizeMapper}
         width={400}
-        height={400}
+        height={200}
       />
     </Box>
   );

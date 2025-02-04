@@ -1,0 +1,20 @@
+.col1 {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    padding: 5px; /* Reduced size */
+    width: 20px;
+  }
+  
+  .icon-style {
+    color: gray;
+   size: 25px;
+  }
+  
+  .icon-style:hover {
+    color: white;
+    background-color: gray;
+    border-radius: 5px; /* Optional for rounded hover effect */
+    padding: 5px;}
+
+   

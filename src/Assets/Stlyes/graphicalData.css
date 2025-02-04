@@ -1,0 +1,10 @@
+.css-1bpewfd-MuiGrid-root {
+    /* Remove the unwanted properties */
+    margin-top: 0 !important;
+    width: auto !important;
+    margin-left: 0 !important;
+    padding: 5px !important;
+}
+.css-o1iywg-MuiGrid-root {
+    padding-top: 0px !important;
+}
