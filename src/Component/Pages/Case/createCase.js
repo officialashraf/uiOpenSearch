@@ -25,7 +25,7 @@ const CreateCase = ({ togglePopup }) => {
 const userData = async () => {
   const token = Cookies.get("accessToken");
    try { 
-    const response = await axios.get('http://5.180.148.40:8007/api/user/get-all'
+    const response = await axios.get('http://5.180.148.40:9000/api/user-man/v1/user'
       , {
         headers: {
           'Content-Type': 'application/json',
@@ -49,7 +49,7 @@ const handleCreateCase = async (formData) => {
       return;
     }
     try {
-      const response = await axios.post('http://5.180.148.40:8008/api/case-service/v1/cases', {
+      const response = await axios.post('http://5.180.148.40:9001/api/case-man/v1/case', {
         title: formData.title,
         description: formData.description,
         assignee: formData.assignee,
@@ -70,7 +70,7 @@ const handleCreateCase = async (formData) => {
   
     } catch (err) {
       console.error("Error during case creation:", err.response || err);
-      toast.error("Error during case creation: " + (err.response?.data?.message || err.message));
+      toast.error("Error during case creation: " + (err.response?.data?.detail || err.message));
     }
   };
 
@@ -94,7 +94,7 @@ const handleCreateCase = async (formData) => {
   const handleAssigneeChange = (selectedOption) => {
     setFormData((prevData) => ({
       ...prevData,
-      assignee: selectedOption ? selectedOption.value : ''
+      assignee: selectedOption ? parseInt(selectedOption.value, 10) : ''
     }));
   };
 
@@ -205,7 +205,7 @@ const handleCreateCase = async (formData) => {
         />
             <div className="button-container">
               <button type="submit" className="create-btn">
-                Create
+               Create
               </button>
               <button type="button" className="cancel-btn" onClick={togglePopup}>
                 Cancel

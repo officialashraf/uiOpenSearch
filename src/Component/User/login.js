@@ -29,7 +29,7 @@ const LoginPage = () => {
     
         try {
             // Sending REST API request with username and password
-            const response = await axios.post('http://5.180.148.40:8007/api/user/validate', {
+            const response = await axios.post('http://5.180.148.40:9000/api/user-man/v1/user/validate', {
                 username: formData.username,
                 password: formData.password
             });
@@ -63,8 +63,10 @@ const LoginPage = () => {
                     toast('Incorrect username or password. Please try again.');
                 } else if (err.response.status === 500) {
                     toast('Server error. Please try again later.');
-                } else {
-                    setError(err.response.data.message || 'Something went wrong. Please try again.');
+                }else if (err.response.status === 404) {
+                    toast('Incorrect username or password. Please try again.');}
+                 else {
+                    setError(err.response.data.detail || 'Something went wrong. Please try again.');
                 }
             } else if (err.request) {
                 // No response from the server

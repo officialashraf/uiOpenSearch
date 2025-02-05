@@ -18,7 +18,7 @@ const  Header = () => {
     <Navbar bg="black" variant="dark" expand="lg">
       <Container className="container d-flex justify-content-between align-items-center">
         <Navbar.Brand  className="custom-navbar-brand">
-          Data Search
+          Cases
         </Navbar.Brand>
   
         <Nav className="custom-nav">

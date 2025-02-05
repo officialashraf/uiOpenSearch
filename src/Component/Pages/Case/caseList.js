@@ -16,7 +16,9 @@ import { setCaseData } from '../../../Redux/Action/caseAction';
 const DataTable = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+
   const [data, setData] = useState([]);
+  const [users, setUsers] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
   const [filteredData, setFilteredData] = useState([]);
   const [showPopup, setShowPopup] = useState(false);
@@ -31,12 +33,11 @@ const DataTable = () => {
     const caseId = item.id // Set the case data in Redux store
     navigate(`/cases/${caseId}`); // Navigate to the new page
   };
-  console.log("onfield", onFieldClick)
-  console.log("dfdf", setCaseData())
+
   const fetchData = async () => {
     try {
       const Token = Cookies.get('accessToken');
-      const response = await axios.get('http://5.180.148.40:8008/api/case-service/cases',
+      const response = await axios.get('http://5.180.148.40:9001/api/case-man/v1/case',
         {
           headers: {
             'Content-Type': 'application/json',
@@ -84,6 +85,7 @@ const DataTable = () => {
   };
 
   const deleteCase = async (id, title) => {
+    //const caseId = parseInt(id.replace("CASE", ""), 10);
     const token = Cookies.get("accessToken");
     if (!token) {
       console.error("No token found in cookies.");
@@ -91,7 +93,7 @@ const DataTable = () => {
     }
     try {
       const authToken = Cookies.get('accessToken'); // Read the token from cookies 
-      const response = await axios.delete(`http://5.180.148.40:8008/api/case-service/cases/${id}`,
+      const response = await axios.delete(`http://5.180.148.40:9001/api/case-man/v1/case/${id}`,
         {
           headers: {
             'Content-Type': 'application/json',
@@ -110,6 +112,27 @@ const DataTable = () => {
       console.error("Error deleting case:", error);
     }
   };
+
+  const userData = async () => {
+    const token = Cookies.get("accessToken");
+     try { 
+      const response = await axios.get('http://5.180.148.40:9000/api/user-man/v1/user'
+        , {
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}`
+          }
+        });
+       const user = response.data;
+        setUsers(user); // Update the state with usered data
+        console.log("userss", user)
+         } catch (error) { 
+          console.error('There was an error usering the data!', error); 
+        } };
+      useEffect(() => {
+      userData(); // Call the userData function
+      }, []);
+
   const handleSearch = (event) => {
     const searchValue = event.target.value;
     setSearchTerm(searchValue);
@@ -135,9 +158,10 @@ const DataTable = () => {
 
     setShowPopup((prev) => !prev);
   };
-  const togglePopupB = () => {
+  const togglePopupB = (item) => {
 
     setShowPopupB((prev) => !prev);
+    setSelectedData(item)
   };
   const togglePopupA = (item) => {
     setShowPopupA((prev) => !prev);
@@ -299,7 +323,7 @@ const DataTable = () => {
               {filteredData && filteredData.map((item, index) => (
                 <tr key={item.id} >
 
-                  <td onClick={() => onFieldClick(item)} style={{ cursor: 'pointer' }} >{item.id.slice(0, 8)}</td>
+                  <td onClick={() => onFieldClick(item)} style={{ cursor: 'pointer' }} >{`CASE${String(item.id).padStart(4, '0')}`}</td>
                   <td>{item.title}</td>
                   <td>{item.created_on.slice(0, 10)}</td>
                   <td>{item.created_by.slice(0, 8)}</td>
@@ -317,7 +341,7 @@ const DataTable = () => {
                       <Dropdown.Toggle className="custom-dropdown-toggle custom-btn"> ⋮ </Dropdown.Toggle>
                       <Dropdown.Menu className="custom-dropdown-menu">
                         <Dropdown.Item onClick={() => { togglePopupA(item) }} style={{ cursor: "pointer" }}>Details</Dropdown.Item>
-                        <Dropdown.Item onClick={togglePopupB} >Edit</Dropdown.Item>
+                        <Dropdown.Item onClick={() => { togglePopupB(item) }} >Edit</Dropdown.Item>
                         <Dropdown.Item
                           onClick={() => confirmDelete(item.id,item.title)}
                         >Delete</Dropdown.Item>
@@ -333,8 +357,8 @@ const DataTable = () => {
         </div>
       </div>
       {showPopup && <CreateCase togglePopup={togglePopup} />}
-      {showPopupB && <EditCase togglePopup={togglePopupB} />}
-      {showPopupA && <CaseDetails item={selectedData} togglePopupA={togglePopupA} />}
+      {showPopupB && <EditCase  item={selectedData} togglePopup={togglePopupB} />}
+      {showPopupA && <CaseDetails item={selectedData} users={users} togglePopupA={togglePopupA} />}
 
     </>
   );

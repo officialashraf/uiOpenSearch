@@ -2,8 +2,14 @@ import React from 'react'
 import {useSelector} from 'react-redux'
 import {ListAltOutlined, PieChart, MoreVert} from '@mui/icons-material';
 import '../../../../../Assets/Stlyes/tabulerHeader.css'
+import { useNavigate } from "react-router-dom";
+
 const CaseHeader = ({ onIconClick }) => {
   const caseData1 = useSelector((state) => state.caseData.caseData);
+  const navigate = useNavigate();
+  const backToSnap = () => {
+    navigate('/cases');
+  };
   return (
     <>
     <div className='row header-row' style={{background: 'darkgray', color:'white',display: 'flex', marginLeft: '0rem', marginRight: '0rem', height:"40px"}} >
@@ -14,10 +20,11 @@ const CaseHeader = ({ onIconClick }) => {
         <div className='col d-flex justify-content-center align-items-center'>
               <button className="add-new-filter-button ">Resources</button>
               <button className="add-new-filter-button" style={{marginLeft:'12px'}}>Case board</button>
+              <button className="add-new-filter-button" style={{marginLeft:'12px'}}onClick={backToSnap}>  Back to Case Snapshot</button>
         </div>
-        <div className='col d-flex justify-content-end align-items-center' >
+        {/* <div className='col d-flex justify-content-end align-items-center' >
             <button className="add-new-filter-button ">  Back to Case Snapshot</button>
-        </div>
+        </div> */}
     </div>
     {                             /*end header*/                                     }
     <div className="row mt-1 ms-1">
@@ -37,7 +44,7 @@ const CaseHeader = ({ onIconClick }) => {
   <div className="col-auto ms-auto ml-3 d-flex justify-content-center align-items-center"  style={{backgroundColor :"black", marginRight:"15px", height:"30px"}}>
       <PieChart className="icon-style" onClick={() => onIconClick('graphicalData')} />
       <ListAltOutlined className="icon-style" onClick={() => onIconClick('caseData')} />
-         <MoreVert  fontSize="inherit" sx={{ color: "white", '&:hover': { color: "gray" } }} />
+         <MoreVert className="icon-style" />
   </div>
 </div>
     </>

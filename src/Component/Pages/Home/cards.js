@@ -41,12 +41,13 @@ const CardList = ()=> {
    const Token = Cookies.get('accessToken');
   const getCardData = async () => {
     try {
-      const response = await axios.get('http://5.180.148.40:8008/api/case-service/cases/states-count',{
+      const response = await axios.get('http://5.180.148.40:9001/api/case-man/v1/case/states-count',{
         headers: {
           'Content-Type': 'application/json',
           'Authorization': `Bearer ${Token}`
         },
       });
+     
       const apiData = response.data;
        
       const updatedData = cardTemplate.map(item => ({
@@ -59,15 +60,30 @@ const CardList = ()=> {
       console.error('Error fetching data:', error);
     }
   };
-  const carListData = useCallback(() => {
-    getCardData()
-}, [cardData]);
-useEffect(() => {
-  if (refresh) {
-    carListData(); // Runs only when refresh changes
-      setRefresh(false); // Reset refresh state after running
-  }
-}, [refresh]);
+ 
+  
+   useEffect(() => {
+                getCardData()
+                const handleDatabaseUpdate = () => {
+                    getCardData()
+                };
+        
+                window.addEventListener("databaseUpdated", handleDatabaseUpdate);
+        
+                return () => {
+                    window.removeEventListener("databaseUpdated", handleDatabaseUpdate);
+                };
+            }, []);
+  
+//   const carListData = useCallback(() => {
+//     getCardData()
+// }, [cardData]);
+// useEffect(() => {
+//   if (refresh) {
+//     carListData(); // Runs only when refresh changes
+//       setRefresh(false); // Reset refresh state after running
+//   }
+// }, [refresh]);
   return (
     <Container fluid className="card-list-container">
       {cardData.map((item, index) => (
