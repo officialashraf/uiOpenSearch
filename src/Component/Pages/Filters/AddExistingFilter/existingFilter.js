@@ -5,11 +5,13 @@ import { Tooltip, OverlayTrigger} from "react-bootstrap";
 import { SortDown, Search, InfoCircle } from 'react-bootstrap-icons'
 import { useSelector, useDispatch } from 'react-redux';
 import { logFilterCount } from '../../../../Redux/Action/filterAction';
+  import Cookies from 'js-cookie';
+ 
 const ExistingFilter = () => {
   const dispatch = useDispatch();
   const caseData1 = useSelector((state) => state.caseData.caseData);
   const [filterdata, setfilterdata] = useState([])
-  
+  const token = Cookies.get('accessToken');
     const [filters, setFilters] = useState([
         { id: 1, name: "Ukraine War", created: "ashraf", modified: "ashraf", owner:"anon", description:"Lorem ipsum dolor sit amet consectetur adipisicing elit." },
         { id: 2, name: "Russia Attack", created: "11/04/2024", modified: "20/04/2024", owner:"anon", description:"Lorem ipsum dolor sit amet consectetur adipisicing elit." },
@@ -48,7 +50,12 @@ const ExistingFilter = () => {
 
           const filterData = async () => {
              try { 
-              const response = await axios.get(`http://5.180.148.40:9002/api/osint/filter/${caseData1.id}`);
+              const response = await axios.get(`http://5.180.148.40:9006/api/osint-man/v1/filters`,{
+                headers: {
+                  'Content-Type': 'application/json',
+                  'Authorization': `Bearer ${token}`,
+                },
+              });
                const user = response.data;
                console.log("user", user)
                dispatch(logFilterCount(user));
@@ -120,7 +127,7 @@ const ExistingFilter = () => {
               </OverlayTrigger>
             </span>
             <p className="existing-filters-li-p">owner: {filter.owner}</p>
-            <p className="existing-filters-li-p">Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
+            <p className="existing-filters-li-p">Demo Description{filter.description}</p>
           </li>
         ))
       ) : (

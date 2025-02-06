@@ -13,17 +13,13 @@ const AddNewFilter = () => {
   const [searchTerm, setSearchTerm] = useState('');
   const [newKeyword, setNewKeyword] = useState('');
   const [filterName, setFilterName] = useState('');
-  const [description, setDescription] = useState(''); // Added state for description
   const [taskId, setTaskId] = useState([]);
   const [filterId, setFilterId] = useState('');
-  const [sources, setSources] = useState([
-    { source: '', platform: [], keywords: [], url: '' },
-  ]);
+  const [sources, setSources] = useState([{ source: '', platform: [], keywords: [] }]);
   const containerRef = useRef(null);
 
   const dispatch = useDispatch();
   const caseData1 = useSelector((state) => state.caseData.caseData);
-
   const token = Cookies.get('accessToken');
 
   useEffect(() => {
@@ -45,7 +41,7 @@ const AddNewFilter = () => {
   const handlePlatformChange = (index, event) => {
     const value = event.target.value;
     const newSources = [...sources];
-    newSources[index].platform = value.split(',').map((p) => p.trim());
+    newSources[index].platform = value;
     setSources(newSources);
     setSelectedPlatform(value);
   };
@@ -73,17 +69,7 @@ const AddNewFilter = () => {
   };
 
   const handleAddSource = () => {
-    setSources([...sources, { source: '', platform: [], keywords: [], url: '' }]);
-  };
-
-  const handleUrlChange = (index, event) => {
-    const newSources = [...sources];
-    newSources[index].url = event.target.value;
-    setSources(newSources);
-  };
-
-  const handleDescriptionChange = (event) => {
-    setDescription(event.target.value);
+    setSources([...sources, { source: '', platform: [], keywords: [] }]);
   };
 
   useEffect(() => {
@@ -100,7 +86,6 @@ const AddNewFilter = () => {
           'Authorization': `Bearer ${token}`,
         },
       });
-      window.dispatchEvent(new Event("databaseUpdated"));
       setPlatforms(response.data.data);
     } catch (error) {
       console.error('Error fetching platforms:', error);
@@ -114,29 +99,27 @@ const AddNewFilter = () => {
   const handleSubmit = async () => {
     const postData = {
       name: filterName,
-      description: description, // Added description to postData
-      filter_criteria: sources.map((source) => ({
+      case_id: caseData1.id,
+      data: sources.map((source) => ({
         source: source.source,
         platform: source.platform,
         keywords: source.keywords,
-        url: source.source === 'Rss' ? source.url : undefined,
       })),
     };
-    console.log("postData", postData);
+   console.log("postData", postData)
     try {
       const response = await axios.post('http://5.180.148.40:9006/api/osint-man/v1/filter', postData, {
         headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${token}`,
-        },
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}`,
+          },
       });
 
       if (response.status === 200) {
         toast.success(`Filter Created Successfully: ${response.data.data.name}`);
         setFilterId(response.data.data.id);
         setFilterName('');
-        setDescription(''); // Clear description after submission
-        setSources([{ source: '', platform: [], keywords: [], url: '' }]);
+        setSources([{ source: '', platform: [], keywords: [] }]);
         setSourceExpand(false);
       } else {
         toast.error('Unexpected response from server.');
@@ -171,15 +154,13 @@ const AddNewFilter = () => {
             id="description"
             rows="3"
             maxLength="1000"
-            value={description}
-            onChange={handleDescriptionChange}
           ></textarea>
         </div>
 
         <div
           className="container-fluid mb-3 source-container-parent"
           ref={containerRef}
-          style={{ maxHeight: '300px', overflowY: 'auto', marginTop: '5px' }}
+          style={{ maxHeight: '300px', overflowY: 'auto', marginTop:'5px' }}
         >
           {sources.map((source, index) => (
             <div
@@ -215,7 +196,7 @@ const AddNewFilter = () => {
                       className="form-select source-select"
                       id={`platform-${index}`}
                       onChange={(e) => handlePlatformChange(index, e)}
-                      value={source.platform.join(',')}
+                      value={source.platform}
                     >
                       <option value="" disabled>
                         Select Platform
@@ -229,91 +210,73 @@ const AddNewFilter = () => {
                   </div>
                 )}
               </div>
-              {source.platform.length > 0 && (
-  <div className="row">
-    <div className="col-md-12">
-      <label htmlFor={`${source.platform}-keywords-${index}`} className="form-label source-label">
-        {source.platform} Keywords
-      </label>
-      <Dropdown className="w-100 keywords-dropdown" id={`${source.platform}-keywords-${index}`}>
-        <Dropdown.Toggle className="w-100 keywords-dropdown-toggle" variant="outline-secondary">
-          Select
-        </Dropdown.Toggle>
-        <Dropdown.Menu className="w-100 p-2 keywords-dropdown-menu" style={{ maxHeight: '300px', overflowY: 'auto' }}>
-          <InputGroup className="mb-2">
-            <Form.Control
-              placeholder="Search"
-              value={searchTerm}
-              onChange={(e) => setSearchTerm(e.target.value)}
-            />
-          </InputGroup>
-          <div className="d-flex mb-2">
-            <Form.Control
-              placeholder="Keyword"
-              value={newKeyword}
-              onChange={(e) => setNewKeyword(e.target.value)}
-              onKeyDown={(e) => handleKeyDown(index, e)}
-              className="me-2"
-            />
-          </div>
-          {source.keywords.map((keyword, keywordIndex) => (
-            <Badge
-              key={keywordIndex}
-              pill
-              bg="dark"
-              className="me-2 mb-2"
-              style={{
-                display: 'inline-flex',
-                alignItems: 'center',
-                minWidth: `${keyword.length * 6}px`,
-                maxWidth: '100%',
-                whiteSpace: 'nowrap',
-                overflow: 'hidden',
-                textOverflow: 'ellipsis',
-              }}
-            >
-              {keyword}
-              <Button size="sm" variant="dark" onClick={() => handleDeleteKeyword(index, keywordIndex)}>
-                x
-              </Button>
-            </Badge>
-          ))}
-        </Dropdown.Menu>
-      </Dropdown>
-    </div>
-  </div>
-)}
-              {source.source === 'Rss' && (
+              {source.platform && (
                 <div className="row">
                   <div className="col-md-12">
-                    <label htmlFor={`rss-url-${index}`} className="form-label source-label">
-                      RSS URL
+                    <label htmlFor={`${source.platform}-keywords-${index}`} className="form-label source-label">
+                      {source.platform
+                    //   .charAt(0).toUpperCase() + source.platform.slice(1)
+                    } Keywords
                     </label>
-                    <input
-                      type="text"
-                      className="form-control"
-                      id={`rss-url-${index}`}
-                      value={source.url}
-                      onChange={(e) => handleUrlChange(index, e)}
-                    />
+                    <Dropdown className="w-100 keywords-dropdown" id={`${source.platform}-keywords-${index}`}>
+                      <Dropdown.Toggle className="w-100 keywords-dropdown-toggle" variant="outline-secondary">
+                        Select
+                      </Dropdown.Toggle>
+                      <Dropdown.Menu className="w-100 p-2 keywords-dropdown-menu" style={{ maxHeight: '200px', overflowY: 'auto' }}>
+                        <InputGroup className="mb-2">
+                          <Form.Control
+                            placeholder="Search"
+                            value={searchTerm}
+                            onChange={(e) => setSearchTerm(e.target.value)}
+                          />
+                        </InputGroup>
+                        <div className="d-flex mb-2">
+                          <Form.Control
+                            placeholder="Keyword"
+                            value={newKeyword}
+                            onChange={(e) => setNewKeyword(e.target.value)}
+                            onKeyDown={(e) => handleKeyDown(index, e)}
+                            className="me-2"
+                          />
+                        </div>
+                        {source.keywords.map((keyword, keywordIndex) => (
+                          <Badge
+                            key={keywordIndex}
+                            pill
+                            bg="dark"
+                            className="me-2 mb-2"
+                            style={{
+                              display: 'inline-flex',
+                              alignItems: 'center',
+                              minWidth: `${keyword.length * 6}px`,
+                              maxWidth: '100%',
+                              whiteSpace: 'nowrap',
+                              overflow: 'hidden',
+                              textOverflow: 'ellipsis',
+                            }}
+                          >
+                            {keyword}
+                            <Button size="sm" variant="dark" onClick={() => handleDeleteKeyword(index, keywordIndex)}>
+                              x
+                            </Button>
+                          </Badge>
+                        ))}
+                      </Dropdown.Menu>
+                    </Dropdown>
                   </div>
                 </div>
               )}
             </div>
           ))}
-                  <div style={{ position: 'fixed',marginBottom:"5px", bottom:"50px", right: '40px', zIndex: '1000' }}>
-  <button type="button" className="btn btn-secondary add-new-filter-button" onClick={handleAddSource}>
-    Add New Source
-  </button>
-  <button type="button" className="btn btn-primary add-new-filter-button" style={{ marginLeft: '5px' }} onClick={handleSubmit}>
-    Proceed
-  </button>
-</div>
         </div>
 
+        <button type="button" className="btn btn-secondary add-new-filter-button" onClick={handleAddSource}>
+          Add New Source
+        </button>
+        <button type="button" className="btn btn-primary add-new-filter-button" onClick={handleSubmit}>
+          Proceed
+        </button>
       </form>
-
-      
     </>
   );
 };

@@ -128,7 +128,7 @@
   }
 
 .source-container-expanded {
-    height: 170px;
+    height: 140px;
   }
 
 .source-container-collapsed {
@@ -162,7 +162,8 @@
     border: 1px solid #000000;
     color: #000000;
     font-size: 12px;
-    
+    width: 200px !important;
+    height: 20px;
   }
   .keywords-dropdown-toggle:hover{
     background-color: #ffffff;
@@ -187,6 +188,7 @@
     background-color: #ffffff;
     color: #000000;
     border: 1px solid #000000;
+    width : 200px  !important;
   }
 
 .dd-opts-metadata{

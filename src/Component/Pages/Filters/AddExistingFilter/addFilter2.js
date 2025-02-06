@@ -51,7 +51,7 @@ const AddFilter2 = ({togglePopup}) => {
          
       </div>
       {/* <button className="btn  btn-secondary" onClick={() => window.history.back()} >Back</button> */}
-      <button className="btn btn-sm btn-secondary mb-3 proceed-button" >Proceed</button>
+      {/* <button className="btn btn-sm btn-secondary mb-3 proceed-button" >Proceed</button> */}
     </div>
     </div>
     </div>
