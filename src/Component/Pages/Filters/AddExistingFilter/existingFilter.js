@@ -57,7 +57,7 @@ const ExistingFilter = () => {
                 },
               });
                const user = response.data;
-               console.log("user", user)
+               console.log("filterData", user)
                dispatch(logFilterCount(user));
               //  setRefresh(true);
                 setfilterdata(user); // Update the state with usered data
@@ -117,8 +117,8 @@ const ExistingFilter = () => {
                 placement="right"
                 overlay={
                   <Tooltip id={`tooltip-${filter.id}`}>
-                    created: {filter.created} <br />
-                    modified: {filter.modified}
+                    created: {filter.created_by} <br />
+                    modified: {filter.modified_on}
                   </Tooltip>
                 }
                 trigger="hover"
@@ -126,8 +126,8 @@ const ExistingFilter = () => {
                 <InfoCircle style={{ color: 'black', fontSize: '1rem', cursor: 'pointer', marginLeft:".2rem" }} />
               </OverlayTrigger>
             </span>
-            <p className="existing-filters-li-p">owner: {filter.owner}</p>
-            <p className="existing-filters-li-p">Demo Description{filter.description}</p>
+            <p className="existing-filters-li-p">owner: {filter.created_by}</p>
+            <p className="existing-filters-li-p">description:{filter.description}</p>
           </li>
         ))
       ) : (

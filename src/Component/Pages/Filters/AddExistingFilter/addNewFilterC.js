@@ -14,7 +14,7 @@ const AddNewFilter = () => {
   const [newKeyword, setNewKeyword] = useState('');
   const [filterName, setFilterName] = useState('');
   const [taskId, setTaskId] = useState([]);
-  const [filterId, setFilterId] = useState('');
+  const [filterId, setFilterId] = useState([]);
   const [sources, setSources] = useState([{ source: '', platform: [], keywords: [] }]);
   const containerRef = useRef(null);
 
@@ -121,12 +121,59 @@ const AddNewFilter = () => {
         setFilterName('');
         setSources([{ source: '', platform: [], keywords: [] }]);
         setSourceExpand(false);
+         try {
+                  const startResponse = await axios.post('http://5.180.148.40:9006/api/osint-man/v1/start/',
+                     {
+                      filter_id: filterId,
+                      case_id: caseData1.id,
+                      interval: 10
+                    }, {
+                    headers: {
+                      'Content-Type': 'application/json',
+                      'Authorization': `Bearer ${token}`,
+                    },
+                  });
+                  window.dispatchEvent(new Event("databaseUpdated"));
+                  console.log('Start Task Response:', startResponse);
+                  console.log('Start Task ID:', startResponse.data.tasks);
+                  // addTask(startResponse.data.tasks)
+
+                  
+                  if (startResponse.status === 200) {
+                    toast.success('Task started successfully');
+        
+                    try {
+                      const updateStatusResponse = await axios.put(` http://5.180.148.40:9001/api/case-man/v1/case/${caseData1.id}`, { status: " In Progress" }, {
+                        headers: {
+                          'Content-Type': 'application/json',
+                          'Authorization': `Bearer ${token}`
+                        }
+                      });
+                      console.log('Update Status Response:', updateStatusResponse);
+                      if (updateStatusResponse.status === 200) {
+                        toast.success('Case status updated successfully');
+                      } else {
+                        toast.error('Unexpected response from server during status update.');
+                      }
+                    } catch (updateError) {
+                      console.error('Error updating status:', updateError);
+                      toast.error('Error during status update: ' + (updateError.response?.data?.detail || updateError.message));
+                    }
+        
+                  } else {
+                    toast.error('Unexpected response from server during task start.');
+                  }
+                } catch (startError) {
+                  console.error('Error starting task:', startError);
+                  toast.error('Error during task start: ' + (startError.response?.data?.detail|| startError.message));
+                }
+
       } else {
         toast.error('Unexpected response from server.');
       }
     } catch (error) {
       console.error('Error posting data:', error);
-      toast.error('Error during filter creation: ' + (error.response?.data?.detail || error.message));
+      toast.error((error.response?.data?.detail || error.message || 'Error during filter creation:'));
     }
   };
 

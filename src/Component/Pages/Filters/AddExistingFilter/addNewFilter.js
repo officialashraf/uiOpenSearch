@@ -15,7 +15,7 @@ const AddNewFilter = () => {
   const [filterName, setFilterName] = useState('');
   const [description, setDescription] = useState(''); // Added state for description
   const [taskId, setTaskId] = useState([]);
-  const [filterId, setFilterId] = useState('');
+  const [filterId, setFilterId] = useState([]);
   const [sources, setSources] = useState([
     { source: '', platform: [], keywords: [], url: '' },
   ]);
@@ -31,7 +31,7 @@ const AddNewFilter = () => {
     localStorage.setItem('filterId', filterId);
     dispatch(setTaskFilter(taskId, filterId));
   }, [taskId, filterId, dispatch]);
-
+ 
   const handleSourceChange = (index, event) => {
     const value = event.target.value;
     const newSources = [...sources];
@@ -130,14 +130,73 @@ const AddNewFilter = () => {
           'Authorization': `Bearer ${token}`,
         },
       });
-
+  
       if (response.status === 200) {
         toast.success(`Filter Created Successfully: ${response.data.data.name}`);
-        setFilterId(response.data.data.id);
+        // const filterId = response.data.data.id; // Save filterId in a local variable
+        // console.log("Filter Created Successfully:", filterId);
+        const newFilterId = response.data.data.id;
+        setFilterId((prevFilterIds) => [...prevFilterIds, newFilterId]);
+        console.log("filterId", response.data.data.id)
+      
         setFilterName('');
         setDescription(''); // Clear description after submission
         setSources([{ source: '', platform: [], keywords: [], url: '' }]);
         setSourceExpand(false);
+  
+        // Now start the task using the new filterId
+        try {
+          const startPayload = {
+            filter_id: filterId,
+            case_id:`${caseData1.id}`,
+            interval: 10
+          };
+          console.log("startPayload", startPayload);
+          const startResponse = await axios.post(`http://5.180.148.40:9006/api/osint-man/v1/start/`, 
+           startPayload
+          , {
+            headers: {
+              'Content-Type': 'application/json',
+              'Authorization': `Bearer ${token}`,
+            },
+          });
+  
+          window.dispatchEvent(new Event("databaseUpdated"));
+          console.log('Start Task Response:', startResponse);
+          console.log('Start Task ID:', startResponse.data.tasks);
+          // addTask(startResponse.data.tasks)
+          // setTaskId(prevTaskIds => [...prevTaskIds, ...startResponse.data.tasks.map(task => task)]);
+          // setFilterId(prevFilterIds => [...prevFilterIds, ...startResponse.data.filter_id.map(filter => filter)]);
+          if (startResponse.status === 200) {
+            toast.success('Task started successfully');
+  
+            try {
+              const updateStatusResponse = await axios.put(`http://5.180.148.40:9001/api/case-man/v1/case/${caseData1.id}`, { status: "in progress" }, {
+                headers: {
+                  'Content-Type': 'application/json',
+                  'Authorization': `Bearer ${token}`
+                }
+              });
+              console.log('Update Status Response:', updateStatusResponse);
+              if (updateStatusResponse.status === 200) {
+                toast.success('Case status updated successfully');
+              } else {
+                toast.error('Unexpected response from server during status update.');
+              }
+            } catch (updateError) {
+              console.error('Error updating status:', updateError);
+              toast.error('Error during status update: ' + (updateError.response?.data?.detail || updateError.message));
+            }
+  
+          } else {
+            toast.error('Unexpected response from server during task start.');
+            
+          }
+        } catch (startError) {
+          console.error('Error starting task:', startError);
+          toast.error('Error during task start: ' + (startError.response?.data?.detail || startError.message));
+        }
+  
       } else {
         toast.error('Unexpected response from server.');
       }
@@ -146,7 +205,7 @@ const AddNewFilter = () => {
       toast.error('Error during filter creation: ' + (error.response?.data?.detail || error.message));
     }
   };
-
+  
   return (
     <>
       <form>

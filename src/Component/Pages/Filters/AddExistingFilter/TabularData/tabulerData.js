@@ -2,6 +2,7 @@
 import { Table, Pagination } from 'react-bootstrap';
 import React, { useState, useEffect } from 'react'
 import Cookies from "js-cookie";
+import axios from 'axios';
 //import Pagination from "./pagination";
 import '../../../../../Assets/Stlyes/Filter/caseTableData.css'
 import { useSelector,useDispatch } from 'react-redux';
@@ -10,41 +11,55 @@ import { setSummaryData } from '../../../../../Redux/Action/caseAction';
 const TabulerData = () => {
     const dispatch = useDispatch();
     const data1 = useSelector((state) => state.caseData.caseData)
+    console.log("data1", data1)
     const [headers, setHeaders] = useState([]);
 // const [summary, setSummary] = useState(second)
     const [data, setData] = useState(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
     const [currentPage, setCurrentPage] = useState(1);
-    const [itemsPerPage] = useState(50);
+    const itemsPerPage = 50;
 
     useEffect(() => {
         fetchCaseData();
-    }, [dispatch]);
+    }, []);
 
     const fetchCaseData = async () => {
           const token = Cookies.get("accessToken");
         try {
-            const response = await fetch('http://5.180.148.40:9005/api/opensearch/case-id/a7924f64-0c7f-431b-90bf-52dd4c06e9b4', {
-                method: 'GET',
+            const queryData = {
+                query:{
+                    case_id:`${data1.id}`
+                }
+            }
+            const response = await axios.post('http://5.180.148.40:9005/api/das/search', queryData,{
                 headers: {
                     'Content-Type': 'application/json',
                      'Authorization': `Bearer ${token}`
                 },
             });
             console.log("Response:", response);
-            if (!response.ok) {
-                // Handle HTTP errors
-                throw new Error(`HTTP error! status: ${response.status}`);
-            }
-            const data = await response.json();
-             dispatch(setSummaryData(data))
-            const dataArray = data.response;
-            console.log("summaryData",)
-console.log("datarray", dataArray)
-            if (Array.isArray(dataArray) && dataArray.length > 0 && dataArray[0]) {
+            // if (!response.ok) {
+            //     // Handle HTTP errors
+            //     throw new Error(`HTTP error! status: ${response.status}`);
+            // }
+            // const data = await response.json();
+            //  dispatch(setSummaryData(data))
+            const dataArray =response.data.response;
+            // console.log("summaryData",)
+            console.log("datarray", dataArray)
+            if (Array.isArray(dataArray) && dataArray.length > 0 ) {
                 const firstFiftyItems = dataArray;
-               setHeaders(Object.keys(firstFiftyItems[0]));
+                const allKeys = new Set();
+                firstFiftyItems.forEach(item => {
+                  Object.keys(item).forEach(key => {
+                    allKeys.add(key);
+                  });
+                });
+          
+                // Convert the set of keys to an array and set as headers
+                setHeaders(Array.from(allKeys));
+               //setHeaders( Object.keys(firstFiftyItems[0]));
                 setData(firstFiftyItems);
                
        
@@ -76,21 +91,19 @@ console.log("datarray", dataArray)
     console.log("headersssss", headers)
     const indexOfLastItem = currentPage * itemsPerPage;
     const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-    const currentItems = data.slice(indexOfFirstItem, indexOfLastItem);
+    const currentItems = data ? data.slice(indexOfFirstItem, indexOfLastItem) : [];
+
 
     // Handle page change
     const handlePageChange = (pageNumber) => setCurrentPage(pageNumber);
 
     // Create page numbers
-    const pageNumbers = [];
-    for (let i = 1; i <= Math.ceil(data.length / itemsPerPage); i++) {
-        pageNumbers.push(i);
-    }
+    const pageNumbers = data ? Array.from({ length: Math.ceil(data.length / itemsPerPage) }, (_, i) => i + 1) : [];
     return (
         <>
             <div className="case-t" style={{ overflow: "auto", height: "390px", fontSize: "10px" }} >
 
-                {data.length > 0 ? (
+                {data && data.length > 0 ? (
                      <Table striped bordered hover>
                        <thead>
                          <tr>
@@ -102,7 +115,7 @@ console.log("datarray", dataArray)
                          </tr>
                        </thead>
                        <tbody>
-                         {data.map((item, index) => (
+                         {currentItems.map((item, index) => (
                            <tr key={index}>
                              {headers.map((header) => (
                               <td key={header} className="fixed-td">

@@ -70,7 +70,7 @@ const handleCreateCase = async (formData) => {
   
     } catch (err) {
       console.error("Error during case creation:", err.response || err);
-      toast.error("Error during case creation: " + (err.response?.data?.detail || err.message));
+      toast.error( (err.response?.data?.detail || err.message || "Error during case creation: " ));
     }
   };
 

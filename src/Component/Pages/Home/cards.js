@@ -8,12 +8,12 @@ import Cookies from "js-cookie";
 
   const cardTemplate = [
     { icon: <Folder size={15} />, name: 'All Files', key: 'case_count' },
-    { icon: <FileEarmarkPlus size={15} />, name: 'New Files', key: 'new' },
-    { icon: <PieChart size={15} />, name: 'In Progress', key: 'in progress' },
-    { icon: <Check2Circle size={15} />, name: 'Closed', key: 'closed' },
-    { icon: <PauseCircle size={15} />, name: 'On Hold', key: 'on hold' },
-    { icon: <Archive size={15} />, name: 'Archived', key: 'archived' },
-    { icon: <Trash size={15} />, name: 'Deleted', key: 'deleted' },
+    { icon: <FileEarmarkPlus size={15} />, name: 'New Files', key: 'New' },
+    { icon: <PieChart size={15} />, name: 'In Progress', key: 'In Progress' },
+    { icon: <Check2Circle size={15} />, name: 'Closed', key: 'Closed' },
+    { icon: <PauseCircle size={15} />, name: 'On Hold', key: 'On Hold' },
+    { icon: <Archive size={15} />, name: 'Archived', key: 'Archived' },
+    { icon: <Trash size={15} />, name: 'Deleted', key: 'Deleted' },
   ];
 
 const StatusCard = ({ name, number, icon })=> {
@@ -43,19 +43,20 @@ const CardList = ()=> {
     try {
       const response = await axios.get('http://5.180.148.40:9001/api/case-man/v1/case/states-count',{
         headers: {
-          'Content-Type': 'application/json',
+         'Content-Type': 'application/json',
           'Authorization': `Bearer ${Token}`
         },
       });
      
       const apiData = response.data;
-       
+      
       const updatedData = cardTemplate.map(item => ({
         ...item,
         number: apiData[item.key] || 0
       }));
+      console.log("updateData",updatedData)
       setCardData(updatedData);
-      
+     
     } catch (error) {
       console.error('Error fetching data:', error);
     }
