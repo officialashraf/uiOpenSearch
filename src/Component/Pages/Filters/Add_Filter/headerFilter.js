@@ -29,7 +29,7 @@ const HeaderFilter = () => {
         <Col xs={11}>
           <Nav className="flex-column">
             <Nav.Item className="d-flex align-items-center">
-              <span>ID:{caseData1.id}</span>
+              <span>ID:{`CASE${String(caseData1.id).padStart(4, '0')}`}</span>
               </Nav.Item> 
               <Nav.Item>
              <span className='caseName'>{caseData1.title} </span> <FaFileAlt className="ml-3" />  <Badge pill bg="dark">
@@ -41,10 +41,10 @@ const HeaderFilter = () => {
       </Row>
       
       </Container>
-      <Button  className='analyze-btn' onClick={handleClick} >
+      <button  className='analyze-btn' onClick={handleClick} >
         {/* <FaChartLine /> */}
          Analyze
-      </Button>
+      </button>
     </Navbar>
   );
 };

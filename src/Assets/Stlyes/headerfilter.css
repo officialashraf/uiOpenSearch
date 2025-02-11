@@ -1,9 +1,13 @@
 .analyze-btn {
+  border: none;
+    border-radius: 5px;
     background-color: gray;
     color: white;
     margin-top: 0px !important;
     margin-right: 40px;
-    border-color: gray;
+    font-size: 12px;
+    padding: opx !important;
+  
   }
   .analyze-btn:hover {
    background-color: black;

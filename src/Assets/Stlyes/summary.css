@@ -38,3 +38,8 @@ g.recharts-layer .recharts-bar :hover{
   .filterCount{
     align-items: center;
   }
+
+  .input:-webkit-autofill {
+    background-color: transparent !important;
+    transition: background-color 5000s ease-in-out 0s;
+  }

@@ -140,12 +140,15 @@
   }
 
   .source-select {
-    max-width: 70%;
+    max-width: 100%;
     background-color: #ffffff;
     border: 1px solid #000000;
-    margin: 0px 16px;
+    margin: 0px 0px;
     font-size: 12px;
   }
+ .form-select{
+  padding: 0rem 0rem 0rem 0.4rem !important 
+}
   .source-select:focus {
     box-shadow: none;
     border: 1px solid #000000;

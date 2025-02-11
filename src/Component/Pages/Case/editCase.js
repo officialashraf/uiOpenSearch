@@ -9,11 +9,11 @@ const EditCase = ({ togglePopup, item }) => {
   const [formData, setFormData] = useState({
     title: item.title || "",
     description: item.description || "",
-    status: item.status || '',
-    watchers: item.watchers.join(", ") || '',
+    // status: item.status || '',
+    watchers: item.watchers.join(", ") || [],
     assignee: item.assignee || '',
   });
-console.log("item.id", item.id)
+console.log("item.id", item)
  const [users, setUsers] = useState([]);
  const options = users.data && users.data.map(user => ({
   value: user.id,
@@ -45,18 +45,22 @@ console.log("item.id", item.id)
       return;
     }
     try {
-      const response = await axios.put(`http://5.180.148.40:9001/api/case-man/v1/case/${item.id}`, {
-        title: formData.title,
-        description: formData.description,
-        status: formData.status,
-        assignee: formData.assignee,
-        watchers: formData.watchers.split(", "),
-      }, {
+      const updateData = {
+    
+          title: formData.title,
+          description: formData.description,
+          // status: formData.status,
+          assignee: formData.assignee,
+          watchers: formData.watchers.split(", "),
+    
+      }
+      const response = await axios.put(`http://5.180.148.40:9001/api/case-man/v1/case/${item.id}`,updateData ,{
         headers: {
           'Content-Type': 'application/json',
           'Authorization': `Bearer ${token}`
         }
       });
+      console.log("updated aDate", updateData)
       window.dispatchEvent(new Event("databaseUpdated"));
       if (response.status === 200) {
         toast.success("Case Edited Successfully");
@@ -69,7 +73,8 @@ console.log("item.id", item.id)
       toast.error("Error during case editing: " + (err.response?.data?.detail || err.message));
     }
   };
- 
+  console.log("Options:", options);
+  console.log("formData.assignee:", formData.assignee);
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -90,7 +95,9 @@ console.log("item.id", item.id)
   const handleAssigneeChange = (selectedOption) => {
     setFormData((prevData) => ({
       ...prevData,
-      assignee: selectedOption ?  parseInt(selectedOption.value, 10) : ''
+      assignee:  selectedOption.value
+      
+      //selectedOption ?  parseInt(selectedOption.value, 10) : ''
     }));
   };
 
@@ -180,7 +187,8 @@ console.log("item.id", item.id)
             styles={customStyles}
             className="com"
             placeholder="Select Assignee"
-            value={options && options.find((option) => option.value === formData.assignee) || null}
+           // defaultValue={options && options.find((option) => option.label )}
+           defaultValue={options && options.find((option) => option.label   ) || null}
             onChange={handleAssigneeChange}
           />
               

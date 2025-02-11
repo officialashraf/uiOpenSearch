@@ -29,7 +29,7 @@ const TabulerData = () => {
         try {
             const queryData = {
                 query:{
-                    case_id:`${data1.id}`
+                  unified_case_id:`${data1.id}`
                 }
             }
             const response = await axios.post('http://5.180.148.40:9005/api/das/search', queryData,{

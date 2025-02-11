@@ -1,43 +1,68 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import axios from 'axios';
+import ProgressRow from "./Summary/progressBar.js";
 import { Container, Box, Typography, Table, TableContainer,TableFooter, TableBody, TableCell, TableHead, TableRow, Paper } from '@mui/material';
 import { PieChart, Pie, Tooltip, Legend, ResponsiveContainer } from 'recharts';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid,Cell, Tooltip as BarTooltip } from 'recharts';
+import AddFilter2 from '../AddExistingFilter/addFilter2.js';
+//import  '../../../../Assets/Stlyes/summary.css'
 
-const Summary = () => {
+const Summary = ({filters}) => {
+  console.log(filters,"hshs")
   const [pieData, setPieData] = useState([]);
   const [barData, setBarData] = useState([]);
   const [tableData, setTableData] = useState([]);
   const [totalCount, setTotalCount] = useState(0);
+  const [showPopup, setShowPopup] = useState(false);
 
-  const caseId = useSelector((state) => state.caseData.caseData.case_id);
-
+  const caseId = useSelector((state) => state.caseData.caseData.id);
+console.log("caseId", caseId)
+const filterCount = useSelector((state) => state.filterCount.filterCount.count);
   useEffect(() => {
     const fetchData = async () => {
       try {
         const response = await axios.post('http://5.180.148.40:9005/api/das/aggregate', {
           query: {
-            case_id: caseId
+            unified_case_id: caseId
           }
         });
-
+        console.log("summrydatata", response.data)
         const { social_media, rss, dates } = response.data;
 
         // Determine the data for the pie chart
         let pieSource = [];
-        if (social_media) pieSource.push({ name: 'social_media', value: social_media.length });
-        if (rss) pieSource.push({ name: 'rss', value: rss.length });
-
+        if (social_media) pieSource.push({ name: 'Social Media', value: social_media.length });
+        if (rss) pieSource.push({ name: 'RSS', value: rss.length });
+        
+        if ( response.data.social_media.length === 0) {
+          pieSource.push({ name: 'No Data', value: 0 });
+        }
+        
+       
         // Determine the data for the bar chart
-        const barData = dates.map(item => ({
-          name: item.key,
-          value: item.doc_count
-        }));
+        // const barData = dates.length > 0 ? dates.map(item => ({
+        //   name: item.key,
+        //   value: item.doc_count
+        // })) : [{ name: 'No Data', value: 0 }];
+
+        const isWithinLastWeek = (date) => {
+          const now = new Date();
+          const oneWeekAgo = new Date(now.getFullYear(), now.getMonth(), now.getDate() - 7);
+          return new Date(date) >= oneWeekAgo && new Date(date) <= now;
+        };
+        
+        // Filter dates for the last week and map to barData
+        const barData = dates.length > 0 ? dates
+          .filter(item => isWithinLastWeek(item.key))
+          .map(item => ({
+            name: item.key,
+            value: item.doc_count
+          })) : [{ name: 'No Data', value: 0 }];
 
         // Determine the data for the table
         const tableData = (social_media || []).concat(rss || []);
-        const totalCount = tableData.reduce((sum, item) => sum + item.doc_count, 0);
+        const totalCount = tableData.reduce((sum, item) => sum +(item.doc_count || 0), 0);
 
         setPieData(pieSource);
         setBarData(barData);
@@ -45,23 +70,37 @@ const Summary = () => {
         setTotalCount(totalCount);
       } catch (error) {
         console.error('Error fetching data:', error);
+        setPieData([{ name: 'No Data', value: 0 }]);
+        setTableData([]);
+        setTotalCount(0);
       }
     };
 
     fetchData();
   }, [caseId]);
+  const togglePopup = () => {
+    setShowPopup((prev) => !prev);
+  }; 
+
 
   return (
+    <>
     <Container>
       <Box width="100%">
         <Box display="flex" justifyContent="space-between" alignItems="center" mb={1} mt={2}>
-          <Typography variant="h5">Summary</Typography>
+          <h5 variant="h5">Summary</h5>
         </Box>
-
-        <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: '5rem' }}>
+        <Box display="flex" justifyContent="flex-end" alignItems="center" mb={1} mt={2}>
+    <button  className="add-new-filter-button" onClick={togglePopup}>Add Resources</button>
+  </Box>
+  <ProgressRow  label="Overall Progress" />
+      <h5 style={{textAlign:"center"}}> FilterCount:{filters}</h5>
+        <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: '1rem' }}>
           <Box width={400} height={300} className="box">
             <ResponsiveContainer width={400} height={300}>
+            
               <PieChart>
+              <Legend align="center" verticalAlign="top" />
                 <Pie
                   data={pieData}
                   cx="50%"
@@ -70,14 +109,19 @@ const Summary = () => {
                   outerRadius={80}
                   fill="#333"
                   dataKey="value"
-                  label={({ name }) => name}
+                  label={({ name }) =>name }
                 >
-                  {pieData.map((entry, index) => (
-                    <Cell key={`cell-${index}`} fill="#333" />
-                  ))}
+                {pieData.map((entry, index) => (
+          <Cell key={`cell-${index}`} fill="#333">
+           
+          
+          </Cell>))}
                 </Pie>
-                <Tooltip />
-                <Legend />
+            
+                <Tooltip
+              formatter={() => ` Total: ${totalCount}`}
+                />
+              
               </PieChart>
             </ResponsiveContainer>
           </Box>
@@ -88,7 +132,7 @@ const Summary = () => {
                 <CartesianGrid strokeDasharray="3 3" />
                 <XAxis dataKey="name" />
                 <YAxis />
-                <Bar dataKey="value" fill="#333" />
+                <Bar dataKey="value" fill="#333" barSize={15}/>
                 <BarTooltip />
               </BarChart>
             </ResponsiveContainer>
@@ -96,7 +140,7 @@ const Summary = () => {
 
           <Box width={400} height={300} className="box">
             <TableContainer component={Paper} height={300}>
-              <Table>
+              <Table width={400} height={300}>
                 <TableHead>
                   <TableRow>
                     <TableCell>Platform</TableCell>
@@ -123,6 +167,8 @@ const Summary = () => {
         </div>
       </Box>
     </Container>
+     {showPopup && <AddFilter2 togglePopup={togglePopup} />}
+     </>
   );
 };
 

@@ -8,13 +8,13 @@ const CaseHeader = ({ onIconClick }) => {
   const caseData1 = useSelector((state) => state.caseData.caseData);
   const navigate = useNavigate();
   const backToSnap = () => {
-    navigate('/cases');
+    navigate(`/cases/${caseData1.id}`);
   };
   return (
     <>
     <div className='row header-row' style={{background: 'darkgray', color:'white',display: 'flex', marginLeft: '0rem', marginRight: '0rem', height:"40px"}} >
         <div className='col ' >
-            <h5 className="header-caseid-h7" >Case id: {caseData1.id}</h5>
+            <h5 className="header-caseid-h7" >Case id: {`CASE${String(caseData1.id).padStart(4, '0')}`}</h5>
             <p className='header-casename-h5' >{caseData1.title}</p>
         </div>
         <div className='col d-flex justify-content-center align-items-center'>
