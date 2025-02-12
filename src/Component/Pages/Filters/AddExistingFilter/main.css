@@ -49,7 +49,7 @@
 .exist-filter{
   overflow:auto;
   height:450px;
-  width: 150px;
+  width: 170px;
   scrollbar-width:thin;
   border: 1px solid #000000 ;
   border-radius: 5px;
@@ -147,7 +147,8 @@
     font-size: 12px;
   }
  .form-select{
-  padding: 0rem 0rem 0rem 0.4rem !important 
+  padding: 0rem 0rem 0rem 0.4rem !important;
+  font-size:12px;
 }
   .source-select:focus {
     box-shadow: none;
@@ -241,7 +242,11 @@
 }
 .col-md-4 {
   flex: 0 0 auto;
-  width: 29.33333333%;
+  width: 30.33333333%;
+}
+.col-md-8 {
+  flex: 0 0 auto;
+  width: 69.33333333%;
 }
 p{
   font-size: 12px;

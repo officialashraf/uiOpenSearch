@@ -25,7 +25,7 @@ const AddFilter2 = ({togglePopup}) => {
   return (
    <>
      <div className="popup-overlay" style={{ trigger:['hover, focus']}} >
-      <div className="popup-container">
+      <div className="popup-container" style={{width:'50%'}}>
       <button className="close-icon" onClick={togglePopup}>
           &times;
         </button>
