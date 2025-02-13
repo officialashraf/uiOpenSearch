@@ -2,6 +2,7 @@
     padding: 0px 5px ;
     font-size: 12px;
     height: 10px !important;
+    background-color: lightgrey;
 
 } 
 
@@ -9,6 +10,10 @@
     padding: 0px 5px ;
     font-size: 12px;
     height: 10px !important;
+    background-color: lightgrey;
+}
+.css-1xwxv7r-MuiTable-root {
+    background-color: lightgray !important;
 }
 g.recharts-layer .recharts-bar :hover{
     columns: red;

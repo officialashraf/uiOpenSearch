@@ -215,7 +215,7 @@ cursor: pointer;
     } 
     .rounded-pill {
       border-radius: 5px !important;
-       width: 90px; 
+       /* width: 90px;  */
     }
 
       /* .table-responsive {

@@ -14,7 +14,7 @@ import Summary from './Component/Pages/Filters/Add_Filter/summary.js';
 import LineChart1 from './Component/Pages/Filters/AddExistingFilter/TabularData/lineChart.js';
 import KeywordChart from './Component/Pages/Filters/AddExistingFilter/TabularData/keywordChart.js';
 import GraphicalData from './Component/Pages/Filters/AddExistingFilter/TabularData/graphicalData.js';
-
+import './App.css'
 
 
 const AppContent = () => {
@@ -43,7 +43,7 @@ const AppContent = () => {
             <Route path="/key" element={< KeywordChart/>} />
             <Route path="/line" element={<LineChart1 />} />
             <Route path="/grapg" element={< GraphicalData />} />
-            <Route path="*" element={<div>Page Not Found</div>} />
+            <Route path="*" element={<div className='notfound'> <h4>Work in progress........</h4></div>} />
           </Routes>
         </div>
 

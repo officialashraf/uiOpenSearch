@@ -27,7 +27,7 @@ const Header = ({ title }) => (
 );
 
 const ComponentOne = () => (
-  <Card  sx={{ height: "235px", backgroundColor: "gray", boxShadow: 2 }}>
+  <Card  sx={{ height: "235px", backgroundColor: "lightgray", boxShadow: 2 }}>
     <Header title="Timeline" />
     <CardContent>
     <LineChart1/>
@@ -36,7 +36,7 @@ const ComponentOne = () => (
 );
 
 const ComponentTwo = () => (
-  <Card  sx={{ height: "235px" ,backgroundColor: "gray", boxShadow: 2 }}>
+  <Card  sx={{ height: "235px" ,backgroundColor: "lightgray", boxShadow: 2 }}>
     <Header title="Keywords" />
     <CardContent>
     <KeywordChart/>
@@ -45,7 +45,7 @@ const ComponentTwo = () => (
 );
 
 const ComponentThree = () => (
-  <Card  sx={{ height: "235px", backgroundColor: "gray", boxShadow: 2 }}>
+  <Card  sx={{ height: "235px", backgroundColor: "lightgray", boxShadow: 2 }}>
     <Header title="Location" />
     <CardContent>
       <Typography mt={10} ml={10}> No Data </Typography>
@@ -55,7 +55,7 @@ const ComponentThree = () => (
 
 const GraphicalData = () => {
   return (
-    <Grid container spacing={1} p={1} style={{background:"gray", marginLeft:"0 px !important"}}>
+    <Grid container spacing={1} p={1} style={{background:"lightgray", marginLeft:"0 px !important"}}>
       <Grid item xs={12}  sx={{ paddingLeft: '0px !important',  paddingTop:"0px !important"}}>
       <ComponentOne/>
       </Grid>

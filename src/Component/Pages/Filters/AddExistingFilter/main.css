@@ -230,8 +230,8 @@
     color: black  ;
 }
 .search_input {
-    width:50px;
-     padding: 5px; 
+    width:70px;
+     padding: 10px; 
      /* margin-bottom: 15px;  */
     border: 1px solid #ccc;
     border-radius: 3.5px;

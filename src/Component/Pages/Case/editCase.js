@@ -201,7 +201,12 @@ console.log("item.id", item)
               className="com"
               name="watchers"
               placeholder="Select Watchers"
-              value={options && options.filter((option) => formData.watchers.split(", ").includes(option.label))}
+              //value={options && options.filter((option) => formData.watchers.split(", ").includes(option.label))}
+              value={
+                options?.filter((option) =>
+                  (formData.watchers ? String(formData.watchers).split(", ") : []).includes(option.label)
+                ) || []
+              }
               onChange={handleWatchersChange}
             />
             <div className="button-container">

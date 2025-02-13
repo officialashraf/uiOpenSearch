@@ -8,7 +8,13 @@
   pointer-events: none;
 }
 
-
+.notfound{
+  display: flex;
+  height:100%;
+   justify-content: center;
+   align-items: center;
+   border:none;
+}
 @media (prefers-reduced-motion: no-preference) {
   .App-logo {
     animation: App-logo-spin infinite 20s linear;

@@ -29,7 +29,7 @@ const ChartsRow = ({ pieData, barData, tableData }) => {
           <thead>
             <tr>
               {tableData.headers.map((header, index) => (
-                <th key={index}  style={{background:"gray"}}>{header}</th>
+                <th key={index}  >{header}</th>
               ))}
             </tr>
           </thead>
@@ -37,7 +37,7 @@ const ChartsRow = ({ pieData, barData, tableData }) => {
             {tableData.rows.map((row, index) => (
               <tr key={index} >
                 {row.map((cell, i) => (
-                  <td key={i} style={{background:"gray"}}>{cell}</td>
+                  <td key={i} >{cell}</td>
                 ))}
               </tr>
             ))}

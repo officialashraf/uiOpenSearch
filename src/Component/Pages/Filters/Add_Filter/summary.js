@@ -6,7 +6,8 @@ import { Container, Box, Typography, Table, TableContainer,TableFooter, TableBod
 import { PieChart, Pie, Tooltip, Legend, ResponsiveContainer } from 'recharts';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid,Cell, Tooltip as BarTooltip } from 'recharts';
 import AddFilter2 from '../AddExistingFilter/addFilter2.js';
-//import  '../../../../Assets/Stlyes/summary.css'
+import { light } from '@mui/material/styles/createPalette.js';
+import  '../../../../Assets/Stlyes/summary.css'
 
 const Summary = ({filters}) => {
   console.log(filters,"hshs")
@@ -138,7 +139,7 @@ const filterCount = useSelector((state) => state.filterCount.filterCount.count);
             </ResponsiveContainer>
           </Box>
 
-          <Box width={400} height={300} className="box">
+          <Box width={400} height={300}  className="box">
             <TableContainer component={Paper} height={300}>
               <Table width={400} height={300}>
                 <TableHead>

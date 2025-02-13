@@ -182,8 +182,11 @@ const DataTable = () => {
         if (typeof a[key] === 'number' && typeof b[key] === 'number') {
             return direction === 'asc' ? a[key] - b[key] : b[key] - a[key];
         } else {
-            const aValue = a[key].toString();
-            const bValue = b[key].toString();
+            const aValue = a[key] ?? null;
+            const bValue = b[key]?? null;
+            if (aValue === null && bValue === null) return 0;
+            if (aValue === null) return 1;
+            if (bValue === null) return -1;
             if (aValue < bValue) {
                 return direction === 'asc' ? -1 : 1;
             }

@@ -7,8 +7,8 @@ import { useEffect, useState,useCallback } from 'react';
 import Cookies from "js-cookie";
 
   const cardTemplate = [
-    { icon: <Folder size={15} />, name: 'All Files', key: 'case_count' },
-    { icon: <FileEarmarkPlus size={15} />, name: 'New Files', key: 'New' },
+    { icon: <Folder size={15} />, name: 'All Cases', key: 'case_count' },
+    { icon: <FileEarmarkPlus size={15} />, name: 'New Cases', key: 'New' },
     { icon: <PieChart size={15} />, name: 'In Progress', key: 'In Progress' },
     { icon: <Check2Circle size={15} />, name: 'Closed', key: 'Closed' },
     { icon: <PauseCircle size={15} />, name: 'On Hold', key: 'On Hold' },

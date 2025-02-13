@@ -1,14 +1,21 @@
-import React from 'react'
+import React,{useState} from 'react'
 import {useSelector} from 'react-redux'
 import {ListAltOutlined, PieChart, MoreVert} from '@mui/icons-material';
 import '../../../../../Assets/Stlyes/tabulerHeader.css'
 import { useNavigate } from "react-router-dom";
-
+import AddFilter2 from '../addFilter2';
 const CaseHeader = ({ onIconClick }) => {
+  const [showPopup, setShowPopup] = useState(false);
   const caseData1 = useSelector((state) => state.caseData.caseData);
   const navigate = useNavigate();
   const backToSnap = () => {
     navigate(`/cases/${caseData1.id}`);
+  };
+  const backToCase = () => {
+    navigate(`/cases`);
+  };
+  const togglePopup = () => {
+    setShowPopup((prev) => !prev);
   };
   return (
     <>
@@ -18,9 +25,9 @@ const CaseHeader = ({ onIconClick }) => {
             <p className='header-casename-h5' >{caseData1.title}</p>
         </div>
         <div className='col d-flex justify-content-center align-items-center'>
-              <button className="add-new-filter-button ">Resources</button>
-              <button className="add-new-filter-button" style={{marginLeft:'12px'}}>Case board</button>
-              <button className="add-new-filter-button" style={{marginLeft:'12px'}}onClick={backToSnap}>  Back to Case Snapshot</button>
+              <button className="add-new-filter-button" onClick={togglePopup} >Resources</button>
+              <button className="add-new-filter-button" style={{marginLeft:'12px'}} onClick={backToCase}>Case board</button>
+              <button className="add-new-filter-button" style={{marginLeft:'12px'}} onClick={backToSnap}>  Back to Case Snapshot</button>
         </div>
         {/* <div className='col d-flex justify-content-end align-items-center' >
             <button className="add-new-filter-button ">  Back to Case Snapshot</button>
@@ -47,6 +54,7 @@ const CaseHeader = ({ onIconClick }) => {
          <MoreVert className="icon-style" />
   </div>
 </div>
+{showPopup && <AddFilter2 togglePopup={togglePopup} />}
     </>
   )
 }

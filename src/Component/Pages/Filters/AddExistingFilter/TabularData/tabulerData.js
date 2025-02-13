@@ -6,6 +6,7 @@ import axios from 'axios';
 //import Pagination from "./pagination";
 import '../../../../../Assets/Stlyes/Filter/caseTableData.css'
 import { useSelector,useDispatch } from 'react-redux';
+import '../../../../../services/pagination.css'
 import { setSumaryHeadersAction, setSummaryDataAction } from '../../../../../Redux/Action/filterAction';
 import { setSummaryData } from '../../../../../Redux/Action/caseAction';
 const TabulerData = () => {
@@ -101,7 +102,7 @@ const TabulerData = () => {
     const pageNumbers = data ? Array.from({ length: Math.ceil(data.length / itemsPerPage) }, (_, i) => i + 1) : [];
     return (
         <>
-            <div className="case-t" style={{ overflow: "auto", height: "390px", fontSize: "10px" }} >
+            <div className="case-t" style={{ overflowY: "auto", height: "450px", fontSize: "10px" }} >
 
                 {data && data.length > 0 ? (
                      <Table striped bordered hover>
