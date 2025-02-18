@@ -1,48 +1,67 @@
-import React from 'react';
-import { Box , Slider } from '@mui/material';
-import { LineChart, Line, XAxis, YAxis, Tooltip, Legend } from 'recharts';
 
-const data = [
-  { name: 'Jan', uv: 4000, pv: 2400, amt: 2400 },
-  { name: 'Feb', uv: 3000, pv: 1398, amt: 2210 },
-  { name: 'Mar', uv: 2000, pv: 9800, amt: 2290 },
-  { name: 'Apr', uv: 2780, pv: 3908, amt: 2000 },
-  { name: 'May', uv: 1890, pv: 4800, amt: 2181 },
-  { name: 'Jun', uv: 2390, pv: 3800, amt: 2500 },
-  { name: 'Jul', uv: 3490, pv: 4300, amt: 2100 },
-];
+
+import React, { useState, useEffect } from 'react';
+import { Box , Slider } from '@mui/material';
+import { LineChart, Line, XAxis, YAxis, Tooltip, Legend, CartesianGrid, ReferenceLine } from 'recharts';
+import { useSelector } from 'react-redux';
+import axios from 'axios';
+
 
 const LineChart1 = () => {
+  const [data, setData] = useState([]);
+  const caseId = useSelector((state) => state.caseData.caseData.id);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await axios.post('http://5.180.148.40:9005/api/das/aggregate', {
+          query: { unified_case_id: caseId },
+          aggs_fields: ["unified_date_only", "unified_record_type"]
+        });
+
+        console.log("line", response);
+
+        const { unified_date_only } = response.data;
+        if (unified_date_only) {
+          setData(unified_date_only);
+        } else {
+          setData([]); // Set data to an empty array if unified_date_only is undefined
+        }
+      } catch (error) {
+        console.error('Error fetching data:', error);
+        setData([]); // Set data to an empty array on error
+      }
+    };
+
+    fetchData();
+  }, [caseId]);
+
   return (
-<>
-<Box  height={250} sx={{ marginTop: 1 }}>
+    <Box height={250} sx={{ marginTop: 1 }}>
       <LineChart width={1200} height={150} data={data}>
-        {/* <CartesianGrid strokeDasharray="3 3" /> */}
-        <XAxis dataKey="name" tick={{ fontSize: 10 }}/>
+        <CartesianGrid strokeDasharray="3 3" />
+        <XAxis dataKey="key" tick={{ fontSize: 10 }} />
         <YAxis tick={{ fontSize: 10 }} />
-        <Tooltip />
+        <Tooltip content={({ payload }) => payload.length ? `doc_count: ${payload[0].value}` : ''} />
         <Legend />
-        
-        <Line type="monotone" dataKey="pv" stroke="darkgray" />
+        <ReferenceLine y={1539} stroke="darkgray" dataKey="doc_count" strokeWidth={2}  label="social_media" />
+        <ReferenceLine y={29} stroke="darkgray" dataKey="doc_count" strokeWidth={2}  label="rss" />
+        <Line type="monotone" dataKey="doc_count" stroke="darkgray"  strokeWidth={2} />
       </LineChart>
       <Slider
         defaultValue={50}
         min={0}
         max={100}
         step={1}
-        
-        // onChange={handleSliderChange}
         sx={{
-          width: '100%', // Make sure the slider takes full width
+          width: '100%',
           marginTop: 0,
-          width: '100%', // Full width
-          marginBottom: 0, // Remove margin
-          padding: 0, // Remove padding
+          marginBottom: 0,
+          padding: 0,
           color: 'darkgray',
         }}
       />
     </Box>
-    </>
   );
 }
 

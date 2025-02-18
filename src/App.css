@@ -31,7 +31,10 @@
   font-size: calc(10px + 2vmin);
   color: white;
 }
-
+p,label,input,h5,th,td,button, li, ul,div {
+  font-family: sans-serif;
+  font-size: 12px;
+}
 .App-link {
   color: #61dafb;
 }

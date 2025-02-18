@@ -77,7 +77,6 @@ cursor: pointer;
 
 .data-table th{
 
-
   vertical-align: middle;
   padding: 0px 0px 0px 10px;
   white-space: nowrap; 
@@ -90,6 +89,7 @@ cursor: pointer;
    padding: 0px 0px 0px 5px; 
   white-space: nowrap; 
   font-size: 12px;
+  font-family: Helvetica;
   
 
 }
@@ -97,7 +97,7 @@ cursor: pointer;
 
 .data-table thead{
   background-color: #d3d3d3;
-  font-weight: bold;
+  font-weight: none !important;
   position: sticky;
   top: -2px;
   z-index: 2;
@@ -209,12 +209,14 @@ cursor: pointer;
 }
 .badge-custom { 
   border-radius: 5px !important; /* Border radius ko 5px set karne ke liye */
-   width: 100%; /* Badge ki width ko container ke width ke barabar set karne ke liye */
+   width: 80%; /* Badge ki width ko container ke width ke barabar set karne ke liye */
     display: flex; /* Badge ko flex container banane ke liye */
      justify-content: center; /* Badge text ko center align karne ke liye */ 
     } 
     .rounded-pill {
       border-radius: 5px !important;
+      font-family: sans-serif;
+      font-size: 12px;
        /* width: 90px;  */
     }
 
@@ -223,7 +225,6 @@ cursor: pointer;
          -webkit-overflow-scrolling:unset
     } */
     .add-btn {
- 
       border: none;
       border-radius: 5px;
       cursor: pointer;
@@ -238,4 +239,9 @@ cursor: pointer;
      .add-btn:hover {
       background-color:black;
       color: white;
+    }
+    .badge-custom{
+      --bs-badge-font-weight: 0 !important;
+      font-family: sans-serif !important;
+      font-size: 12px;
     }

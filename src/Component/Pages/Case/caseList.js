@@ -71,6 +71,7 @@ const DataTable = () => {
     toast((t) => (
       <div>
         <p>Are you sure you want to delete {title} case?</p>
+        <p>Warning: Deleting this case will unapply all filters</p>
         <button className='custom-confirm-button' onClick={() => { deleteCase(id,title); toast.dismiss(t.id); }}>Yes</button>
         <button className='custom-confirm-button' onClick={() => toast.dismiss(t.id)}>No</button> </div>),
       { autoClose: false, closeOnClick: false, draggable: false, style: {
@@ -335,7 +336,7 @@ const DataTable = () => {
                   <td>{item.modified_on}</td>
                   <td disabled={true} >
                     <Badge pill bg="dark" className="badge-custom">
-                      <span><ul><li >{item.status}</li></ul></span>
+                      <span>{item.status}</span>
                     </Badge>
                   </td>
                   <td className="d-flex justify-content-between align-items-center">

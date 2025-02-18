@@ -15,6 +15,8 @@ import LineChart1 from './Component/Pages/Filters/AddExistingFilter/TabularData/
 import KeywordChart from './Component/Pages/Filters/AddExistingFilter/TabularData/keywordChart.js';
 import GraphicalData from './Component/Pages/Filters/AddExistingFilter/TabularData/graphicalData.js';
 import './App.css'
+import ProtectedRoute from './services/protectRoute.js';
+import Loader from './Component/Pages/Layout/loader.js';
 
 
 const AppContent = () => {
@@ -32,7 +34,8 @@ const AppContent = () => {
 
         <div className="cont-b">
           <Routes>
-            <Route path="/" element={<LoginPage />} />
+          <Route path="/" element={<LoginPage />} />
+          <Route element={<ProtectedRoute />}>
             <Route path="/search" element={<SearchBar />} />
             <Route path="/cases" element={<Home />} />
             <Route path="/cases/:caseId" element={<MainFilter />} />
@@ -44,6 +47,8 @@ const AppContent = () => {
             <Route path="/line" element={<LineChart1 />} />
             <Route path="/grapg" element={< GraphicalData />} />
             <Route path="*" element={<div className='notfound'> <h4>Work in progress........</h4></div>} />
+          </Route>
+          <Route path='loader' element={<Loader/>}/>
           </Routes>
         </div>
 

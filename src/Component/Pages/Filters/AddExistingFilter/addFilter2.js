@@ -131,6 +131,7 @@ console.log("filterToStop", filtersToStop)
       if (filtersToStop.length > 0) {
         await axios.post('http://5.180.148.40:9006/api/osint-man/v1/stop/batch', {
           filter_id_list: filtersToStop
+          
         }, { headers: { Authorization: `Bearer ${token}`,
         "Content-Type": "application/json" } });
       }

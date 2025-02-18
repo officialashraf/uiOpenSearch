@@ -176,6 +176,7 @@ import axios from 'axios';
 import Cookies from 'js-cookie';
 import '../../../../Assets/Stlyes/mainContainer.css';
 import AddFilter2 from '../AddExistingFilter/addFilter2.js';
+import Loader from '../../Layout/loader.js';
 
 const MainContainer = () => {
   const navigate = useNavigate();
@@ -226,7 +227,8 @@ const MainContainer = () => {
 
   const renderContent = () => {
     if (isLoading) {
-      return <div className="loading-container">Loading...</div>; // Show loading state
+      return <>
+      <div  style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh', marginTop:'10rem', width:'100%' }}> <Loader />; </div> </>// Show loading state
     }
 
     if (hasFilters) {

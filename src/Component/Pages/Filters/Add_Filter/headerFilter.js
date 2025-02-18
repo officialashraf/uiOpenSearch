@@ -24,7 +24,7 @@ const HeaderFilter = () => {
 
       <Container className='custom-containerH'>  <Row className="w-100">
         <Col xs={1} className="d-flex align-items-center justify-content-center">
-          <FaArrowLeft style={{ cursor: 'pointer',margin:'0px' }}  onClick={() => navigate(-1)} />
+          <FaArrowLeft style={{ cursor: 'pointer',margin:'0px' }}  onClick={() => navigate('/cases')} />
         </Col>
         <Col xs={11}>
           <Nav className="flex-column">
@@ -33,7 +33,7 @@ const HeaderFilter = () => {
               </Nav.Item> 
               <Nav.Item>
              <span className='caseName'>{caseData1.title} </span> <FaFileAlt className="ml-3" />  <Badge pill bg="dark">
-             <span><ul><li >{caseData1.status}</li></ul></span>
+             <span>{caseData1.status}</span>
                </Badge>
               </Nav.Item>
           </Nav>

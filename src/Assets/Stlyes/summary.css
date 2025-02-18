@@ -5,7 +5,14 @@
     background-color: lightgrey;
 
 } 
-
+.css-1orzuox-MuiTableCell-root{
+    padding: 0px 5px ;
+    background-color: lightgrey !important;
+}
+.css-to33az-MuiTableCell-root{
+    padding: 0px 5px ;
+    background-color: lightgrey !important;
+}
 .css-1dc80h3-MuiTableCell-root{
     padding: 0px 5px ;
     font-size: 12px;
@@ -48,3 +55,4 @@ g.recharts-layer .recharts-bar :hover{
     background-color: transparent !important;
     transition: background-color 5000s ease-in-out 0s;
   }
+  

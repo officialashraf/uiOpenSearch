@@ -40,8 +40,8 @@ const LoginPage = () => {
                   
 
                 // Set cookies for 1 day
-                Cookies.set('accessToken', access_token, { expires: 1 });
-                Cookies.set('refreshToken', refresh_token, { expires: 1 });
+                Cookies.set('accessToken', access_token, { expires: 10 });
+                Cookies.set('refreshToken', refresh_token, { expires: 10 });
 
 
     
