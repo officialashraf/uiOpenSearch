@@ -69,10 +69,10 @@ const AddFilter2 = ({ togglePopup }) => {
   const [initialSelectedFilters, setInitialSelectedFilters] = useState([]);
   const caseData1 = useSelector((state) => state.caseData.caseData);
   const token = Cookies.get('accessToken');
-
+const [filterIdedit, setFilterIdedit] = useState()
 
   const [showAddFilter, setShowAddFilter] = useState(false);
-  
+ 
 
   // Toggle visibility of Add New Filter form
   const toggleAddFilter = () => {
@@ -101,6 +101,7 @@ const AddFilter2 = ({ togglePopup }) => {
 
   // Handler for filter toggle
   const handleFilterToggle = (filterId, isChecked) => {
+    
     setSelectedFilters(prev => 
       isChecked ? [...prev, filterId] : prev.filter(id => id !== filterId)
     );
@@ -110,6 +111,9 @@ const AddFilter2 = ({ togglePopup }) => {
   const handleNewFilterCreated = (newFilterId) => {
     setSelectedFilters(prev => [...prev, newFilterId]);
   };
+  const handleFilterid = (id) => {
+    setFilterIdedit(id);
+  };
 
   // Proceed handler
   const handleProceed = async () => {
@@ -117,12 +121,26 @@ const AddFilter2 = ({ togglePopup }) => {
     const filtersToStop = initialSelectedFilters.filter(id => !selectedFilters.includes(id));
 console.log("filterToStop", filtersToStop)
     try {
+
+
+      // Update case status
+      await axios.put(`http://5.180.148.40:9001/api/case-man/v1/case/${caseData1.id}`, 
+        { status: "in progress" },
+        { headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`
+        }
+      } 
+      );
+      window.dispatchEvent(new Event('databaseUpdated'));
+
+
       // Start new filters
+
       if (filtersToStart.length > 0) {
         await axios.post('http://5.180.148.40:9006/api/osint-man/v1/start', {
           filter_id: filtersToStart,
-          case_id: String(caseData1.id),
-          interval: 10
+          case_id: String(caseData1.id)
         }, { headers: { Authorization: `Bearer ${token}` } });
         window.dispatchEvent(new Event('databaseUpdated'));
       }
@@ -136,11 +154,8 @@ console.log("filterToStop", filtersToStop)
         "Content-Type": "application/json" } });
       }
 
-      // Update case status
-    
-
       // Refresh data and close popup
-      window.dispatchEvent(new Event('databaseUpdated'));
+     
       togglePopup();
     } catch (error){
       if (error.response) {
@@ -170,6 +185,7 @@ console.log("filterToStop", filtersToStop)
                   <ExistingFilters 
                     selectedFilters={selectedFilters}
                     onFilterToggle={handleFilterToggle}
+                    onFilterSelect={handleFilterid}
                   />
                 </div>
                 {showAddFilter && (
@@ -177,7 +193,7 @@ console.log("filterToStop", filtersToStop)
                     <button onClick={() => setShowAddFilter(false)} className="btn close-add-filter-button">
                       <X/>
                     </button>
-                    <AddNewFilter onNewFilterCreated={handleNewFilterCreated}/>
+                    <AddNewFilter filterIde={filterIdedit} onNewFilterCreated={handleNewFilterCreated}/>
                   </div>
                 )}
               </div>

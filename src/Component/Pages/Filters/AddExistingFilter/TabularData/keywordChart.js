@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Box } from '@mui/material';
+import { Box, Typography } from '@mui/material';
 import WordCloud from 'react-d3-cloud';
 import axios from 'axios';
 import { useSelector } from 'react-redux';
@@ -38,11 +38,12 @@ const KeywordChart = () => {
     value: item.doc_count, // ✅ "doc_count" ke mutaabiq size badhega
   }));
 
-  const fontSizeMapper = (word) => Math.log2(word.value + 1) * 50; // ✅ Size adjust kiya
-  const rotate = () => 0; // ✅ Fixed rotation (seedha text dikhane ke liye)
+  const fontSizeMapper = (word) => Math.log2(word.value + 1) * 50; // Size adjust kiya
+  const rotate = () => 0; //  Fixed rotation (seedha text dikhane ke liye)
 
   return (
     <Box width={600} height={230} style={{ marginTop: 0,padding: 0 }}>
+       {data.length > 0 ? (
       <WordCloud
         data={dataa}
         fontSizeMapper={fontSizeMapper}
@@ -52,6 +53,11 @@ const KeywordChart = () => {
         width={600}
         height={250}
       />
+          ) : (
+          <Typography variant="h6" color="textSecondary" align="center" height={250}>
+            No Data Available
+          </Typography>
+        )}
     </Box>
   );
 }

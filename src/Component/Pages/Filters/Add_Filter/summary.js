@@ -203,7 +203,7 @@ const Summary = ({ filters }) => {
   
         const { unified_record_type, unified_date_only, unified_type } = response.data;
   
-        // ✅ Fix Pie Chart Data (unified_record_type)
+        //  Fix Pie Chart Data (unified_record_type)
         // const pieSource = (unified_record_type || []).map(item => ({
         //   name: item.key,
         //   value: item.doc_count
@@ -224,9 +224,9 @@ const Summary = ({ filters }) => {
         const totalCount = pieData.reduce((sum, item) => sum + item.value, 0);
         
         const colors = ['#8884d8', '#8dd1e1', '#a4de6c', '#d0ed57', '#ffc658'];
-        // ✅ Fix Bar Chart Data (unified_date_only)
+        //   Bar Chart Data (unified_date_only)
         const barData = (unified_date_only || []).map(item => ({
-          name: item.key,
+          name: item.key.split('-').slice(0, 3).join(''),
           value: item.doc_count
         }));
   
@@ -234,13 +234,13 @@ const Summary = ({ filters }) => {
           barData.push({ name: 'No Data', value: 0 });
         }
   
-        // ✅ Fix Table Data (unified_type)
+        //Table Data (unified_type)
         const tableData = (unified_type || []).map(item => ({
           name: item.key,
           value: item.doc_count
         }));
   console.log("tabledtaa", tableData)
-        // ✅ Set States
+        //  Set States
         setPieData(pieData);
         setBarData(barData);
         setTableData(tableData);
@@ -341,7 +341,7 @@ const Summary = ({ filters }) => {
 {barData.map((entry, index) => (
             <Cell
               key={`cell-${index}`}
-              fill={index === activeIndex ? "#333" : "#333"} // 🟢 Hover pe color change
+              fill={index === activeIndex ? "#333" : "#333"} // Hover pe color change
               onMouseEnter={() => setActiveIndex(index)}
               onMouseLeave={() => setActiveIndex(null)}
             />

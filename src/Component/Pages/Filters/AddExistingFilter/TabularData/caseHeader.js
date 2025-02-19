@@ -14,9 +14,12 @@ const CaseHeader = ({ onIconClick }) => {
   const backToCase = () => {
     navigate(`/cases`);
   };
-  const togglePopup = () => {
-    setShowPopup((prev) => !prev);
+  const backToResource = () => {
+    navigate(`/esource`);
   };
+  // const togglePopup = () => {
+  //   setShowPopup((prev) => !prev);
+  // };
   return (
     <>
     <div className='row header-row' style={{background: 'darkgray', color:'white',display: 'flex', marginLeft: '0rem', marginRight: '0rem', height:"40px"}} >
@@ -25,7 +28,7 @@ const CaseHeader = ({ onIconClick }) => {
             <p className='header-casename-h5' >{caseData1.title}</p>
         </div>
         <div className='col d-flex justify-content-center align-items-center'>
-              <button className="add-new-filter-button" onClick={togglePopup} >Resources</button>
+              <button className="add-new-filter-button" onClick={backToResource} >Resources</button>
               <button className="add-new-filter-button" style={{marginLeft:'12px'}} onClick={backToCase}>Case board</button>
               <button className="add-new-filter-button" style={{marginLeft:'12px'}} onClick={backToSnap}>  Back to Case Snapshot</button>
         </div>
@@ -54,7 +57,7 @@ const CaseHeader = ({ onIconClick }) => {
          <MoreVert className="icon-style" />
   </div>
 </div>
-{showPopup && <AddFilter2 togglePopup={togglePopup} />}
+{/* {showPopup && <AddFilter2 togglePopup={togglePopup} />} */}
     </>
   )
 }

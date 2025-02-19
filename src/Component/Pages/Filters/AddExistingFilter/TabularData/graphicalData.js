@@ -48,7 +48,7 @@ const ComponentThree = () => (
   <Card  sx={{ height: "235px", backgroundColor: "lightgray", boxShadow: 2 }}>
     <Header title="Location" />
     <CardContent>
-      <Typography mt={10} ml={10}> No Data </Typography>
+      <Typography variant="h6" color="textSecondary" align="center" height={250}> No Data </Typography>
     </CardContent>
   </Card>
 );

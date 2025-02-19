@@ -3,7 +3,8 @@ import axios from 'axios';
 import React from 'react'
 import { useState, useEffect} from 'react'
 import { Tooltip, OverlayTrigger} from "react-bootstrap";
-import { SortDown, Search, InfoCircle } from 'react-bootstrap-icons'
+import { SortDown, Search, X } from 'react-bootstrap-icons'
+import AddNewFilter from './addNewFilter.js';
 import { useSelector, useDispatch } from 'react-redux';
 import { logFilterCount } from '../../../../Redux/Action/filterAction';
 import Cookies from 'js-cookie';
@@ -139,7 +140,7 @@ import Loader from '../../Layout/loader.js'
 // export default ExistingFilter;
 
 
-const ExistingFilter = ({ selectedFilters, onFilterToggle }) => {
+const ExistingFilter = ({ selectedFilters, onFilterToggle,onFilterSelect  }) => {
   const dispatch = useDispatch();
   const caseId = useSelector((state) => state.caseData.caseData.id);
   const [loading, setLoading] = useState(true);
@@ -147,6 +148,7 @@ const ExistingFilter = ({ selectedFilters, onFilterToggle }) => {
   const [searchQuery, setSearchQuery] = useState("");
   const [searchBarVisibility, setSearchBarVisibility] = useState(false);
   const token = Cookies.get('accessToken');
+  const [showAddFilter, setShowAddFilter] = useState(false);
 
   const toggleSearchBar = () => {
     setSearchBarVisibility(!searchBarVisibility);
@@ -155,6 +157,9 @@ const ExistingFilter = ({ selectedFilters, onFilterToggle }) => {
   const handleSearch = (e) => {
     setSearchQuery(e.target.value.toLowerCase());
   };
+  // const onFilterSelect = (id) => {
+  //  console.log("filterid", id)
+  // };
 
   const sortFilters = () => {
     if (filterdata.data) {
@@ -230,7 +235,7 @@ const ExistingFilter = ({ selectedFilters, onFilterToggle }) => {
 
   return (
     <>
-      <div style={{ display: 'flex', alignItems: 'center', width: '185px' }}>
+      <div style={{ display: 'flex', alignItems: 'center', width: '200px' }}>
         <p style={{ margin: '0' }}>Existing Filters</p>
         {searchBarVisibility && (
           <input
@@ -241,8 +246,8 @@ const ExistingFilter = ({ selectedFilters, onFilterToggle }) => {
           />
         )}
         {!searchBarVisibility && (
-          <span style={{ marginLeft: '40px', marginRight: '0' }}>
-            <Search onClick={toggleSearchBar} style={{ width: '10px' }} />
+          <span style={{ marginLeft: '0px', marginRight: '0' }}>
+            <Search onClick={toggleSearchBar} style={{ width: '10px' ,marginLeft: '80px',}} />
           </span>
         )}
         <button
@@ -272,23 +277,24 @@ const ExistingFilter = ({ selectedFilters, onFilterToggle }) => {
                       checked={selectedFilters.includes(filter.id)}
                       onChange={(e) => onFilterToggle(filter.id, e.target.checked)}
                     />
-                    <span>
+                    <span onClick={() =>{ onFilterSelect(filter.id); setShowAddFilter(true); }} style={{cursor:'pointer'}}>
                       {filter.name}
-                      <OverlayTrigger
+                      {/* <OverlayTrigger
                         placement="right"
                         overlay={
                           <Tooltip id={`tooltip-${filter.id}`}>
                             created: {filter.created_by} <br />
-                            modified: {filter.modified_on}
+                            modified: {filter.created_on}
                           </Tooltip>
                         }
                         trigger={["hover", "focus"]}
                       >
                         <InfoCircle style={{ color: "black", fontSize: "1rem", cursor: "pointer", marginLeft: ".2rem" }} />
-                      </OverlayTrigger>
+                      </OverlayTrigger> */}
                     </span>
-                    <p className="existing-filters-li-p">owner: {filter.created_by}</p>
-                    <p className="existing-filters-li-p">description: {filter.description}</p>
+                    <p className="existing-filters-li-p">created_by: {filter.created_by}</p>
+                    <p className="existing-filters-li-p">created_on: {filter.created_on.slice(0, 10)}</p>
+                    {/* <p className="existing-filters-li-p">description: {filter.description}</p> */}
                   </li>
                 ))
             ) : (
@@ -298,6 +304,14 @@ const ExistingFilter = ({ selectedFilters, onFilterToggle }) => {
             )}
           </ul>
         )}
+        {showAddFilter && (
+                  <div className="col-md-8" style={{marginTop: "-15px"}}>
+                    <button onClick={() => setShowAddFilter(false)} className="btn close-add-filter-button">
+                      <X/>
+                    </button>
+                    <AddNewFilter />
+                  </div>
+                )}
       </div>
     </>
   );

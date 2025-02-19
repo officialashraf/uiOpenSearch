@@ -49,7 +49,7 @@
 .exist-filter{
   overflow:auto;
   height:450px;
-  width: 170px;
+  width: 200px;
   scrollbar-width:thin;
   border: 1px solid #000000 ;
   border-radius: 5px;
@@ -229,8 +229,11 @@
 .form-labell {
     color: black  ;
 }
+.form-label {
+ margin-bottom: .0rem !important; 
+}
 .search_input {
-    width:70px;
+    width:90px;
      padding: 10px; 
      /* margin-bottom: 15px;  */
     border: 1px solid #ccc;
@@ -260,6 +263,7 @@ p{
 }
 .list-group-item {
   font-size: 12px;
+  padding: 5px 0px 0px 8px !important;
 }
 input.search_input:focus,
 input.search_input.active,
