@@ -220,6 +220,12 @@ const MainContainer = () => {
     (filter) => filter["case id"]?.includes(String(caseData?.id))
   );
 
+const isCaseInProgress = caseData?.status === 'In Progress';
+
+const isFilterZero = filterdata.length > 0;
+
+const shouldProceed = hasFilters || (isCaseInProgress && isFilterZero);
+
   const matchingFilters = filterdata.filter(
     (filter) => filter["case id"]?.includes(String(caseData?.id))
   );
@@ -231,7 +237,7 @@ const MainContainer = () => {
       <div  style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh', marginTop:'10rem', width:'100%' }}> <Loader />; </div> </>// Show loading state
     }
 
-    if (hasFilters) {
+    if (shouldProceed) {
       return <Summary filters={numberOfMatchingFilters} />;
     }
 

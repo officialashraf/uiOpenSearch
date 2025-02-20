@@ -22,7 +22,7 @@ const CaseHeader = ({ onIconClick }) => {
   // };
   return (
     <>
-    <div className='row header-row' style={{background: 'darkgray', color:'white',display: 'flex', marginLeft: '0rem', marginRight: '0rem', height:"40px"}} >
+    <div className='row header-row' style={{background: 'lightgray', color:'black',display: 'flex', marginLeft: '0rem', marginRight: '0rem', height:"40px"}} >
         <div className='col ' >
             <h5 className="header-caseid-h7" >Case id: {`CASE${String(caseData1.id).padStart(4, '0')}`}</h5>
             <p className='header-casename-h5' >{caseData1.title}</p>
@@ -37,13 +37,13 @@ const CaseHeader = ({ onIconClick }) => {
         </div> */}
     </div>
     {                             /*end header*/                                     }
-    <div className="row mt-1 ms-1">
+    <div className="row" style={{backgroundColor:'lightgrey', marginLeft:'0.1px'}}>
   <div className="col-md-auto">
     <input type="text" className="form-control form-control-sm search-bar-f-option" placeholder="Search..." />
   </div>
-  <div className="col-md-auto">
+  {/* <div className="col-md-auto">
   <ListAltOutlined/>
-  </div>
+  </div> */}
 
   <div className="col-md-auto">
     <select className="form-select header-dropdown1" style={{fontSize:"12px" }} >
@@ -51,10 +51,10 @@ const CaseHeader = ({ onIconClick }) => {
       <option value="source2">Options</option>
     </select>
   </div>
-  <div className="col-auto ms-auto ml-3 d-flex justify-content-center align-items-center"  style={{backgroundColor :"black", marginRight:"15px", height:"30px"}}>
+  <div className="col-auto ms-auto ml-3 d-flex justify-content-center align-items-center"  style={{ marginRight:"5px", height:"28px"}}>
       <PieChart className="icon-style" onClick={() => onIconClick('graphicalData')} />
       <ListAltOutlined className="icon-style" onClick={() => onIconClick('caseData')} />
-         <MoreVert className="icon-style" />
+         {/* <MoreVert className="icon-style" /> */}
   </div>
 </div>
 {/* {showPopup && <AddFilter2 togglePopup={togglePopup} />} */}

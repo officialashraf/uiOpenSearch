@@ -273,6 +273,18 @@ const EditCase = ({ togglePopup, item }) => {
               openMenuOnClick={true}
             />
 
+            <label htmlFor="watchers">Watchers:</label>
+            <Select
+              options={options}
+              isMulti
+              styles={customStyles}
+              className="com"
+              name="watchers"
+              placeholder="Select Watchers"
+              value={watcherValues}
+              onChange={handleWatchersChange}
+            />
+
             <label htmlFor="status">Status:</label>
             <Select
               options={statusOptions}
@@ -284,19 +296,7 @@ const EditCase = ({ togglePopup, item }) => {
               value={getCurrentStatus()}
               onChange={handleStatusChange}
               defaultMenuIsOpen={false}  // Ensures menu starts closed
-        openMenuOnClick={true} 
-            />
-
-            <label htmlFor="watchers">Watchers:</label>
-            <Select
-              options={options}
-              isMulti
-              styles={customStyles}
-              className="com"
-              name="watchers"
-              placeholder="Select Watchers"
-              value={watcherValues}
-              onChange={handleWatchersChange}
+              openMenuOnClick={true} 
             />
 
             <label htmlFor="comment">Comment:</label>

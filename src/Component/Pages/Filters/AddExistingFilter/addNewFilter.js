@@ -45,7 +45,7 @@
 //     dispatch(setTaskFilter(taskId, filterId));
 //   }, [taskId, filterId, dispatch]);
 
- 
+
 // if (token) {
 //     const decodedToken = jwtDecode(token);
 //     console.log(decodedToken); // Pura payload dekho
@@ -221,7 +221,7 @@
 //             type="text"
 //             value={filterName}
 //             onChange={(e) => setFilterName(e.target.value)}
-           
+
 //           />
 //         </Form.Group>
 
@@ -237,7 +237,7 @@
 //         <div>
 //         <div ref={containerRef} style={{ height: '300px', overflowY: 'auto',overflowX:'hidden', marginTop:'5px' }}>
 //           {sources.map((source, sourceIndex) => (
-           
+
 //             <div key={sourceIndex} className="mb-3 p-1 border rounded">
 //               <div className="row g-3">
 //                 <div className="col-md-6">
@@ -263,7 +263,7 @@
 //                     >
 //                        <option value="" disabled selected>Select Platform</option>
 //                       {platform.map((plat) => (
-                         
+
 //                         <option key={plat} value={plat}>{plat}</option>
 //                       ))}
 //                     </Form.Select>
@@ -332,16 +332,16 @@
 //                             ×
 //                           </Button>
 //                         </Badge>
-                        
+
 //                       ))}
-                 
+
 //                     </div>
-  
-            
+
+
 //                   </div>
-                  
+
 //                 )}
-                    
+
 //                 {source.source === 'rss feed' && (
 //                   <div className="col-md-6">
 //                     <Form.Label>RSS URL</Form.Label>
@@ -385,15 +385,15 @@
 //                       ))}
 //                     </div>
 //                   </div>
-                  
+
 //                 )}
-             
+
 //               </div>
-             
+
 //             </div>
-          
-       
-      
+
+
+
 //           ))}
 //             <button type="button" className="add-new-filter-button"  onClick={handleAddSource}>
 //             Add Sources
@@ -418,7 +418,7 @@ import { toast } from 'react-toastify';
 import { useDispatch, useSelector, useStore } from 'react-redux';
 import { setTaskFilter } from '../../../../Redux/Action/filterAction';
 import Cookies from 'js-cookie';
-import {jwtDecode} from "jwt-decode";
+import { jwtDecode } from "jwt-decode";
 
 
 
@@ -428,23 +428,23 @@ const conversionFactors = {
   hours: 3600,
 };
 
-const AddNewFilter = ({ onNewFilterCreated , filterIde}) => {
+const AddNewFilter = ({ onNewFilterCreated, filterIde }) => {
   const [platform, setPlatform] = useState([]);
   const [newKeyword, setNewKeyword] = useState('');
   const [filterName, setFilterName] = useState('');
   const [description, setDescription] = useState('');
   const [taskId, setTaskId] = useState([]);
   const [filterId, setFilterId] = useState([]);
-  const [filterDetails,  setFilterDetails] = useState(null)
-  const [isEditable, setIsEditable] = useState(true);
+  const [filterDetails, setFilterDetails] = useState(null)
+  const [isEditable, setIsEditable] = useState(false);
   const [loggedInUserId, setLoggedInUserId] = useState(null);
   const [sources, setSources] = useState([
-    { 
-      source: '', 
+    {
+      source: '',
       platform: [],
       keywords: [], // Initialize as an array with a single empty string
-      urls: [] ,// Initialize as an array with a single empty string
-      interval:'',
+      urls: [],// Initialize as an array with a single empty string
+      interval: '',
     },
   ]);
   const containerRef = useRef(null);
@@ -536,7 +536,7 @@ const AddNewFilter = ({ onNewFilterCreated , filterIde}) => {
     if (filterDetails && filterDetails.id) {
       setFilterName(filterDetails.name);
       setDescription(filterDetails.description);
-      
+
       // Convert filter criteria to sources format
       const convertedSources = filterDetails.filter_criteria.map(criteria => {
         // Convert interval back to value + unit
@@ -568,13 +568,14 @@ const AddNewFilter = ({ onNewFilterCreated , filterIde}) => {
       });
 
       setSources(convertedSources);
-      
+
       // Check edit permissions
-      if ( loggedInUserId == filterDetails.created_by) {
-        toast.info("You can edit this filter yet");
+      if (loggedInUserId == filterDetails.created_by) {
         setIsEditable(true);
+        toast.info("You can edit this filter yet");
        
-        console.log("hey",filterDetails.created_by,  loggedInUserId )
+
+        console.log("hey", filterDetails.created_by, loggedInUserId)
       } else {
         setIsEditable(false);
         toast.info("You don't have permission to edit this filter yet");
@@ -583,14 +584,14 @@ const AddNewFilter = ({ onNewFilterCreated , filterIde}) => {
   }, [filterDetails, loggedInUserId]);
 
   const handleAddSource = () => {
-    setSources([...sources, { 
-      source: '', 
+    setSources([...sources, {
+      source: '',
       platform: [],
       keywords: [],
       urls: [],
       keywordInput: '',
       urlInput: '',
-        intervalValue: 1,
+      intervalValue: 1,
       intervalUnit: 'hours',
     }]);
   };
@@ -603,7 +604,7 @@ const AddNewFilter = ({ onNewFilterCreated , filterIde}) => {
         },
       });
       setFilterDetails(response.data)
-      console.log("fetchflterdetails",response)
+      console.log("fetchflterdetails", response)
     } catch (error) {
       console.error('Platform fetch error:', error);
       toast.error('Error fetching platforms: ' + (error.response?.data?.detail || error.message));
@@ -611,7 +612,9 @@ const AddNewFilter = ({ onNewFilterCreated , filterIde}) => {
   };
 
   useEffect(() => {
-    fetchFilterDetails();
+    if (filterIde) {
+      fetchFilterDetails();
+    }
   }, [filterIde]);
   const fetchPlatforms = async () => {
     try {
@@ -633,59 +636,59 @@ const AddNewFilter = ({ onNewFilterCreated , filterIde}) => {
 
 
 
-const handleSaveFilter = async () => {
-  if (!isEditable) {
-    toast.error("You don't have permission to edit this filter");
-    return;
-  }
-  const postData = {
-        name: filterName,
-        description: description, // Ensure description is included
-        filter_criteria: sources.map((source) => ({
-          source: source.source,
-          platform: source.platform,
-          keywords: source.keywords,
-          urls: source.source === 'rss feed' ? [source.urls.join(',')] : undefined,
-          interval: source.intervalValue * conversionFactors[source.intervalUnit],
-        })),
-      };
-    console.log("postdata save filter", postData);
-  try {
-    const url = filterDetails?.id 
-  ? `http://5.180.148.40:9006/api/osint-man/v1/filter/${filterDetails.id}`
-  : 'http://5.180.148.40:9006/api/osint-man/v1/filter';
-
-const method = filterDetails?.id ? 'put' : 'post';
-
-const response = await axios[method](url, postData, {
-  headers: {
-    'Content-Type': 'application/json',
-    'Authorization': `Bearer ${token}`,
-  },
-}); window.dispatchEvent(new Event('databaseUpdated'));
-     console.log("responseFilter", response)
-    if (response.status === 200) {
-       toast.success(`Filter Created Successfully: ${response.data.data.name}`);
-      const newFilterId = Number(response.data.data.id);
-      setFilterId((prevFilterIds) => [...prevFilterIds, newFilterId]);
-      onNewFilterCreated(newFilterId);
-         setFilterName('');
-         setDescription('');
-         setSources([{ source: '', platform: [], keywords: [], urls: [],interval:'' }]);
-    } else {
-      toast.error('Unexpected response from server.');
+  const handleSaveFilter = async () => {
+    if (!isEditable) {
+      toast.error("You don't have permission to edit this filter");
+      return;
     }
-  } catch (error) {
-    console.error('Error posting data:', error);
-    toast.error('Error during filter creation: ' + (error.response?.data?.detail || error.message));
-  }
-};
-console.log("filetraddnew",filterId)
+    const postData = {
+      name: filterName,
+      description: description, // Ensure description is included
+      filter_criteria: sources.map((source) => ({
+        source: source.source,
+        platform: source.platform,
+        keywords: source.keywords,
+        urls: source.source === 'rss feed' ? [source.urls.join(',')] : undefined,
+        interval: source.intervalValue * conversionFactors[source.intervalUnit],
+      })),
+    };
+    console.log("postdata save filter", postData);
+    try {
+      const url = filterDetails?.id
+        ? `http://5.180.148.40:9006/api/osint-man/v1/filter/${filterDetails.id}`
+        : 'http://5.180.148.40:9006/api/osint-man/v1/filter';
+
+      const method = filterDetails?.id ? 'put' : 'post';
+
+      const response = await axios[method](url, postData, {
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`,
+        },
+      }); window.dispatchEvent(new Event('databaseUpdated'));
+      console.log("responseFilter", response)
+      if (response.status === 200) {
+        toast.success(`Filter Created Successfully: ${response.data.data.name}`);
+        const newFilterId = Number(response.data.data.id);
+        setFilterId((prevFilterIds) => [...prevFilterIds, newFilterId]);
+        onNewFilterCreated(newFilterId);
+        setFilterName('');
+        setDescription('');
+        setSources([{ source: '', platform: [], keywords: [], urls: [], interval: '' }]);
+      } else {
+        toast.error('Unexpected response from server.');
+      }
+    } catch (error) {
+      console.error('Error posting data:', error);
+      toast.error('Error during filter creation: ' + (error.response?.data?.detail || error.message));
+    }
+  };
+  console.log("filetraddnew", filterId)
   return (
     <div className="p-3">
-       {filterDetails?.id && <p>Filter ID: {filterDetails.id}</p>}
+      {filterDetails?.id && <p>Filter ID: {filterDetails.id}</p>}
       <Form>
-      
+
         <Form.Group className="mb-3">
           <Form.Label>Filter Name </Form.Label>
           <Form.Control
@@ -693,7 +696,7 @@ console.log("filetraddnew",filterId)
             value={filterName}
             onChange={(e) => setFilterName(e.target.value)}
             disabled={!isEditable}
-           
+
           />
         </Form.Group>
 
@@ -708,188 +711,188 @@ console.log("filetraddnew",filterId)
           />
         </Form.Group>
         <div>
-        <div ref={containerRef} style={{ height: '300px', overflowY: 'auto',overflowX:'hidden', marginTop:'5px' }}>
-          {sources.map((source, sourceIndex) => (
-           
-            <div key={sourceIndex} className="mb-3 p-1 border rounded">
-              <div className="row g-3">
-                <div className="col-md-6">
-                  <Form.Label>Source</Form.Label>
-                  <Form.Select
-                    value={source.source}
-                    onChange={(e) => handleSourceChange(sourceIndex, e)}
-                    disabled={!isEditable}
-                  >
-                    <option value="" disabled selected>Select Source</option>
-                    <option value="social media">Social Media</option>
-                    <option value="social media profile">Social Media Profile</option>
-                    <option value="rss feed">RSS Feed</option>
-                  </Form.Select>
-                </div>
+          <div ref={containerRef} style={{ height: '300px', overflowY: 'auto', overflowX: 'hidden', marginTop: '5px' }}>
+            {sources.map((source, sourceIndex) => (
 
-                {source.source && source.source !== 'rss feed' && (
+              <div key={sourceIndex} className="mb-3 p-1 border rounded">
+                <div className="row g-3">
                   <div className="col-md-6">
-                    <Form.Label>Platform</Form.Label>
+                    <Form.Label>Source</Form.Label>
                     <Form.Select
-                      // multiple
-                      value={source.platform}
-                      onChange={(e) => handlePlatformChange(sourceIndex, e)}
+                      value={source.source}
+                      onChange={(e) => handleSourceChange(sourceIndex, e)}
                       disabled={!isEditable}
                     >
-                       <option value="" disabled selected>Select Platform</option>
-                      {platform.map((plat) => (
-                         
-                        <option key={plat} value={plat}>{plat}</option>
-                      ))}
+                      <option value="" disabled selected>Select Source</option>
+                      <option value="social media">Social Media</option>
+                      <option value="social media profile">Social Media Profile</option>
+                      <option value="rss feed">RSS Feed</option>
                     </Form.Select>
                   </div>
-                )}
- {source.source && (
-              <div className="col-md-6">
-                <Form.Label>Monitoring Interval</Form.Label>
-                <InputGroup>
-                  <Form.Control
-                    type="number"
-                    min="1"
-                    value={source.intervalValue}
-                    onChange={(e) => handleIntervalValueChange(sourceIndex, e.target.value)}
-                    style={{ maxWidth: '100px' }}
-                    disabled={!isEditable}
-                  />
-                  <Form.Select
-                    value={source.intervalUnit}
-                    onChange={(e) => handleIntervalUnitChange(sourceIndex, e.target.value)}
-                    style={{ maxWidth: '150px' }}
-                  >
-                     <option value="" disabled selected>Units</option>
-                    <option value="seconds">Seconds</option>
-                    <option value="minutes">Minutes</option>
-                    <option value="hours">Hours</option>
-                  </Form.Select>
-                  {/* <InputGroup.Text>
+
+                  {source.source && source.source !== 'rss feed' && (
+                    <div className="col-md-6">
+                      <Form.Label>Platform</Form.Label>
+                      <Form.Select
+                        // multiple
+                        value={source.platform}
+                        onChange={(e) => handlePlatformChange(sourceIndex, e)}
+                        disabled={!isEditable}
+                      >
+                        <option value="" disabled selected>Select Platform</option>
+                        {platform.map((plat) => (
+
+                          <option key={plat} value={plat}>{plat}</option>
+                        ))}
+                      </Form.Select>
+                    </div>
+                  )}
+                  {source.source && (
+                    <div className="col-md-6">
+                      <Form.Label>Monitoring Interval</Form.Label>
+                      <InputGroup>
+                        <Form.Control
+                          type="number"
+                          min="1"
+                          value={source.intervalValue}
+                          onChange={(e) => handleIntervalValueChange(sourceIndex, e.target.value)}
+                          style={{ maxWidth: '100px' }}
+                          disabled={!isEditable}
+                        />
+                        <Form.Select
+                          value={source.intervalUnit}
+                          onChange={(e) => handleIntervalUnitChange(sourceIndex, e.target.value)}
+                          style={{ maxWidth: '150px' }}
+                        >
+                          <option value="" disabled selected>Units</option>
+                          <option value="seconds">Seconds</option>
+                          <option value="minutes">Minutes</option>
+                          <option value="hours">Hours</option>
+                        </Form.Select>
+                        {/* <InputGroup.Text>
                     ({source.intervalValue * conversionFactors[source.intervalUnit]} seconds)
                   </InputGroup.Text> */}
-                </InputGroup>
-                      </div>
-                 )}    
-                {source.source && (
+                      </InputGroup>
+                    </div>
+                  )}
+                  {source.source && (
                     <div className="col-md-6">
-                    <Form.Label>Keywords</Form.Label>
-                    <Form.Control
-                      type="text"
-                      placeholder="Enter keyword and press Enter"
-                      value={source.keywordInput}
-                      onChange={(e) => handleKeywordChange(sourceIndex, e.target.value)}
-                      onKeyDown={(e) => handleKeywordKeyDown(sourceIndex, e)}
-                      disabled={!isEditable}
-                    />
-                    <div className="mt-2">
-                      {source.keywords.map((keyword, keyIndex) => (
-                        <Badge
-                          key={keyIndex}
-                          pill
-                          bg="dark"
-                          className="me-2 mb-1 d-inline-flex align-items-center"
-                          style={{
-                            display: 'inline-flex',
-                            alignItems: 'center',
-                            minWidth: `${keyword.length * 10}px`,
-                            maxWidth: '100%',
-                            whiteSpace: 'nowrap',
-                            overflow: 'hidden',
-                            textOverflow: 'ellipsis',
-                          }}
-                        >
-                          {keyword}
-                          <Button
-                            variant="link"
-                            className="text-light p-0 ms-1"
-                            onClick={() => handleDeleteKeyword(sourceIndex, keyIndex)}
+                      <Form.Label>Keywords</Form.Label>
+                      <Form.Control
+                        type="text"
+                        placeholder="Enter keyword and press Enter"
+                        value={source.keywordInput}
+                        onChange={(e) => handleKeywordChange(sourceIndex, e.target.value)}
+                        onKeyDown={(e) => handleKeywordKeyDown(sourceIndex, e)}
+                        disabled={!isEditable}
+                      />
+                      <div className="mt-2">
+                        {source.keywords.map((keyword, keyIndex) => (
+                          <Badge
+                            key={keyIndex}
+                            pill
+                            bg="dark"
+                            className="me-2 mb-1 d-inline-flex align-items-center"
+                            style={{
+                              display: 'inline-flex',
+                              alignItems: 'center',
+                              minWidth: `${keyword.length * 10}px`,
+                              maxWidth: '100%',
+                              whiteSpace: 'nowrap',
+                              overflow: 'hidden',
+                              textOverflow: 'ellipsis',
+                            }}
                           >
-                            ×
-                          </Button>
-                        </Badge>
-                        
-                      ))}
-                 
+                            {keyword}
+                            <Button
+                              variant="link"
+                              className="text-light p-0 ms-1"
+                              onClick={() => handleDeleteKeyword(sourceIndex, keyIndex)}
+                            >
+                              ×
+                            </Button>
+                          </Badge>
+
+                        ))}
+
+                      </div>
+
+
                     </div>
-  
-            
-                  </div>
-                  
-                )}
-                    
-                {source.source === 'rss feed' && (
-                  <div className="col-md-6">
-                    <Form.Label>RSS URL</Form.Label>
-                    <Form.Control
-                      type="url"
-                      placeholder="Enter RSS URL and press Enter"
-                      value={source.urlInput}
-                      onChange={(e) => {
-                        const newSources = [...sources];
-                        newSources[sourceIndex].urlInput = e.target.value;
-                        setSources(newSources);
-                        
-                      }}
-                      onKeyDown={(e) => handleUrlKeyDown(sourceIndex, e)}
-                      disabled={!isEditable}
-                    />
-                    <div className="mt-2">
-                      {source.urls.map((url, urlIndex) => (
-                        <Badge
-                          key={urlIndex}
-                          pill
-                          bg="dark"
-                          className="me-2 mb-2 d-inline-flex align-items-center"
-                          style={{
-                            display: 'inline-flex',
-                            alignItems: 'center',
-                            minWidth: `${url.length * 10}px`,
-                            maxWidth: '100%',
-                            whiteSpace: 'nowrap',
-                            overflow: 'hidden',
-                            textOverflow: 'ellipsis',
-                          }}
-                        >
-                          {url}
-                          <Button
-                            variant="link"
-                            className="text-light p-0 ms-2"
-                            onClick={() => handleDeleteUrl(sourceIndex, urlIndex)}
+
+                  )}
+
+                  {source.source === 'rss feed' && (
+                    <div className="col-md-6">
+                      <Form.Label>RSS URL</Form.Label>
+                      <Form.Control
+                        type="url"
+                        placeholder="Enter RSS URL and press Enter"
+                        value={source.urlInput}
+                        onChange={(e) => {
+                          const newSources = [...sources];
+                          newSources[sourceIndex].urlInput = e.target.value;
+                          setSources(newSources);
+
+                        }}
+                        onKeyDown={(e) => handleUrlKeyDown(sourceIndex, e)}
+                        disabled={!isEditable}
+                      />
+                      <div className="mt-2">
+                        {source.urls.map((url, urlIndex) => (
+                          <Badge
+                            key={urlIndex}
+                            pill
+                            bg="dark"
+                            className="me-2 mb-2 d-inline-flex align-items-center"
+                            style={{
+                              display: 'inline-flex',
+                              alignItems: 'center',
+                              minWidth: `${url.length * 10}px`,
+                              maxWidth: '100%',
+                              whiteSpace: 'nowrap',
+                              overflow: 'hidden',
+                              textOverflow: 'ellipsis',
+                            }}
                           >
-                            ×
-                          </Button>
-                        </Badge>
-                      ))}
+                            {url}
+                            <Button
+                              variant="link"
+                              className="text-light p-0 ms-2"
+                              onClick={() => handleDeleteUrl(sourceIndex, urlIndex)}
+                            >
+                              ×
+                            </Button>
+                          </Badge>
+                        ))}
+                      </div>
                     </div>
-                  </div>
-                  
-                )}
-             
+
+                  )}
+
+                </div>
+
               </div>
-             
-            </div>
-          
-       
-      
-          ))}
-            <button type="button" className="add-new-filter-button"  onClick={handleAddSource}>
-            Add Sources
-          </button>
-          {/* <button type="button" className="add-new-filter-button" style={{ marginLeft: '5px' }} onClick={handleSaveFilter}>
+
+
+
+            ))}
+            <button type="button" className="add-new-filter-button" onClick={handleAddSource}>
+              Add Sources
+            </button>
+            {/* <button type="button" className="add-new-filter-button" style={{ marginLeft: '5px' }} onClick={handleSaveFilter}>
             Save Filter
             </button> */}
-             <button 
-          type="button" 
-          className="add-new-filter-button" 
-          style={{ marginLeft: '5px' }} 
-          onClick={handleSaveFilter}
-          disabled={!isEditable}
-        >
-          {filterDetails?.id ? 'Update Filter' : 'Save Filter'}
-        </button>
-            </div>
+            <button
+              type="button"
+              className="add-new-filter-button"
+              style={{ marginLeft: '5px' }}
+              onClick={handleSaveFilter}
+              disabled={!isEditable}
+            >
+              {filterDetails?.id ? 'Update Filter' : 'Save Filter'}
+            </button>
+          </div>
         </div>
       </Form>
     </div>

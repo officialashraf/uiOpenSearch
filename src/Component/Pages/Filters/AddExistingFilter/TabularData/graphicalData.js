@@ -7,27 +7,27 @@ import KeywordChart from "./keywordChart";
 
 
 const Header = ({ title }) => (
-  <Grid container alignItems="center" justifyContent="space-between" p={0} sx={{ mt: 0, mb: 0, height:"20px" ,  backgroundColor: "gray"}}>
-    <p style={{color:"white"}} >{title}</p>
+  <Grid container alignItems="center" justifyContent="space-between" p={0} sx={{ mt: 0, mb: 0, height:"20px" ,  backgroundColor: "lightgray"}}>
+    <p style={{color:"black"}} >{title}</p>
     <Grid item p={0} mt={-2}>
        
-        <ArrowBack fontSize="inherit" sx={{ color: "white", '&:hover': { color: "gray" } }}  />
+        <ArrowBack fontSize="inherit" sx={{ color: "black", '&:hover': { color: "gray" } }}  />
      
       
-        <ArrowForward fontSize="inherit" sx={{ color: "white", '&:hover': { color: "gray" } }}  />
+        <ArrowForward fontSize="inherit" sx={{ color: "black", '&:hover': { color: "gray" } }}  />
      
       
-        <ListAltOutlined  fontSize="inherit" sx={{ color: "white", '&:hover': { color: "gray" } }} />
+        <ListAltOutlined  fontSize="inherit" sx={{ color: "black", '&:hover': { color: "gray" } }} />
      
       
-        <MoreVert  fontSize="inherit" sx={{ color: "white", '&:hover': { color: "gray" } }} />
+        <MoreVert  fontSize="inherit" sx={{ color: "black", '&:hover': { color: "gray" } }} />
      
     </Grid>
   </Grid>
 );
 
 const ComponentOne = () => (
-  <Card  sx={{ height: "235px", backgroundColor: "lightgray", boxShadow: 2 }}>
+  <Card  sx={{ height: "235px", backgroundColor: "lightgray" }}>
     <Header title="Timeline" />
     <CardContent>
     <LineChart1/>
@@ -36,7 +36,7 @@ const ComponentOne = () => (
 );
 
 const ComponentTwo = () => (
-  <Card  sx={{ height: "235px" ,backgroundColor: "lightgray", boxShadow: 2 }}>
+  <Card  sx={{ height: "235px" ,backgroundColor: "lightgray" }}>
     <Header title="Keywords" />
     <CardContent>
     <KeywordChart/>
@@ -45,7 +45,7 @@ const ComponentTwo = () => (
 );
 
 const ComponentThree = () => (
-  <Card  sx={{ height: "235px", backgroundColor: "lightgray", boxShadow: 2 }}>
+  <Card  sx={{ height: "235px", backgroundColor: "lightgray" }}>
     <Header title="Location" />
     <CardContent>
       <Typography variant="h6" color="textSecondary" align="center" height={250}> No Data </Typography>

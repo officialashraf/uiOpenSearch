@@ -1,78 +1,25 @@
-import React, { useState,useEffect} from 'react'
+import React, { useState, useEffect } from 'react'
 //import AddNewFilter from "./components/addNewFilter";
 import ExistingFilters from "./existingFilter";
 import axios from 'axios';
 import AddNewFilter from './addNewFilter';
 import "./main.css"
-import { Plus, X} from 'react-bootstrap-icons'
-import { useSelector,useDispatch } from 'react-redux';
-//import MainContainer from '../Add_Filter/mainContainer';
+import { Plus, X } from 'react-bootstrap-icons'
+import { useSelector, useDispatch } from 'react-redux';
 
-
-// const AddFilter2 = ({togglePopup}) => {
-//   const [showAddFilter, setShowAddFilter] = useState(false);
-//   const caseData1 = useSelector((state) => state.caseData.caseData);
-
-//   // Toggle visibility of Add New Filter form
-//   const toggleAddFilter = () => {
-//     setShowAddFilter(true);
-//   };
-
-//   // const togglePopup = () =>{
-    
-//   // }
-
-//   return (
-//    <>
-//      <div className="popup-overlay" style={{ trigger:['hover, focus']}} >
-//       <div className="popup-container" style={{width:'50%'}}>
-//       <button className="close-icon" onClick={togglePopup}>
-//           &times;
-//         </button>
-//         <div className="popup-content">
-//      <div className="container-fluid p-4 main-body-div" >
-        
-//       <div className="row main-body-div-1st-row">
-//       <div className="col-md-4 ">
-//       <button className='add-new-filter-button' onClick={toggleAddFilter}>
-//           <Plus />  Add New Filter 
-//           </button>
-//         <ExistingFilters />
-//         </div>
-//           {showAddFilter && (
-//         <div className="col-md-8" style={{marginTop:"-15px"}}>
-         
-//             <button onClick={()=>(setShowAddFilter(false))} className="btn close-add-filter-button" >< X /> </button>       
-            
-//             <AddNewFilter />
-            
-//         </div>
-//           )}
-         
-//       </div>
-//       {/* <button className="btn  btn-secondary" onClick={() => window.history.back()} >Back</button> */}
-//       {/* <button className="btn btn-sm btn-secondary mb-3 proceed-button" >Proceed</button> */}
-//     </div>
-//     </div>
-//     </div>
-//     </div>
-//    </>
-//   )
-// }
-
-// export default AddFilter2
 import { toast } from 'react-toastify';
 import Cookies from 'js-cookie';
+
 const AddFilter2 = ({ togglePopup }) => {
   const dispatch = useDispatch();
   const [selectedFilters, setSelectedFilters] = useState([]);
   const [initialSelectedFilters, setInitialSelectedFilters] = useState([]);
   const caseData1 = useSelector((state) => state.caseData.caseData);
   const token = Cookies.get('accessToken');
-const [filterIdedit, setFilterIdedit] = useState()
+  const [filterIdedit, setFilterIdedit] = useState()
 
   const [showAddFilter, setShowAddFilter] = useState(false);
- 
+
 
   // Toggle visibility of Add New Filter form
   const toggleAddFilter = () => {
@@ -85,8 +32,8 @@ const [filterIdedit, setFilterIdedit] = useState()
         const response = await axios.get('http://5.180.148.40:9006/api/osint-man/v1/filters', {
           headers: { Authorization: `Bearer ${token}` }
         });
-        const filters = response.data.data.filter(filter => 
-          Array.isArray(filter["case id"]) && 
+        const filters = response.data.data.filter(filter =>
+          Array.isArray(filter["case id"]) &&
           filter["case id"].includes(String(caseData1.id))
         );
         const initialIds = filters.map(f => f.id);
@@ -101,8 +48,8 @@ const [filterIdedit, setFilterIdedit] = useState()
 
   // Handler for filter toggle
   const handleFilterToggle = (filterId, isChecked) => {
-    
-    setSelectedFilters(prev => 
+
+    setSelectedFilters(prev =>
       isChecked ? [...prev, filterId] : prev.filter(id => id !== filterId)
     );
   };
@@ -117,20 +64,28 @@ const [filterIdedit, setFilterIdedit] = useState()
 
   // Proceed handler
   const handleProceed = async () => {
-    const filtersToStart = selectedFilters.filter(id => !initialSelectedFilters.includes(id));
-    const filtersToStop = initialSelectedFilters.filter(id => !selectedFilters.includes(id));
-console.log("filterToStop", filtersToStop)
+    // const filtersToStart = selectedFilters.filter(id =>!selectedFilters .includes(id));
+    // console.log("filterToStop", filtersToStart)
+    // const filtersToStop = initialSelectedFilters.filter(id => !initialSelectedFilters.includes(id));
+    // console.log("filterToStop", filtersToStop)
+    const filtersToStart = selectedFilters.filter(id => 
+      !initialSelectedFilters.includes(id)
+    );
+    const filtersToStop = initialSelectedFilters.filter(id => 
+      !selectedFilters.includes(id)
+    );
     try {
 
 
       // Update case status
-      await axios.put(`http://5.180.148.40:9001/api/case-man/v1/case/${caseData1.id}`, 
+      await axios.put(`http://5.180.148.40:9001/api/case-man/v1/case/${caseData1.id}`,
         { status: "in progress" },
-        { headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${token}`
+        {
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}`
+          }
         }
-      } 
       );
       window.dispatchEvent(new Event('databaseUpdated'));
 
@@ -141,23 +96,31 @@ console.log("filterToStop", filtersToStop)
         await axios.post('http://5.180.148.40:9006/api/osint-man/v1/start', {
           filter_id: filtersToStart,
           case_id: String(caseData1.id)
-        }, { headers: { Authorization: `Bearer ${token}` } });
+        }, {   headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`,
+        }});
         window.dispatchEvent(new Event('databaseUpdated'));
       }
 
       // Stop deselected filters
       if (filtersToStop.length > 0) {
         await axios.post('http://5.180.148.40:9006/api/osint-man/v1/stop/batch', {
-          filter_id_list: filtersToStop
-          
-        }, { headers: { Authorization: `Bearer ${token}`,
-        "Content-Type": "application/json" } });
+          filter_id_list: filtersToStop,
+          case_id: String(caseData1.id)
+
+        }, {
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}`,
+          },
+        });
       }
 
       // Refresh data and close popup
-     
+
       togglePopup();
-    } catch (error){
+    } catch (error) {
       if (error.response) {
         console.error("Error Status:", error.response.status);
         console.error("Error Data:", error.response.data);
@@ -173,27 +136,28 @@ console.log("filterToStop", filtersToStop)
   return (
     <>
       <div className="popup-overlay">
-        <div className="popup-container" style={{width: '50%'}}>
+        <div className="popup-container" style={{ width: '50%' }}>
           <button className="close-icon" onClick={togglePopup}>&times;</button>
           <div className="popup-content">
             <div className="container-fluid p-4 main-body-div">
               <div className="row main-body-div-1st-row">
                 <div className="col-md-4">
                   <button className='add-new-filter-button' onClick={toggleAddFilter}>
-                    <Plus/> Add New Filter
+                    <Plus /> Add New Filter
                   </button>
-                  <ExistingFilters 
+                  <ExistingFilters
+                    setShowAddFilter={setShowAddFilter}
                     selectedFilters={selectedFilters}
                     onFilterToggle={handleFilterToggle}
                     onFilterSelect={handleFilterid}
                   />
                 </div>
                 {showAddFilter && (
-                  <div className="col-md-8" style={{marginTop: "-15px"}}>
+                  <div className="col-md-8" style={{ marginTop: "-15px" }}>
                     <button onClick={() => setShowAddFilter(false)} className="btn close-add-filter-button">
-                      <X/>
+                      <X />
                     </button>
-                    <AddNewFilter filterIde={filterIdedit} onNewFilterCreated={handleNewFilterCreated}/>
+                    <AddNewFilter filterIde={filterIdedit} onNewFilterCreated={handleNewFilterCreated} />
                   </div>
                 )}
               </div>

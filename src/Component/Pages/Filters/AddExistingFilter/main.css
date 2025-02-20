@@ -149,6 +149,8 @@
  .form-select{
   padding: 0rem 0rem 0rem 0.4rem !important;
   font-size:12px;
+  width: 120px;
+    height: 28px;
 }
   .source-select:focus {
     box-shadow: none;

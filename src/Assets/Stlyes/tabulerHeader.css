@@ -12,9 +12,11 @@
   }
   
   .icon-style:hover {
-    color: white;
-    background-color: gray;
-    border-radius: 5px; /* Optional for rounded hover effect */
-    padding: 5px;}
+    color: lightgrey;
+    background-color: black;
+   
+
+    
+  }
 
    
