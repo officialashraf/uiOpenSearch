@@ -75,28 +75,15 @@ const AddFilter2 = ({ togglePopup }) => {
       !selectedFilters.includes(id)
     );
     try {
-
-
-      // Update case status
-      await axios.put(`http://5.180.148.40:9001/api/case-man/v1/case/${caseData1.id}`,
-        { status: "in progress" },
-        {
-          headers: {
-            'Content-Type': 'application/json',
-            'Authorization': `Bearer ${token}`
-          }
-        }
-      );
-      window.dispatchEvent(new Event('databaseUpdated'));
-
-
       // Start new filters
 
       if (filtersToStart.length > 0) {
-        await axios.post('http://5.180.148.40:9006/api/osint-man/v1/start', {
+        const payload = {
           filter_id: filtersToStart,
           case_id: String(caseData1.id)
-        }, {   headers: {
+      };
+      console.log('Payload being sent start:', payload);
+        await axios.post('http://5.180.148.40:9006/api/osint-man/v1/start',payload, {   headers: {
           'Content-Type': 'application/json',
           'Authorization': `Bearer ${token}`,
         }});
@@ -105,17 +92,31 @@ const AddFilter2 = ({ togglePopup }) => {
 
       // Stop deselected filters
       if (filtersToStop.length > 0) {
-        await axios.post('http://5.180.148.40:9006/api/osint-man/v1/stop/batch', {
+        const payload = {
           filter_id_list: filtersToStop,
           case_id: String(caseData1.id)
-
-        }, {
+      };
+      console.log('Payload being sent stop:', payload);
+        await axios.post('http://5.180.148.40:9006/api/osint-man/v1/stop/batch', payload, {
           headers: {
             'Content-Type': 'application/json',
             'Authorization': `Bearer ${token}`,
           },
-        });
+        });window.dispatchEvent(new Event('databaseUpdated'));
       }
+
+     // Update case status
+     await axios.put(`http://5.180.148.40:9001/api/case-man/v1/case/${caseData1.id}`,
+      { status: "in progress" },
+      {
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`
+        }
+      }
+    );
+    window.dispatchEvent(new Event('databaseUpdated'));
+
 
       // Refresh data and close popup
 
