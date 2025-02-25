@@ -1,11 +1,11 @@
 import React from 'react';
-import { Navbar, Nav, Button,Container, Row, Col,Badge } from 'react-bootstrap';
+import { Navbar, Nav,Container, Row, Col,Badge } from 'react-bootstrap';
 import { FaFileAlt,FaArrowLeft } from 'react-icons/fa';
-import { useDispatch, useSelector } from 'react-redux';
+ import {  useSelector } from 'react-redux';
 //import { setSelectedTab } from '../../../../Redux/Action/caseAction';
-import '../../../../Assets/Stlyes/headerfilter.css';
+import '../../../Assets/Stlyes/headerfilter.css';
 import { useNavigate, useParams } from 'react-router-dom';
-import CaseData from '../AddExistingFilter/TabularData/tabulerData';
+// import CaseData from '../Analyze/TabularData/tabulerData';
 
 const HeaderFilter = () => {
   //const dispatch = useDispatch();

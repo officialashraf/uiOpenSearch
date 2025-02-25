@@ -173,12 +173,11 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import axios from 'axios';
-import ProgressRow from "./Summary/progressBar.js";
+import ProgressRow from "./progressBar.js";
 import { Container, Box, Table, TableContainer, TableFooter, TableBody, TableCell, TableHead, TableRow, Paper } from '@mui/material';
-import { PieChart, Pie, Tooltip, Legend, ResponsiveContainer } from 'recharts';
-import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Cell, Tooltip as BarTooltip } from 'recharts';
-import AddFilter2 from '../AddExistingFilter/addFilter2.js';
-import '../../../../Assets/Stlyes/summary.css';
+import { PieChart, Pie, Tooltip, Legend, ResponsiveContainer,BarChart, Bar, XAxis, YAxis, CartesianGrid, Cell } from 'recharts';
+import AddFilter2 from '../Filters/addFilter.js';
+import '../../../Assets/Stlyes/summary.css';
 
 
 const Summary = ({ filters }) => {
@@ -189,7 +188,7 @@ const Summary = ({ filters }) => {
   const [showPopup, setShowPopup] = useState(false);
 
   const caseId = useSelector((state) => state.caseData.caseData.id);
-  const filterCount = useSelector((state) => state.filterCount.filterCount.count);
+  // const filterCount = useSelector((state) => state.filterCount.filterCount.count);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -221,9 +220,9 @@ const Summary = ({ filters }) => {
           pieData.push({ name: 'No Data', value: 0 });
         }
         
-        const totalCount = pieData.reduce((sum, item) => sum + item.value, 0);
+        // const totalCount = pieData.reduce((sum, item) => sum + item.value, 0);
         
-        const colors = ['#8884d8', '#8dd1e1', '#a4de6c', '#d0ed57', '#ffc658'];
+        // const colors = ['#8884d8', '#8dd1e1', '#a4de6c', '#d0ed57', '#ffc658'];
         //   Bar Chart Data (unified_date_only)
         const barData = (unified_date_only || []).map(item => ({
           name: item.key.split('-').slice(0, 3).join(''),

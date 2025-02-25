@@ -3,8 +3,8 @@ import { Container, Row, Col, Form } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import Cookies from 'js-cookie';
-import '../../Assets/Stlyes/login.css';
-import InputField from './inputField'; // Import the reusable input field
+import '../../../Assets/Stlyes/login.css';
+import InputField from './inputField'; // reusable input field
 import {  toast } from 'react-toastify';
 
 const LoginPage = () => {

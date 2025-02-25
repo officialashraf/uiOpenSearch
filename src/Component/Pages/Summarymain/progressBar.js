@@ -1,5 +1,5 @@
 import React from "react";
-import './progressBar.css'
+import '../../../Assets/Stlyes/progressBar.css'
 import { ProgressBar } from "react-bootstrap";
 
 const ProgressRow = ({ now, label }) => {

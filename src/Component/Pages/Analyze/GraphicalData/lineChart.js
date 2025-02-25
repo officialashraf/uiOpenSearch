@@ -4,7 +4,7 @@ import { useSelector } from 'react-redux';
 import axios from 'axios';
 import { Box, Slider } from '@mui/material';
 import { LineChart, Line, XAxis, YAxis, Tooltip, Legend, CartesianGrid, ReferenceLine } from 'recharts';
-import '../../../../../Assets/Stlyes/lineChart.css'
+import '../../../../Assets/Stlyes/lineChart.css'
 
 const LineChart1 = () => {
   const [data, setData] = useState([]);

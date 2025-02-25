@@ -159,12 +159,12 @@ import { useState, useEffect } from 'react';
 import { Table, Pagination } from 'react-bootstrap';
 import Cookies from "js-cookie";
 import axios from 'axios';
-import '../../../../../Assets/Stlyes/Filter/caseTableData.css';
+import '../../../../Assets/Stlyes/Filter/caseTableData.css';
 import { useSelector, useDispatch } from 'react-redux';
-import '../../../../../services/pagination.css';
-import { setSumaryHeadersAction, setSummaryDataAction } from '../../../../../Redux/Action/filterAction';
-import { setSummaryData } from '../../../../../Redux/Action/caseAction';
-import Loader from '../../../Layout/loader';
+import '../../../../Assets/Stlyes/pagination.css';
+import { setSumaryHeadersAction, setSummaryDataAction } from '../../../../Redux/Action/filterAction';
+import { setSummaryData } from '../../../../Redux/Action/caseAction';
+import Loader from '../../Layout/loader';
 
 const TabulerData = () => {
     const dispatch = useDispatch();

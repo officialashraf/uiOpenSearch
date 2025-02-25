@@ -170,18 +170,18 @@ import React, { useState, useEffect } from 'react';
 import { Button } from 'react-bootstrap';
 import { FaPlus } from 'react-icons/fa';
 import { useSelector } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
+
 import Summary from './summary.js';
 import axios from 'axios';
 import Cookies from 'js-cookie';
-import '../../../../Assets/Stlyes/mainContainer.css';
-import AddFilter2 from '../AddExistingFilter/addFilter2.js';
-import Loader from '../../Layout/loader.js';
+import '../../../Assets/Stlyes/mainContainer.css';
+import AddFilter2 from '../Filters/addFilter.js';
+import Loader from '../Layout/loader.js';
 
 const MainContainer = () => {
-  const navigate = useNavigate();
+
   const [filterdata, setfilterdata] = useState([]);
-  const selectedTab = useSelector((state) => state.selectedTab.selectedTab);
+  // const selectedTab = useSelector((state) => state.selectedTab.selectedTab);
   const caseData = useSelector((state) => state.caseData.caseData);
   const [showPopup, setShowPopup] = useState(false);
   const [isLoading, setIsLoading] = useState(true); // Track loading state

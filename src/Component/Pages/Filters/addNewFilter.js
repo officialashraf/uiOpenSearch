@@ -3,8 +3,8 @@ import React, { useState, useRef, useEffect } from 'react';
 import axios from 'axios';
 import { Form, InputGroup, Button, Badge } from 'react-bootstrap';
 import { toast } from 'react-toastify';
-import { useDispatch, useSelector, useStore } from 'react-redux';
-import { setTaskFilter } from '../../../../Redux/Action/filterAction';
+import { useDispatch, useSelector } from 'react-redux';
+import { setTaskFilter } from '../../../Redux/Action/filterAction';
 import Cookies from 'js-cookie';
 import { jwtDecode } from "jwt-decode";
 
@@ -18,10 +18,9 @@ const conversionFactors = {
 
 const AddNewFilter = ({ onNewFilterCreated, filterIde }) => {
   const [platform, setPlatform] = useState([]);
-  const [newKeyword, setNewKeyword] = useState('');
   const [filterName, setFilterName] = useState('');
   const [description, setDescription] = useState('');
-  const [taskId, setTaskId] = useState([]);
+  // const [taskId, setTaskId] = useState([]);
   const [filterId, setFilterId] = useState([]);
   const [filterDetails, setFilterDetails] = useState(null)
   const [isEditable, setIsEditable] = useState(true);
@@ -40,14 +39,14 @@ const AddNewFilter = ({ onNewFilterCreated, filterIde }) => {
   const containerRef = useRef(null);
 
   const dispatch = useDispatch();
-  const caseData1 = useSelector((state) => state.caseData.caseData);
+  // const caseData1 = useSelector((state) => state.caseData.caseData);
   const token = Cookies.get('accessToken');
   const toastShown = useRef(false);
   useEffect(() => {
-    localStorage.setItem('taskId', taskId);
+    // localStorage.setItem('taskId', taskId);
     localStorage.setItem('filterId', filterId);
-    dispatch(setTaskFilter(taskId, filterId));
-  }, [taskId, filterId, dispatch]);
+    // dispatch(setTaskFilter(taskId, filterId));
+  }, [ filterId, dispatch]);
 
   useEffect(() => {
     if (token) {

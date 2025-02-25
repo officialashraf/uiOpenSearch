@@ -2,11 +2,11 @@
 import axios from 'axios';
 import React from 'react';
 import { useState, useEffect } from 'react';
-import { SortDown, SortUp, Search, X } from 'react-bootstrap-icons';
+import { SortDown, SortUp, Search } from 'react-bootstrap-icons';
 import { useSelector, useDispatch } from 'react-redux';
-import { logFilterCount } from '../../../../Redux/Action/filterAction';
+import { logFilterCount } from '../../../Redux/Action/filterAction.js';
 import Cookies from 'js-cookie';
-import Loader from '../../Layout/loader.js';
+import Loader from '../Layout/loader.js';
 
 const ExistingFilter = ({ selectedFilters, onFilterToggle, onFilterSelect, setShowAddFilter }) => {
   const dispatch = useDispatch();

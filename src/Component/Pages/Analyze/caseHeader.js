@@ -1,11 +1,10 @@
 import React,{useState} from 'react'
 import {useSelector} from 'react-redux'
 import {ListAltOutlined, PieChart, MoreVert} from '@mui/icons-material';
-import '../../../../../Assets/Stlyes/tabulerHeader.css'
+import '../../../Assets/Stlyes/tabulerHeader.css'
 import { useNavigate } from "react-router-dom";
-import AddFilter2 from '../addFilter2';
+
 const CaseHeader = ({ onIconClick }) => {
-  const [showPopup, setShowPopup] = useState(false);
   const caseData1 = useSelector((state) => state.caseData.caseData);
   const navigate = useNavigate();
   const backToSnap = () => {

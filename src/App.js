@@ -1,21 +1,21 @@
 import Header from './Component/Pages/Home/header.js';
 import Home from './Component/Pages/Home/home';
 import SearchBar from './Component/Pages/SearchPage/searchBar';
-import LoginPage from './Component/User/login';
+import LoginPage from './Component/Pages/User/login';
 import { BrowserRouter , Routes, Route, useLocation  } from 'react-router-dom';
-import MainFilter from './Component/Pages/Filters/Add_Filter/mainFilterPage.js';
-import AddFilter2 from './Component/Pages/Filters/AddExistingFilter/addFilter2.js';
-import CaseTableDataFilter from './Component/Pages/Filters/AddExistingFilter/TabularData/caseTableDataFilter.js';
-import CaseAddFilter from './Component/Pages/Filters/Add_Filter/caseAddFilter.js';
+import MainFilter from './Component/Pages/Summarymain/mainFilterPage.js';
+import AddFilter2 from './Component/Pages/Filters/addFilter.js';
+import CaseTableDataFilter from './Component/Pages/Analyze/caseTableDataFilter.js';
+import CaseAddFilter from './Component/Pages/Summarymain/unusable/caseAddFilter.js';
 import RightSidebar from './Component/Pages/Home/rightSideBar.js';
 import Sidebar from './Component/Pages/Home/leftSideBar.js';
 import './Assets/Stlyes/dashboard.css';
-import Summary from './Component/Pages/Filters/Add_Filter/summary.js';
-import LineChart1 from './Component/Pages/Filters/AddExistingFilter/TabularData/lineChart.js';
-import KeywordChart from './Component/Pages/Filters/AddExistingFilter/TabularData/keywordChart.js';
-import GraphicalData from './Component/Pages/Filters/AddExistingFilter/TabularData/graphicalData.js';
+import Summary from './Component/Pages/Summarymain/summary.js';
+import LineChart1 from './Component/Pages/Analyze/GraphicalData/lineChart.js';
+import KeywordChart from './Component/Pages/Analyze/GraphicalData/keywordChart.js';
+import GraphicalData from './Component/Pages/Analyze/GraphicalData/graphicalData.js';
 import './App.css'
-import ProtectedRoute from './services/protectRoute.js';
+import ProtectedRoute from './utils/protectRoute.js';
 import Loader from './Component/Pages/Layout/loader.js';
 
 

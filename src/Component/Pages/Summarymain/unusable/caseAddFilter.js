@@ -2,9 +2,9 @@ import React from 'react'
 import Headerm from '../../Home/header'
 import Sidebar from '../../Home/leftSideBar'
 import RightSidebar from '../../Home/rightSideBar'
-import MainContainer from './mainContainer'
+import MainContainer from '../mainContainer'
 import Preheader from './preheaderFilter'
-import Header from './headerFilter'
+import Header from '../headerFilter'
 
 
 const CaseAddFilter = ({ onAnalyzeClick, caseData1 }) => {
