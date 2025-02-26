@@ -194,7 +194,7 @@ const TabulerData = () => {
               
             };
 
-            const response = await axios.post('http://5.180.148.40:9005/api/das/search', queryData, {
+            const response = await axios.post('http://5.180.148.40:9006/api/das/search', queryData, {
                 headers: {
                     'Content-Type': 'application/json',
                     'Authorization': `Bearer ${token}`

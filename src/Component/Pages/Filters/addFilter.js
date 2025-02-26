@@ -29,7 +29,7 @@ const AddFilter2 = ({ togglePopup }) => {
   useEffect(() => {
     const fetchInitialFilters = async () => {
       try {
-        const response = await axios.get('http://5.180.148.40:9006/api/osint-man/v1/filters', {
+        const response = await axios.get('http://5.180.148.40:9002/api/osint-man/v1/filters', {
           headers: { Authorization: `Bearer ${token}` }
         });
         const filters = response.data.data.filter(filter =>
@@ -83,7 +83,7 @@ const AddFilter2 = ({ togglePopup }) => {
           case_id: String(caseData1.id)
       };
       console.log('Payload being sent start:', payload);
-        await axios.post('http://5.180.148.40:9006/api/osint-man/v1/start',payload, {   headers: {
+        await axios.post('http://5.180.148.40:9002/api/osint-man/v1/start',payload, {   headers: {
           'Content-Type': 'application/json',
           'Authorization': `Bearer ${token}`,
         }});
@@ -97,7 +97,7 @@ const AddFilter2 = ({ togglePopup }) => {
           case_id: String(caseData1.id)
       };
       console.log('Payload being sent stop:', payload);
-        await axios.post('http://5.180.148.40:9006/api/osint-man/v1/stop/batch', payload, {
+        await axios.post('http://5.180.148.40:9002/api/osint-man/v1/stop/batch', payload, {
           headers: {
             'Content-Type': 'application/json',
             'Authorization': `Bearer ${token}`,

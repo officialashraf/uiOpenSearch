@@ -194,7 +194,7 @@ const MainContainer = () => {
   const filterData = async () => {
     setIsLoading(true); // Start loading
     try {
-      const response = await axios.get(`http://5.180.148.40:9006/api/osint-man/v1/filters`, {
+      const response = await axios.get(`http://5.180.148.40:9002/api/osint-man/v1/filters`, {
         headers: {
           'Content-Type': 'application/json',
           'Authorization': `Bearer ${token}`,

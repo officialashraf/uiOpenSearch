@@ -31,7 +31,7 @@
   font-size: calc(10px + 2vmin);
   color: white;
 }
-p,label,input,h5,th,td,button, li, ul,div {
+p,label,input,h5,th,td,button, li, ul,div,a,link,span {
   font-family: sans-serif;
   font-size: 12px;
 }

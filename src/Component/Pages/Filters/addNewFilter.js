@@ -195,7 +195,7 @@ const AddNewFilter = ({ onNewFilterCreated, filterIde }) => {
 
   const fetchFilterDetails = async () => {
     try {
-      const response = await axios.get(`http://5.180.148.40:9006/api/osint-man/v1/filter/${filterIde}`, {
+      const response = await axios.get(`http://5.180.148.40:9002/api/osint-man/v1/filter/${filterIde}`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -215,7 +215,7 @@ const AddNewFilter = ({ onNewFilterCreated, filterIde }) => {
   }, [filterIde]);
   const fetchPlatforms = async () => {
     try {
-      const response = await axios.get('http://5.180.148.40:9006/api/osint-man/v1/platforms', {
+      const response = await axios.get('http://5.180.148.40:9002/api/osint-man/v1/platforms', {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -252,8 +252,8 @@ const AddNewFilter = ({ onNewFilterCreated, filterIde }) => {
     console.log("postdata save filter", postData);
     try {
       const url = filterDetails?.id
-        ? `http://5.180.148.40:9006/api/osint-man/v1/filter/${filterDetails.id}`
-        : 'http://5.180.148.40:9006/api/osint-man/v1/filter';
+        ? `http://5.180.148.40:9002/api/osint-man/v1/filter/${filterDetails.id}`
+        : 'http://5.180.148.40:9002/api/osint-man/v1/filter';
 
       const method = filterDetails?.id ? 'put' : 'post';
 
